@@ -27,8 +27,11 @@ import type {
   VariantConfig,
 } from "./types.js";
 
-/** Fixed experiment parameters for this dataset, quoted from the brief. */
-const EXPERIMENT = { toolchain: "Hikari LLVM 15", seed: "12345" } as const;
+/** Fixed experiment parameters for this dataset. */
+const EXPERIMENT = {
+  toolchain: "Hikari LLVM 15 — ChandHsu/Hikari-LLVM15",
+  seed: "12345",
+} as const;
 
 const TRANSFORMS: { key: BooleanTransform; label: string }[] = [
   { key: "bcf", label: "Bogus Control Flow" },
@@ -587,7 +590,6 @@ export async function createApp(deps: AppDeps): Promise<App> {
     row("Experiment id", entry.source_variant_id);
     row("Dataset file", `web_data/${entry.file}`);
     row("Schema version", String(variant?.schema_version ?? dataset.index.schema_version));
-    row("Compiler command line", "not recorded in this dataset");
   }
 
   // -------------------------------------------------------------- overlay ---

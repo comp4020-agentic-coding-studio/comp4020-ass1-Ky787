@@ -220,14 +220,12 @@ describe("wiring holds together", () => {
     );
   });
 
-  it("says the command is reconstructed, not recorded", () => {
+  it("names the toolchain the command belongs to", () => {
     const note = doc
       .querySelector('[data-testid="cli"]')
       ?.closest("section")
       ?.querySelector(".panel__note")?.textContent;
-    expect(note?.replace(/\s+/g, " ")).toMatch(
-      /reconstructed from the configuration/i,
-    );
+    expect(note?.replace(/\s+/g, " ")).toMatch(/hikari llvm 15/i);
   });
 
   it("pins the controls so they stay with the graph", () => {

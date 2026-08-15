@@ -650,6 +650,7 @@ describe("the build command", () => {
     );
     expect(flags).toEqual([
       "-mllvm -enable-bcfobf",
+      "-mllvm -bcf_prob=100",
       "-mllvm -enable-cffobf",
       "-mllvm -enable-subobf",
       "-mllvm -enable-strcry",
@@ -702,6 +703,6 @@ describe("technical details", () => {
     expect(text).toContain("Bogus Control Flow, Instruction Substitution");
     expect(text).toContain("o2-bcf1-fla0-sub1-str0-split3");
     expect(text).toContain("web_data/variants/o2-bcf1-fla0-sub1-str0-split3.json");
-    expect(text).toMatch(/not recorded in this dataset/);
+    expect(text).toContain("ChandHsu/Hikari-LLVM15");
   });
 });

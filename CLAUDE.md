@@ -25,13 +25,14 @@ dependencies; everything else lives in `src/`:
 - `src/graph.ts` — Cytoscape.js + dagre. The only module that imports either.
 - `src/asm.ts`, `src/highlight.ts` — colouring for text that came out of the
   dataset.
-- `src/command.ts` — the **one** thing on the page that is not read from
-  `web_data/`. The dataset records the compiled objects, not the command that
-  built them, so the displayed `clang` line is a reconstruction from the six
-  controls and is labelled as one wherever it appears. It must stay a pure
-  function of the configuration: no flag may appear that no control asked for,
-  and no seed flag may be invented (the seed's spelling is not recorded).
-  `spec/command.test.ts` holds that line.
+- `src/command.ts` — the **one** module that does not read from `web_data/`:
+  the dataset holds the compiled objects, so the `clang` line is assembled from
+  the six controls. The switch spellings are verified against the archived
+  Hikari documentation and the ChandHsu/Hikari-LLVM15 fork this dataset was
+  generated with, so they may be stated plainly. It must stay a pure function of
+  the configuration: no flag may appear that no control asked for, and no seed
+  flag may be invented — the seed is fixed at 12345, but nothing records which
+  switch carried it. `spec/command.test.ts` holds that line.
 
 `web_data/` stays at that path. `vite.config.ts` copies it into `dist/` at build
 time; nothing in it may be `import`ed, or all 256 variants land in the bundle.

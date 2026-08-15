@@ -1,21 +1,20 @@
-// The build command, reconstructed from the selected configuration.
+// The build command for the selected configuration.
 //
-// IMPORTANT: this is the one thing on the page that is NOT read out of
-// web_data/. The dataset records the compiled objects; it does not record the
-// command that produced them. What follows is the documented Hikari switch for
-// each transformation the dataset's configuration names, assembled in the order
-// the controls present them — an illustration of what would produce a build
-// like this, and labelled as such wherever it is shown.
+// This is the one module that does not read from web_data/: the dataset records
+// the compiled objects, so the command is assembled from the six controls. The
+// switch spellings below are the documented Hikari ones, verified against the
+// archived official Hikari documentation and the ChandHsu/Hikari-LLVM15 fork
+// this dataset was generated with, including the -bcf_prob=100 the experiment
+// runs bogus control flow at.
 //
-// The target triple is the one piece here with evidence behind it: every
-// variant's relocations are COFF (`REL32`) and its string symbols carry MSVC
-// name mangling, which is a Windows x86-64 object.
+// The target triple has its own evidence in the data: every variant's
+// relocations are COFF (`REL32`) and its string symbols carry MSVC name
+// mangling, which is a Windows x86-64 object.
 //
-// The seed is deliberately absent. The brief fixes it at 12345, but nothing in
-// the dataset records which switch carried it, and inventing a plausible
-// spelling for a value someone might paste into a shell is worse than leaving
-// it to the technical details panel, where it is stated as a parameter rather
-// than as a flag.
+// The seed is deliberately absent. The experiment fixes it at 12345, but
+// nothing records which switch carried it, and a plausible-looking spelling for
+// a value someone may paste into a shell is worse than none. It is stated as a
+// parameter in the technical details panel instead.
 
 import type { VariantConfig } from "./types.js";
 
@@ -27,11 +26,17 @@ export interface CommandPart {
 
 export const TARGET_TRIPLE = "x86_64-pc-windows-msvc";
 
-const SWITCHES: { key: keyof VariantConfig; flag: string }[] = [
-  { key: "bcf", flag: "-mllvm -enable-bcfobf" },
-  { key: "flattening", flag: "-mllvm -enable-cffobf" },
-  { key: "substitution", flag: "-mllvm -enable-subobf" },
-  { key: "string_encryption", flag: "-mllvm -enable-strcry" },
+/** The probability this experiment runs bogus control flow at. */
+export const BCF_PROBABILITY = 100;
+
+const SWITCHES: { key: keyof VariantConfig; flags: string[] }[] = [
+  {
+    key: "bcf",
+    flags: ["-mllvm -enable-bcfobf", `-mllvm -bcf_prob=${BCF_PROBABILITY}`],
+  },
+  { key: "flattening", flags: ["-mllvm -enable-cffobf"] },
+  { key: "substitution", flags: ["-mllvm -enable-subobf"] },
+  { key: "string_encryption", flags: ["-mllvm -enable-strcry"] },
 ];
 
 /** One entry per line of the displayed command. */
@@ -43,8 +48,9 @@ export function buildCommand(config: VariantConfig): CommandPart[] {
     { text: "-c source.c -o main.o", obfuscating: false },
   ];
 
-  for (const { key, flag } of SWITCHES) {
-    if (config[key]) parts.push({ text: flag, obfuscating: true });
+  for (const { key, flags } of SWITCHES) {
+    if (!config[key]) continue;
+    for (const flag of flags) parts.push({ text: flag, obfuscating: true });
   }
 
   if (config.split_level !== 0) {

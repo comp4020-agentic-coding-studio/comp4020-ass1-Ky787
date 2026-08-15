@@ -1,13 +1,17 @@
 // Contract: the build command shown on the page follows the configuration
-// exactly — one flag per switch, in control order, and nothing extra.
+// exactly — the switches each control turns on, in control order, and nothing
+// else.
 //
-// This is the one part of the page that is a reconstruction rather than a
-// reading of web_data/, so what it can be trusted for is narrow: that it is a
-// faithful function of the six controls, and that it never quietly grows a flag
-// the controls did not ask for. The page labels it as reconstructed.
+// The spellings themselves were verified against the archived Hikari
+// documentation and the ChandHsu/Hikari-LLVM15 fork this dataset came from.
+// What this suite guards is the wiring: that the command is a faithful function
+// of the six controls, that it never quietly grows a flag no control asked for,
+// and that no seed flag is invented — the seed is fixed at 12345 but nothing
+// records which switch carried it.
 
 import { describe, expect, it } from "vitest";
 import {
+  BCF_PROBABILITY,
   TARGET_TRIPLE,
   buildCommand,
   commandText,
@@ -36,24 +40,38 @@ describe("the clean configuration", () => {
   });
 });
 
-describe("each control adds exactly its own flag", () => {
-  const flags: Record<(typeof TRANSFORMS)[number], string> = {
-    bcf: "-mllvm -enable-bcfobf",
-    flattening: "-mllvm -enable-cffobf",
-    substitution: "-mllvm -enable-subobf",
-    string_encryption: "-mllvm -enable-strcry",
+describe("each control adds exactly its own switches", () => {
+  const flags: Record<(typeof TRANSFORMS)[number], string[]> = {
+    bcf: ["-mllvm -enable-bcfobf", `-mllvm -bcf_prob=${BCF_PROBABILITY}`],
+    flattening: ["-mllvm -enable-cffobf"],
+    substitution: ["-mllvm -enable-subobf"],
+    string_encryption: ["-mllvm -enable-strcry"],
   };
 
   for (const key of TRANSFORMS) {
-    it(`${key} adds ${flags[key]} and nothing else`, () => {
-      const command = commandText({ ...BASELINE_CONFIG, [key]: true });
-      expect(command).toContain(flags[key]);
-      expect(obfuscatingFlagCount({ ...BASELINE_CONFIG, [key]: true })).toBe(1);
+    it(`${key} adds ${flags[key].join(" ")} and nothing else`, () => {
+      const config = { ...BASELINE_CONFIG, [key]: true };
+      const command = commandText(config);
+      for (const flag of flags[key]) expect(command).toContain(flag);
+      expect(obfuscatingFlagCount(config)).toBe(flags[key].length);
       for (const other of TRANSFORMS) {
-        if (other !== key) expect(command).not.toContain(flags[other]);
+        if (other === key) continue;
+        for (const flag of flags[other]) expect(command).not.toContain(flag);
       }
     });
   }
+
+  it("runs bogus control flow at the experiment's probability", () => {
+    expect(BCF_PROBABILITY).toBe(100);
+    expect(commandText({ ...BASELINE_CONFIG, bcf: true })).toContain(
+      "-mllvm -bcf_prob=100",
+    );
+    // The probability is a BCF parameter: meaningless without the pass.
+    expect(commandText(BASELINE_CONFIG)).not.toContain("bcf_prob");
+    expect(
+      commandText({ ...BASELINE_CONFIG, flattening: true }),
+    ).not.toContain("bcf_prob");
+  });
 
   it("keeps the switches in the order the controls present them", () => {
     const all: VariantConfig = {
@@ -67,7 +85,7 @@ describe("each control adds exactly its own flag", () => {
       buildCommand(all)
         .filter((part) => part.obfuscating)
         .map((part) => part.text),
-    ).toEqual(TRANSFORMS.map((key) => flags[key]));
+    ).toEqual(TRANSFORMS.flatMap((key) => flags[key]));
   });
 
   for (const level of SPLIT_LEVELS) {
@@ -96,6 +114,7 @@ describe("no flag appears that a control did not ask for", () => {
   it("holds across every configuration", () => {
     const known = new Set([
       "-mllvm -enable-bcfobf",
+      "-mllvm -bcf_prob=100",
       "-mllvm -enable-cffobf",
       "-mllvm -enable-subobf",
       "-mllvm -enable-strcry",
@@ -118,6 +137,7 @@ describe("no flag appears that a control did not ask for", () => {
           const parts = buildCommand(config);
           const expected =
             TRANSFORMS.filter((key) => config[key]).length +
+            (config.bcf ? 1 : 0) +
             (split_level === 0 ? 0 : 2);
           expect(obfuscatingFlagCount(config), JSON.stringify(config)).toBe(
             expected,

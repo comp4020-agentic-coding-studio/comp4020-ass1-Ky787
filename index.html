@@ -163,8 +163,7 @@
         <div class="panel__head">
           <h2 id="pipeline-h" class="panel__title">Build command</h2>
           <p class="panel__note">
-            reconstructed from the configuration — the dataset holds the
-            compiled objects, not the command that produced them
+            the Hikari LLVM 15 switches for this configuration
           </p>
           <button type="button" class="btn" data-testid="cli-copy">
             Copy
@@ -494,9 +493,10 @@
           pre-generated dataset in <code>web_data/</code>. Nothing is
           disassembled, lowered to IR, or otherwise regenerated in the browser.
           Toolchain, seed and the build command are the fixed parameters of the
-          experiment that produced the dataset, reconstructed from the selected
-          configuration; every other row is read from the selected variant's
-          JSON.
+          experiment that produced the dataset; the command is assembled from
+          the selected configuration, since the dataset holds the compiled
+          objects rather than the shell history. Every other row is read from
+          the selected variant's JSON.
         </p>
       </details>
     </footer>
