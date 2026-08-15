@@ -1,0 +1,5475 @@
+{
+  "schema_version": 1,
+  "id": "o0-bcf1-fla0-sub0-str0-split0",
+  "source_variant_id": "O0_bcf1_fla0_sub0_str0_split0",
+  "config": {
+    "optimization": "O0",
+    "bcf": true,
+    "flattening": false,
+    "substitution": false,
+    "string_encryption": false,
+    "split_level": 0
+  },
+  "metrics": {
+    "instruction_count": 146,
+    "main_byte_size": 538,
+    "machine_basic_block_count": 17,
+    "machine_cfg_edge_count": 18,
+    "llvm_basic_block_count": 28,
+    "llvm_cfg_edge_count": 43
+  },
+  "watched_plaintext_strings": {
+    "ACCESS GRANTED": true,
+    "ACCESS DENIED": true,
+    "result=%u": true
+  },
+  "disassembly": {
+    "instructions": [
+      {
+        "address": 0,
+        "address_hex": "0x0000",
+        "size": 1,
+        "bytes": "55",
+        "mnemonic": "push",
+        "op_str": "rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rbp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "mode64"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 1,
+        "address_hex": "0x0001",
+        "size": 4,
+        "bytes": "48 83 ec 40",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x40",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 64,
+            "hex": "0x40",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 5,
+        "address_hex": "0x0005",
+        "size": 5,
+        "bytes": "48 8d 6c 24 40",
+        "mnemonic": "lea",
+        "op_str": "rbp, [rsp + 0x40]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rsp",
+            "index": null,
+            "scale": 1,
+            "disp": 64,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rbp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 10,
+        "address_hex": "0x000A",
+        "size": 4,
+        "bytes": "48 89 55 f0",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x10], rdx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -16,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rdx",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rdx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 14,
+        "address_hex": "0x000E",
+        "size": 3,
+        "bytes": "89 4d fc",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rbp - 4], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 17,
+        "address_hex": "0x0011",
+        "size": 3,
+        "bytes": "8b 55 fc",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rbp - 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 20,
+        "address_hex": "0x0014",
+        "size": 4,
+        "bytes": "4c 8b 4d f0",
+        "mnemonic": "mov",
+        "op_str": "r9, qword ptr [rbp - 0x10]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -16,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "r9"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 24,
+        "address_hex": "0x0018",
+        "size": 5,
+        "bytes": "b8 10 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "eax, 0x10",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 16,
+            "hex": "0x10",
+            "size": 4
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 29,
+        "address_hex": "0x001D",
+        "size": 4,
+        "bytes": "48 89 45 d8",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x28], rax",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -40,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rax"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 33,
+        "address_hex": "0x0021",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x26",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 38,
+            "hex": "0x26",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 34,
+            "symbol_index": 25,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 38,
+        "address_hex": "0x0026",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 41,
+        "address_hex": "0x0029",
+        "size": 4,
+        "bytes": "48 8b 45 d8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x28]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -40,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 45,
+        "address_hex": "0x002D",
+        "size": 3,
+        "bytes": "49 89 e2",
+        "mnemonic": "mov",
+        "op_str": "r10, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r10",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r10"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 48,
+        "address_hex": "0x0030",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x35",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 53,
+            "hex": "0x35",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 49,
+            "symbol_index": 25,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 53,
+        "address_hex": "0x0035",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 56,
+        "address_hex": "0x0038",
+        "size": 4,
+        "bytes": "48 8b 45 d8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x28]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -40,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 60,
+        "address_hex": "0x003C",
+        "size": 3,
+        "bytes": "49 89 e0",
+        "mnemonic": "mov",
+        "op_str": "r8, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r8",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r8"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 63,
+        "address_hex": "0x003F",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x44",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 68,
+            "hex": "0x44",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 64,
+            "symbol_index": 25,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 68,
+        "address_hex": "0x0044",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 71,
+        "address_hex": "0x0047",
+        "size": 4,
+        "bytes": "48 8b 45 d8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x28]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -40,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 75,
+        "address_hex": "0x004B",
+        "size": 3,
+        "bytes": "48 89 e1",
+        "mnemonic": "mov",
+        "op_str": "rcx, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 78,
+        "address_hex": "0x004E",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x53",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 83,
+            "hex": "0x53",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 79,
+            "symbol_index": 25,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 83,
+        "address_hex": "0x0053",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 86,
+        "address_hex": "0x0056",
+        "size": 3,
+        "bytes": "48 89 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 89,
+        "address_hex": "0x0059",
+        "size": 4,
+        "bytes": "48 89 45 e0",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x20], rax",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rax"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 93,
+        "address_hex": "0x005D",
+        "size": 7,
+        "bytes": "41 c7 02 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [r10], 0",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r10",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "r10"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 100,
+        "address_hex": "0x0064",
+        "size": 3,
+        "bytes": "4d 89 08",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [r8], r9",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r8",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "r8",
+          "r9"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 103,
+        "address_hex": "0x0067",
+        "size": 2,
+        "bytes": "89 11",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rcx], edx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx",
+          "edx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 105,
+        "address_hex": "0x0069",
+        "size": 3,
+        "bytes": "6b 09 07",
+        "mnemonic": "imul",
+        "op_str": "ecx, dword ptr [rcx], 7",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 7,
+            "hex": "0x7",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 108,
+        "address_hex": "0x006C",
+        "size": 3,
+        "bytes": "83 c1 03",
+        "mnemonic": "add",
+        "op_str": "ecx, 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 111,
+        "address_hex": "0x006F",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 113,
+        "address_hex": "0x0071",
+        "size": 2,
+        "bytes": "8b 00",
+        "mnemonic": "mov",
+        "op_str": "eax, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 115,
+        "address_hex": "0x0073",
+        "size": 3,
+        "bytes": "83 e0 01",
+        "mnemonic": "and",
+        "op_str": "eax, 1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 1,
+            "hex": "0x1",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags",
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 118,
+        "address_hex": "0x0076",
+        "size": 3,
+        "bytes": "83 f8 00",
+        "mnemonic": "cmp",
+        "op_str": "eax, 0",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 121,
+        "address_hex": "0x0079",
+        "size": 3,
+        "bytes": "0f 94 c0",
+        "mnemonic": "sete",
+        "op_str": "al",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 124,
+        "address_hex": "0x007C",
+        "size": 3,
+        "bytes": "88 45 ef",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rbp - 0x11], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -17,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 127,
+        "address_hex": "0x007F",
+        "size": 3,
+        "bytes": "8a 45 ef",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rbp - 0x11]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -17,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 130,
+        "address_hex": "0x0082",
+        "size": 2,
+        "bytes": "a8 01",
+        "mnemonic": "test",
+        "op_str": "al, 1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 1,
+            "hex": "0x1",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 132,
+        "address_hex": "0x0084",
+        "size": 6,
+        "bytes": "0f 85 05 00 00 00",
+        "mnemonic": "jne",
+        "op_str": "0x8f",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 143,
+            "hex": "0x8F",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 138,
+        "address_hex": "0x008A",
+        "size": 5,
+        "bytes": "e9 25 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0xb4",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 180,
+            "hex": "0xB4",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 143,
+        "address_hex": "0x008F",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 146,
+            "symbol_index": 13,
+            "symbol": "??_C@_0P@ONADOGLL@ACCESS?5GRANTED?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 150,
+        "address_hex": "0x0096",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 154,
+        "address_hex": "0x009A",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x9f",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 159,
+            "hex": "0x9F",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 155,
+            "symbol_index": 26,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 159,
+        "address_hex": "0x009F",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 163,
+        "address_hex": "0x00A3",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 167,
+        "address_hex": "0x00A7",
+        "size": 3,
+        "bytes": "6b 08 03",
+        "mnemonic": "imul",
+        "op_str": "ecx, dword ptr [rax], 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 170,
+        "address_hex": "0x00AA",
+        "size": 3,
+        "bytes": "83 f1 42",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x42",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 66,
+            "hex": "0x42",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 173,
+        "address_hex": "0x00AD",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 175,
+        "address_hex": "0x00AF",
+        "size": 5,
+        "bytes": "e9 27 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0xdb",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 219,
+            "hex": "0xDB",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 180,
+        "address_hex": "0x00B4",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 183,
+            "symbol_index": 16,
+            "symbol": "??_C@_0O@POJHGBNJ@ACCESS?5DENIED?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 187,
+        "address_hex": "0x00BB",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 191,
+        "address_hex": "0x00BF",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0xc4",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 196,
+            "hex": "0xC4",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 192,
+            "symbol_index": 26,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 196,
+        "address_hex": "0x00C4",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 200,
+        "address_hex": "0x00C8",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 204,
+        "address_hex": "0x00CC",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 206,
+        "address_hex": "0x00CE",
+        "size": 3,
+        "bytes": "83 c1 0d",
+        "mnemonic": "add",
+        "op_str": "ecx, 0xd",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 13,
+            "hex": "0xD",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 209,
+        "address_hex": "0x00D1",
+        "size": 3,
+        "bytes": "83 f1 17",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x17",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 23,
+            "hex": "0x17",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 212,
+        "address_hex": "0x00D4",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 214,
+        "address_hex": "0x00D6",
+        "size": 5,
+        "bytes": "e9 00 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0xdb",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 219,
+            "hex": "0xDB",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 219,
+        "address_hex": "0x00DB",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 223,
+        "address_hex": "0x00DF",
+        "size": 3,
+        "bytes": "83 38 64",
+        "mnemonic": "cmp",
+        "op_str": "dword ptr [rax], 0x64",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 100,
+            "hex": "0x64",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 226,
+        "address_hex": "0x00E2",
+        "size": 3,
+        "bytes": "0f 97 c0",
+        "mnemonic": "seta",
+        "op_str": "al",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 229,
+        "address_hex": "0x00E5",
+        "size": 3,
+        "bytes": "88 45 d7",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rbp - 0x29], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -41,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 232,
+        "address_hex": "0x00E8",
+        "size": 3,
+        "bytes": "8a 45 d7",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rbp - 0x29]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -41,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 235,
+        "address_hex": "0x00EB",
+        "size": 2,
+        "bytes": "a8 01",
+        "mnemonic": "test",
+        "op_str": "al, 1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 1,
+            "hex": "0x1",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 237,
+        "address_hex": "0x00ED",
+        "size": 6,
+        "bytes": "0f 85 05 00 00 00",
+        "mnemonic": "jne",
+        "op_str": "0xf8",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 248,
+            "hex": "0xF8",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 243,
+        "address_hex": "0x00F3",
+        "size": 5,
+        "bytes": "e9 10 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0x108",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 264,
+            "hex": "0x108",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 248,
+        "address_hex": "0x00F8",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 252,
+        "address_hex": "0x00FC",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 254,
+        "address_hex": "0x00FE",
+        "size": 3,
+        "bytes": "83 e9 11",
+        "mnemonic": "sub",
+        "op_str": "ecx, 0x11",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 17,
+            "hex": "0x11",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 257,
+        "address_hex": "0x0101",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 259,
+        "address_hex": "0x0103",
+        "size": 5,
+        "bytes": "e9 10 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0x118",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 280,
+            "hex": "0x118",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 264,
+        "address_hex": "0x0108",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 268,
+        "address_hex": "0x010C",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 270,
+        "address_hex": "0x010E",
+        "size": 3,
+        "bytes": "83 c1 05",
+        "mnemonic": "add",
+        "op_str": "ecx, 5",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 5,
+            "hex": "0x5",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 273,
+        "address_hex": "0x0111",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 275,
+        "address_hex": "0x0113",
+        "size": 5,
+        "bytes": "e9 00 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0x118",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 280,
+            "hex": "0x118",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 280,
+        "address_hex": "0x0118",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 284,
+        "address_hex": "0x011C",
+        "size": 2,
+        "bytes": "8b 10",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 286,
+        "address_hex": "0x011E",
+        "size": 6,
+        "bytes": "81 e2 ff 00 00 00",
+        "mnemonic": "and",
+        "op_str": "edx, 0xff",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 255,
+            "hex": "0xFF",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "edx"
+        ],
+        "regs_write": [
+          "rflags",
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 292,
+        "address_hex": "0x0124",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 296,
+        "address_hex": "0x0128",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 299,
+            "symbol_index": 19,
+            "symbol": "??_C@_0L@JCELACLN@result?$DN?$CFu?6?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 303,
+        "address_hex": "0x012F",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x134",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 308,
+            "hex": "0x134",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 304,
+            "symbol_index": 27,
+            "symbol": "printf",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 308,
+        "address_hex": "0x0134",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 312,
+        "address_hex": "0x0138",
+        "size": 2,
+        "bytes": "31 c0",
+        "mnemonic": "xor",
+        "op_str": "eax, eax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags",
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 314,
+        "address_hex": "0x013A",
+        "size": 3,
+        "bytes": "48 89 ec",
+        "mnemonic": "mov",
+        "op_str": "rsp, rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 317,
+        "address_hex": "0x013D",
+        "size": 1,
+        "bytes": "5d",
+        "mnemonic": "pop",
+        "op_str": "rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rsp",
+          "rbp"
+        ],
+        "groups": [
+          "mode64"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 318,
+        "address_hex": "0x013E",
+        "size": 1,
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "op_str": "",
+        "operands": [],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "ret",
+          "mode64"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 319,
+        "address_hex": "0x013F",
+        "size": 3,
+        "bytes": "8b 55 fc",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rbp - 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 322,
+        "address_hex": "0x0142",
+        "size": 4,
+        "bytes": "4c 8b 4d f0",
+        "mnemonic": "mov",
+        "op_str": "r9, qword ptr [rbp - 0x10]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -16,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "r9"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 326,
+        "address_hex": "0x0146",
+        "size": 5,
+        "bytes": "b8 10 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "eax, 0x10",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 16,
+            "hex": "0x10",
+            "size": 4
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 331,
+        "address_hex": "0x014B",
+        "size": 4,
+        "bytes": "48 89 45 c8",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x38], rax",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -56,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rax"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 335,
+        "address_hex": "0x014F",
+        "size": 4,
+        "bytes": "48 8b 45 c8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x38]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -56,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 339,
+        "address_hex": "0x0153",
+        "size": 3,
+        "bytes": "49 89 e2",
+        "mnemonic": "mov",
+        "op_str": "r10, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r10",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r10"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 342,
+        "address_hex": "0x0156",
+        "size": 4,
+        "bytes": "48 8b 45 c8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x38]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -56,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 346,
+        "address_hex": "0x015A",
+        "size": 3,
+        "bytes": "49 89 e0",
+        "mnemonic": "mov",
+        "op_str": "r8, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r8",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r8"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 349,
+        "address_hex": "0x015D",
+        "size": 4,
+        "bytes": "48 8b 45 c8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x38]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -56,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 353,
+        "address_hex": "0x0161",
+        "size": 3,
+        "bytes": "48 89 e1",
+        "mnemonic": "mov",
+        "op_str": "rcx, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 356,
+        "address_hex": "0x0164",
+        "size": 3,
+        "bytes": "48 89 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 359,
+        "address_hex": "0x0167",
+        "size": 7,
+        "bytes": "41 c7 02 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [r10], 0",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r10",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "r10"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 366,
+        "address_hex": "0x016E",
+        "size": 3,
+        "bytes": "4d 89 08",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [r8], r9",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r8",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "r8",
+          "r9"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 369,
+        "address_hex": "0x0171",
+        "size": 2,
+        "bytes": "89 11",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rcx], edx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx",
+          "edx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 371,
+        "address_hex": "0x0173",
+        "size": 2,
+        "bytes": "8b 09",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rcx]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 373,
+        "address_hex": "0x0175",
+        "size": 3,
+        "bytes": "6b c9 07",
+        "mnemonic": "imul",
+        "op_str": "ecx, ecx, 7",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 7,
+            "hex": "0x7",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 376,
+        "address_hex": "0x0178",
+        "size": 3,
+        "bytes": "83 c1 03",
+        "mnemonic": "add",
+        "op_str": "ecx, 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 379,
+        "address_hex": "0x017B",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 381,
+        "address_hex": "0x017D",
+        "size": 5,
+        "bytes": "e9 8f fe ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0x11",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 17,
+            "hex": "0x11",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 386,
+        "address_hex": "0x0182",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 389,
+            "symbol_index": 13,
+            "symbol": "??_C@_0P@ONADOGLL@ACCESS?5GRANTED?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 393,
+        "address_hex": "0x0189",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 397,
+        "address_hex": "0x018D",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x192",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 402,
+            "hex": "0x192",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 398,
+            "symbol_index": 26,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 402,
+        "address_hex": "0x0192",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 406,
+        "address_hex": "0x0196",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 410,
+        "address_hex": "0x019A",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 412,
+        "address_hex": "0x019C",
+        "size": 3,
+        "bytes": "6b c9 03",
+        "mnemonic": "imul",
+        "op_str": "ecx, ecx, 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 415,
+        "address_hex": "0x019F",
+        "size": 3,
+        "bytes": "83 f1 42",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x42",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 66,
+            "hex": "0x42",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 418,
+        "address_hex": "0x01A2",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 420,
+        "address_hex": "0x01A4",
+        "size": 5,
+        "bytes": "e9 e6 fe ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0x8f",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 143,
+            "hex": "0x8F",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 425,
+        "address_hex": "0x01A9",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 428,
+            "symbol_index": 16,
+            "symbol": "??_C@_0O@POJHGBNJ@ACCESS?5DENIED?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 432,
+        "address_hex": "0x01B0",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 436,
+        "address_hex": "0x01B4",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x1b9",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 441,
+            "hex": "0x1B9",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 437,
+            "symbol_index": 26,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 441,
+        "address_hex": "0x01B9",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 445,
+        "address_hex": "0x01BD",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 449,
+        "address_hex": "0x01C1",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 451,
+        "address_hex": "0x01C3",
+        "size": 3,
+        "bytes": "83 c1 0d",
+        "mnemonic": "add",
+        "op_str": "ecx, 0xd",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 13,
+            "hex": "0xD",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 454,
+        "address_hex": "0x01C6",
+        "size": 3,
+        "bytes": "83 f1 17",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x17",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 23,
+            "hex": "0x17",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 457,
+        "address_hex": "0x01C9",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 459,
+        "address_hex": "0x01CB",
+        "size": 5,
+        "bytes": "e9 e4 fe ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0xb4",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 180,
+            "hex": "0xB4",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 464,
+        "address_hex": "0x01D0",
+        "size": 5,
+        "bytes": "e9 06 ff ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0xdb",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 219,
+            "hex": "0xDB",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 469,
+        "address_hex": "0x01D5",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 473,
+        "address_hex": "0x01D9",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 475,
+        "address_hex": "0x01DB",
+        "size": 3,
+        "bytes": "83 e9 11",
+        "mnemonic": "sub",
+        "op_str": "ecx, 0x11",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 17,
+            "hex": "0x11",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 478,
+        "address_hex": "0x01DE",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 480,
+        "address_hex": "0x01E0",
+        "size": 5,
+        "bytes": "e9 13 ff ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0xf8",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 248,
+            "hex": "0xF8",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 485,
+        "address_hex": "0x01E5",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 489,
+        "address_hex": "0x01E9",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 491,
+        "address_hex": "0x01EB",
+        "size": 3,
+        "bytes": "83 c1 05",
+        "mnemonic": "add",
+        "op_str": "ecx, 5",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 5,
+            "hex": "0x5",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 494,
+        "address_hex": "0x01EE",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 496,
+        "address_hex": "0x01F0",
+        "size": 5,
+        "bytes": "e9 13 ff ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0x108",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 264,
+            "hex": "0x108",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 501,
+        "address_hex": "0x01F5",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 505,
+        "address_hex": "0x01F9",
+        "size": 2,
+        "bytes": "8b 10",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 507,
+        "address_hex": "0x01FB",
+        "size": 6,
+        "bytes": "81 e2 ff 00 00 00",
+        "mnemonic": "and",
+        "op_str": "edx, 0xff",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 255,
+            "hex": "0xFF",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "edx"
+        ],
+        "regs_write": [
+          "rflags",
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 513,
+        "address_hex": "0x0201",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 517,
+        "address_hex": "0x0205",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 520,
+            "symbol_index": 19,
+            "symbol": "??_C@_0L@JCELACLN@result?$DN?$CFu?6?$AA@",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 524,
+        "address_hex": "0x020C",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x211",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 529,
+            "hex": "0x211",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 525,
+            "symbol_index": 27,
+            "symbol": "printf",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 529,
+        "address_hex": "0x0211",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 533,
+        "address_hex": "0x0215",
+        "size": 5,
+        "bytes": "e9 fe fe ff ff",
+        "mnemonic": "jmp",
+        "op_str": "0x118",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 280,
+            "hex": "0x118",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      }
+    ]
+  },
+  "machine_cfg": {
+    "entry_node_id": 0,
+    "nodes": [
+      {
+        "id": 0,
+        "start": 0,
+        "end": 17,
+        "instruction_addresses": [
+          0,
+          1,
+          5,
+          10,
+          14
+        ],
+        "order": 0
+      },
+      {
+        "id": 1,
+        "start": 17,
+        "end": 138,
+        "instruction_addresses": [
+          17,
+          20,
+          24,
+          29,
+          33,
+          38,
+          41,
+          45,
+          48,
+          53,
+          56,
+          60,
+          63,
+          68,
+          71,
+          75,
+          78,
+          83,
+          86,
+          89,
+          93,
+          100,
+          103,
+          105,
+          108,
+          111,
+          113,
+          115,
+          118,
+          121,
+          124,
+          127,
+          130,
+          132
+        ],
+        "order": 1
+      },
+      {
+        "id": 2,
+        "start": 138,
+        "end": 143,
+        "instruction_addresses": [
+          138
+        ],
+        "order": 2
+      },
+      {
+        "id": 3,
+        "start": 143,
+        "end": 180,
+        "instruction_addresses": [
+          143,
+          150,
+          154,
+          159,
+          163,
+          167,
+          170,
+          173,
+          175
+        ],
+        "order": 3
+      },
+      {
+        "id": 4,
+        "start": 180,
+        "end": 219,
+        "instruction_addresses": [
+          180,
+          187,
+          191,
+          196,
+          200,
+          204,
+          206,
+          209,
+          212,
+          214
+        ],
+        "order": 4
+      },
+      {
+        "id": 5,
+        "start": 219,
+        "end": 243,
+        "instruction_addresses": [
+          219,
+          223,
+          226,
+          229,
+          232,
+          235,
+          237
+        ],
+        "order": 5
+      },
+      {
+        "id": 6,
+        "start": 243,
+        "end": 248,
+        "instruction_addresses": [
+          243
+        ],
+        "order": 6
+      },
+      {
+        "id": 7,
+        "start": 248,
+        "end": 264,
+        "instruction_addresses": [
+          248,
+          252,
+          254,
+          257,
+          259
+        ],
+        "order": 7
+      },
+      {
+        "id": 8,
+        "start": 264,
+        "end": 280,
+        "instruction_addresses": [
+          264,
+          268,
+          270,
+          273,
+          275
+        ],
+        "order": 8
+      },
+      {
+        "id": 9,
+        "start": 280,
+        "end": 319,
+        "instruction_addresses": [
+          280,
+          284,
+          286,
+          292,
+          296,
+          303,
+          308,
+          312,
+          314,
+          317,
+          318
+        ],
+        "order": 9
+      },
+      {
+        "id": 10,
+        "start": 319,
+        "end": 386,
+        "instruction_addresses": [
+          319,
+          322,
+          326,
+          331,
+          335,
+          339,
+          342,
+          346,
+          349,
+          353,
+          356,
+          359,
+          366,
+          369,
+          371,
+          373,
+          376,
+          379,
+          381
+        ],
+        "order": 10
+      },
+      {
+        "id": 11,
+        "start": 386,
+        "end": 425,
+        "instruction_addresses": [
+          386,
+          393,
+          397,
+          402,
+          406,
+          410,
+          412,
+          415,
+          418,
+          420
+        ],
+        "order": 11
+      },
+      {
+        "id": 12,
+        "start": 425,
+        "end": 464,
+        "instruction_addresses": [
+          425,
+          432,
+          436,
+          441,
+          445,
+          449,
+          451,
+          454,
+          457,
+          459
+        ],
+        "order": 12
+      },
+      {
+        "id": 13,
+        "start": 464,
+        "end": 469,
+        "instruction_addresses": [
+          464
+        ],
+        "order": 13
+      },
+      {
+        "id": 14,
+        "start": 469,
+        "end": 485,
+        "instruction_addresses": [
+          469,
+          473,
+          475,
+          478,
+          480
+        ],
+        "order": 14
+      },
+      {
+        "id": 15,
+        "start": 485,
+        "end": 501,
+        "instruction_addresses": [
+          485,
+          489,
+          491,
+          494,
+          496
+        ],
+        "order": 15
+      },
+      {
+        "id": 16,
+        "start": 501,
+        "end": 538,
+        "instruction_addresses": [
+          501,
+          505,
+          507,
+          513,
+          517,
+          524,
+          529,
+          533
+        ],
+        "order": 16
+      }
+    ],
+    "edges": [
+      {
+        "source": 0,
+        "target": 1,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 1,
+        "target": 3,
+        "kind": "branch"
+      },
+      {
+        "source": 1,
+        "target": 2,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 2,
+        "target": 4,
+        "kind": "jump"
+      },
+      {
+        "source": 3,
+        "target": 5,
+        "kind": "jump"
+      },
+      {
+        "source": 4,
+        "target": 5,
+        "kind": "jump"
+      },
+      {
+        "source": 5,
+        "target": 7,
+        "kind": "branch"
+      },
+      {
+        "source": 5,
+        "target": 6,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 6,
+        "target": 8,
+        "kind": "jump"
+      },
+      {
+        "source": 7,
+        "target": 9,
+        "kind": "jump"
+      },
+      {
+        "source": 8,
+        "target": 9,
+        "kind": "jump"
+      },
+      {
+        "source": 10,
+        "target": 1,
+        "kind": "jump"
+      },
+      {
+        "source": 11,
+        "target": 3,
+        "kind": "jump"
+      },
+      {
+        "source": 12,
+        "target": 4,
+        "kind": "jump"
+      },
+      {
+        "source": 13,
+        "target": 5,
+        "kind": "jump"
+      },
+      {
+        "source": 14,
+        "target": 7,
+        "kind": "jump"
+      },
+      {
+        "source": 15,
+        "target": 8,
+        "kind": "jump"
+      },
+      {
+        "source": 16,
+        "target": 9,
+        "kind": "jump"
+      }
+    ]
+  },
+  "llvm_cfg": {
+    "entry_node_id": 0,
+    "nodes": [
+      {
+        "id": 0,
+        "label": "entry",
+        "instructions": [
+          "  %3 = icmp eq i32 1, 1",
+          "  br i1 %3, label %4, label %64"
+        ],
+        "order": 0
+      },
+      {
+        "id": 1,
+        "label": "4",
+        "instructions": [
+          "  %5 = alloca i32, align 4",
+          "  %6 = alloca ptr, align 8",
+          "  %7 = alloca i32, align 4",
+          "  %8 = alloca i32, align 4",
+          "  store i32 0, ptr %5, align 4",
+          "  store ptr %1, ptr %6, align 8",
+          "  store i32 %0, ptr %7, align 4",
+          "  %9 = load i32, ptr %7, align 4",
+          "  %10 = mul i32 %9, 7",
+          "  %11 = add i32 %10, 3",
+          "  store i32 %11, ptr %8, align 4",
+          "  %12 = load i32, ptr %8, align 4",
+          "  %13 = and i32 %12, 1",
+          "  %14 = icmp eq i32 %13, 0",
+          "  %15 = icmp eq i32 1, 1",
+          "  br i1 %15, label %16, label %64"
+        ],
+        "order": 1
+      },
+      {
+        "id": 2,
+        "label": "16",
+        "instructions": [
+          "  br i1 %14, label %17, label %26"
+        ],
+        "order": 2
+      },
+      {
+        "id": 3,
+        "label": "17",
+        "instructions": [
+          "  %18 = icmp eq i32 1, 1",
+          "  br i1 %18, label %19, label %93"
+        ],
+        "order": 3
+      },
+      {
+        "id": 4,
+        "label": "19",
+        "instructions": [
+          "  %20 = call i32 @puts(ptr noundef @\"??_C@_0P@ONADOGLL@ACCESS?5GRANTED?$AA@\")",
+          "  %21 = load i32, ptr %8, align 4",
+          "  %22 = mul i32 %21, 3",
+          "  %23 = xor i32 %22, 66",
+          "  store i32 %23, ptr %8, align 4",
+          "  %24 = icmp eq i32 1, 1",
+          "  br i1 %24, label %25, label %93"
+        ],
+        "order": 4
+      },
+      {
+        "id": 5,
+        "label": "25",
+        "instructions": [
+          "  br label %35"
+        ],
+        "order": 5
+      },
+      {
+        "id": 6,
+        "label": "26",
+        "instructions": [
+          "  %27 = icmp eq i32 1, 1",
+          "  br i1 %27, label %28, label %107"
+        ],
+        "order": 6
+      },
+      {
+        "id": 7,
+        "label": "28",
+        "instructions": [
+          "  %29 = call i32 @puts(ptr noundef @\"??_C@_0O@POJHGBNJ@ACCESS?5DENIED?$AA@\")",
+          "  %30 = load i32, ptr %8, align 4",
+          "  %31 = add i32 %30, 13",
+          "  %32 = xor i32 %31, 23",
+          "  store i32 %32, ptr %8, align 4",
+          "  %33 = icmp eq i32 1, 1",
+          "  br i1 %33, label %34, label %28"
+        ],
+        "order": 7
+      },
+      {
+        "id": 8,
+        "label": "34",
+        "instructions": [
+          "  br label %35"
+        ],
+        "order": 8
+      },
+      {
+        "id": 9,
+        "label": "35",
+        "instructions": [
+          "  %36 = icmp eq i32 1, 1",
+          "  br i1 %36, label %37, label %120"
+        ],
+        "order": 9
+      },
+      {
+        "id": 10,
+        "label": "37",
+        "instructions": [
+          "  %38 = load i32, ptr %8, align 4",
+          "  %39 = icmp ugt i32 %38, 100",
+          "  %40 = icmp eq i32 1, 1",
+          "  br i1 %40, label %41, label %120"
+        ],
+        "order": 10
+      },
+      {
+        "id": 11,
+        "label": "41",
+        "instructions": [
+          "  br i1 %39, label %42, label %49"
+        ],
+        "order": 11
+      },
+      {
+        "id": 12,
+        "label": "42",
+        "instructions": [
+          "  %43 = icmp eq i32 1, 1",
+          "  br i1 %43, label %44, label %123"
+        ],
+        "order": 12
+      },
+      {
+        "id": 13,
+        "label": "44",
+        "instructions": [
+          "  %45 = load i32, ptr %8, align 4",
+          "  %46 = sub i32 %45, 17",
+          "  store i32 %46, ptr %8, align 4",
+          "  %47 = icmp eq i32 1, 1",
+          "  br i1 %47, label %48, label %44"
+        ],
+        "order": 13
+      },
+      {
+        "id": 14,
+        "label": "48",
+        "instructions": [
+          "  br label %56"
+        ],
+        "order": 14
+      },
+      {
+        "id": 15,
+        "label": "49",
+        "instructions": [
+          "  %50 = icmp eq i32 1, 1",
+          "  br i1 %50, label %51, label %138"
+        ],
+        "order": 15
+      },
+      {
+        "id": 16,
+        "label": "51",
+        "instructions": [
+          "  %52 = load i32, ptr %8, align 4",
+          "  %53 = add i32 %52, 5",
+          "  store i32 %53, ptr %8, align 4",
+          "  %54 = icmp eq i32 1, 1",
+          "  br i1 %54, label %55, label %138"
+        ],
+        "order": 16
+      },
+      {
+        "id": 17,
+        "label": "55",
+        "instructions": [
+          "  br label %56"
+        ],
+        "order": 17
+      },
+      {
+        "id": 18,
+        "label": "56",
+        "instructions": [
+          "  %57 = icmp eq i32 1, 1",
+          "  br i1 %57, label %58, label %145"
+        ],
+        "order": 18
+      },
+      {
+        "id": 19,
+        "label": "58",
+        "instructions": [
+          "  %59 = load i32, ptr %8, align 4",
+          "  %60 = and i32 %59, 255",
+          "  %61 = call i32 (ptr, ...) @printf(ptr noundef @\"??_C@_0L@JCELACLN@result?$DN?$CFu?6?$AA@\", i32 noundef %60)",
+          "  %62 = icmp eq i32 1, 1",
+          "  br i1 %62, label %63, label %145"
+        ],
+        "order": 19
+      },
+      {
+        "id": 20,
+        "label": "63",
+        "instructions": [
+          "  ret i32 0"
+        ],
+        "order": 20
+      },
+      {
+        "id": 21,
+        "label": "64",
+        "instructions": [
+          "  %65 = alloca i32, align 4",
+          "  %66 = alloca ptr, align 8",
+          "  %67 = alloca i32, align 4",
+          "  %68 = alloca i32, align 4",
+          "  store i32 0, i32* %65, align 4",
+          "  store ptr %1, ptr* %66, align 8",
+          "  store i32 %0, i32* %67, align 4",
+          "  %69 = load i32, i32* %67, align 4",
+          "  %70 = sub i32 %69, 7",
+          "  %71 = mul i32 %70, 7",
+          "  %72 = sub i32 %69, 7",
+          "  %73 = mul i32 %72, 7",
+          "  %74 = sub i32 %69, 7",
+          "  %75 = mul i32 %74, 7",
+          "  %76 = sub i32 %69, 7",
+          "  %77 = mul i32 %76, 7",
+          "  %78 = mul i32 %69, 7",
+          "  %79 = sub i32 0, %78",
+          "  %80 = add i32 %79, 3",
+          "  %81 = sub i32 %78, 3",
+          "  %82 = mul i32 %81, 3",
+          "  %83 = shl i32 %78, 3",
+          "  %84 = add i32 %78, 3",
+          "  store i32 %84, i32* %68, align 4",
+          "  %85 = load i32, i32* %68, align 4",
+          "  %86 = sub i32 0, %85",
+          "  %87 = add i32 %86, 1",
+          "  %88 = sub i32 0, %85",
+          "  %89 = add i32 %88, 1",
+          "  %90 = shl i32 %85, 1",
+          "  %91 = and i32 %85, 1",
+          "  %92 = icmp eq i32 %91, 0",
+          "  br label %4"
+        ],
+        "order": 21
+      },
+      {
+        "id": 22,
+        "label": "93",
+        "instructions": [
+          "  %94 = call i32 @puts(ptr noundef @\"??_C@_0P@ONADOGLL@ACCESS?5GRANTED?$AA@\")",
+          "  %95 = load i32, ptr %8, align 4",
+          "  %96 = shl i32 %95, 3",
+          "  %97 = sub i32 %95, 3",
+          "  %98 = mul i32 %97, 3",
+          "  %99 = sub i32 0, %95",
+          "  %100 = add i32 %99, 3",
+          "  %101 = shl i32 %95, 3",
+          "  %102 = shl i32 %95, 3",
+          "  %103 = mul i32 %95, 3",
+          "  %104 = sub i32 0, %103",
+          "  %105 = add i32 %104, 66",
+          "  %106 = xor i32 %103, 66",
+          "  store i32 %106, ptr %8, align 4",
+          "  br label %19"
+        ],
+        "order": 22
+      },
+      {
+        "id": 23,
+        "label": "107",
+        "instructions": [
+          "  %108 = call i32 @puts(ptr noundef @\"??_C@_0O@POJHGBNJ@ACCESS?5DENIED?$AA@\")",
+          "  %109 = load i32, ptr %8, align 4",
+          "  %110 = sub i32 %109, 13",
+          "  %111 = mul i32 %110, 13",
+          "  %112 = sub i32 %109, 13",
+          "  %113 = mul i32 %112, 13",
+          "  %114 = sub i32 %109, 13",
+          "  %115 = mul i32 %114, 13",
+          "  %116 = add i32 %109, 13",
+          "  %117 = sub i32 0, %116",
+          "  %118 = add i32 %117, 23",
+          "  %119 = xor i32 %116, 23",
+          "  store i32 %119, ptr %8, align 4",
+          "  br label %28"
+        ],
+        "order": 23
+      },
+      {
+        "id": 24,
+        "label": "120",
+        "instructions": [
+          "  %121 = load i32, ptr %8, align 4",
+          "  %122 = icmp ugt i32 %121, 100",
+          "  br label %37"
+        ],
+        "order": 24
+      },
+      {
+        "id": 25,
+        "label": "123",
+        "instructions": [
+          "  %124 = load i32, ptr %8, align 4",
+          "  %125 = shl i32 %124, 17",
+          "  %126 = sub i32 0, %124",
+          "  %127 = add i32 %126, 17",
+          "  %128 = sub i32 %124, 17",
+          "  %129 = mul i32 %128, 17",
+          "  %130 = sub i32 %124, 17",
+          "  %131 = mul i32 %130, 17",
+          "  %132 = sub i32 0, %124",
+          "  %133 = add i32 %132, 17",
+          "  %134 = shl i32 %124, 17",
+          "  %135 = sub i32 0, %124",
+          "  %136 = add i32 %135, 17",
+          "  %137 = sub i32 %124, 17",
+          "  store i32 %137, ptr %8, align 4",
+          "  br label %44"
+        ],
+        "order": 25
+      },
+      {
+        "id": 26,
+        "label": "138",
+        "instructions": [
+          "  %139 = load i32, ptr %8, align 4",
+          "  %140 = sub i32 0, %139",
+          "  %141 = add i32 %140, 5",
+          "  %142 = sub i32 %139, 5",
+          "  %143 = mul i32 %142, 5",
+          "  %144 = add i32 %139, 5",
+          "  store i32 %144, ptr %8, align 4",
+          "  br label %51"
+        ],
+        "order": 26
+      },
+      {
+        "id": 27,
+        "label": "145",
+        "instructions": [
+          "  %146 = load i32, ptr %8, align 4",
+          "  %147 = sub i32 0, %146",
+          "  %148 = add i32 %147, 255",
+          "  %149 = shl i32 %146, 255",
+          "  %150 = sub i32 0, %146",
+          "  %151 = add i32 %150, 255",
+          "  %152 = shl i32 %146, 255",
+          "  %153 = sub i32 0, %146",
+          "  %154 = add i32 %153, 255",
+          "  %155 = shl i32 %146, 255",
+          "  %156 = sub i32 0, %146",
+          "  %157 = add i32 %156, 255",
+          "  %158 = shl i32 %146, 255",
+          "  %159 = and i32 %146, 255",
+          "  %160 = call i32 (ptr, ...) @printf(ptr noundef @\"??_C@_0L@JCELACLN@result?$DN?$CFu?6?$AA@\", i32 noundef %159)",
+          "  br label %58"
+        ],
+        "order": 27
+      }
+    ],
+    "edges": [
+      {
+        "source": 0,
+        "target": 1,
+        "kind": "true"
+      },
+      {
+        "source": 0,
+        "target": 21,
+        "kind": "false"
+      },
+      {
+        "source": 1,
+        "target": 2,
+        "kind": "true"
+      },
+      {
+        "source": 1,
+        "target": 21,
+        "kind": "false"
+      },
+      {
+        "source": 2,
+        "target": 3,
+        "kind": "true"
+      },
+      {
+        "source": 2,
+        "target": 6,
+        "kind": "false"
+      },
+      {
+        "source": 3,
+        "target": 4,
+        "kind": "true"
+      },
+      {
+        "source": 3,
+        "target": 22,
+        "kind": "false"
+      },
+      {
+        "source": 4,
+        "target": 5,
+        "kind": "true"
+      },
+      {
+        "source": 4,
+        "target": 22,
+        "kind": "false"
+      },
+      {
+        "source": 5,
+        "target": 9,
+        "kind": "branch"
+      },
+      {
+        "source": 6,
+        "target": 7,
+        "kind": "true"
+      },
+      {
+        "source": 6,
+        "target": 23,
+        "kind": "false"
+      },
+      {
+        "source": 7,
+        "target": 8,
+        "kind": "true"
+      },
+      {
+        "source": 7,
+        "target": 7,
+        "kind": "false"
+      },
+      {
+        "source": 8,
+        "target": 9,
+        "kind": "branch"
+      },
+      {
+        "source": 9,
+        "target": 10,
+        "kind": "true"
+      },
+      {
+        "source": 9,
+        "target": 24,
+        "kind": "false"
+      },
+      {
+        "source": 10,
+        "target": 11,
+        "kind": "true"
+      },
+      {
+        "source": 10,
+        "target": 24,
+        "kind": "false"
+      },
+      {
+        "source": 11,
+        "target": 12,
+        "kind": "true"
+      },
+      {
+        "source": 11,
+        "target": 15,
+        "kind": "false"
+      },
+      {
+        "source": 12,
+        "target": 13,
+        "kind": "true"
+      },
+      {
+        "source": 12,
+        "target": 25,
+        "kind": "false"
+      },
+      {
+        "source": 13,
+        "target": 14,
+        "kind": "true"
+      },
+      {
+        "source": 13,
+        "target": 13,
+        "kind": "false"
+      },
+      {
+        "source": 14,
+        "target": 18,
+        "kind": "branch"
+      },
+      {
+        "source": 15,
+        "target": 16,
+        "kind": "true"
+      },
+      {
+        "source": 15,
+        "target": 26,
+        "kind": "false"
+      },
+      {
+        "source": 16,
+        "target": 17,
+        "kind": "true"
+      },
+      {
+        "source": 16,
+        "target": 26,
+        "kind": "false"
+      },
+      {
+        "source": 17,
+        "target": 18,
+        "kind": "branch"
+      },
+      {
+        "source": 18,
+        "target": 19,
+        "kind": "true"
+      },
+      {
+        "source": 18,
+        "target": 27,
+        "kind": "false"
+      },
+      {
+        "source": 19,
+        "target": 20,
+        "kind": "true"
+      },
+      {
+        "source": 19,
+        "target": 27,
+        "kind": "false"
+      },
+      {
+        "source": 21,
+        "target": 1,
+        "kind": "branch"
+      },
+      {
+        "source": 22,
+        "target": 4,
+        "kind": "branch"
+      },
+      {
+        "source": 23,
+        "target": 7,
+        "kind": "branch"
+      },
+      {
+        "source": 24,
+        "target": 10,
+        "kind": "branch"
+      },
+      {
+        "source": 25,
+        "target": 13,
+        "kind": "branch"
+      },
+      {
+        "source": 26,
+        "target": 16,
+        "kind": "branch"
+      },
+      {
+        "source": 27,
+        "target": 19,
+        "kind": "branch"
+      }
+    ]
+  }
+}

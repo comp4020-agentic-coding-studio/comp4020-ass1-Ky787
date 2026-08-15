@@ -1,0 +1,7489 @@
+{
+  "schema_version": 1,
+  "id": "o0-bcf0-fla0-sub0-str1-split0",
+  "source_variant_id": "O0_bcf0_fla0_sub0_str1_split0",
+  "config": {
+    "optimization": "O0",
+    "bcf": false,
+    "flattening": false,
+    "substitution": false,
+    "string_encryption": true,
+    "split_level": 0
+  },
+  "metrics": {
+    "instruction_count": 199,
+    "main_byte_size": 860,
+    "machine_basic_block_count": 9,
+    "machine_cfg_edge_count": 11,
+    "llvm_basic_block_count": 9,
+    "llvm_cfg_edge_count": 11
+  },
+  "watched_plaintext_strings": {
+    "ACCESS GRANTED": false,
+    "ACCESS DENIED": false,
+    "result=%u": false
+  },
+  "disassembly": {
+    "instructions": [
+      {
+        "address": 0,
+        "address_hex": "0x0000",
+        "size": 1,
+        "bytes": "55",
+        "mnemonic": "push",
+        "op_str": "rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rbp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "mode64"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 1,
+        "address_hex": "0x0001",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 5,
+        "address_hex": "0x0005",
+        "size": 5,
+        "bytes": "48 8d 6c 24 20",
+        "mnemonic": "lea",
+        "op_str": "rbp, [rsp + 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rsp",
+            "index": null,
+            "scale": 1,
+            "disp": 32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rbp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 10,
+        "address_hex": "0x000A",
+        "size": 4,
+        "bytes": "48 89 55 f0",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x10], rdx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -16,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rdx",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rdx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 14,
+        "address_hex": "0x000E",
+        "size": 3,
+        "bytes": "89 4d fc",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rbp - 4], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 17,
+        "address_hex": "0x0011",
+        "size": 7,
+        "bytes": "83 3d ff ff ff ff 00",
+        "mnemonic": "cmp",
+        "op_str": "dword ptr [rip - 1], 0",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": -1,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 19,
+            "symbol_index": 4,
+            "symbol": ".bss",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 24,
+        "address_hex": "0x0018",
+        "size": 6,
+        "bytes": "0f 85 30 02 00 00",
+        "mnemonic": "jne",
+        "op_str": "0x24e",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 590,
+            "hex": "0x24E",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 30,
+        "address_hex": "0x001E",
+        "size": 6,
+        "bytes": "8a 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 32,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 36,
+        "address_hex": "0x0024",
+        "size": 2,
+        "bytes": "34 74",
+        "mnemonic": "xor",
+        "op_str": "al, 0x74",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 116,
+            "hex": "0x74",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 38,
+        "address_hex": "0x0026",
+        "size": 6,
+        "bytes": "88 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 40,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 44,
+        "address_hex": "0x002C",
+        "size": 6,
+        "bytes": "8a 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 1]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 46,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 50,
+        "address_hex": "0x0032",
+        "size": 2,
+        "bytes": "34 6b",
+        "mnemonic": "xor",
+        "op_str": "al, 0x6b",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 107,
+            "hex": "0x6B",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 52,
+        "address_hex": "0x0034",
+        "size": 6,
+        "bytes": "88 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 1], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 54,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 58,
+        "address_hex": "0x003A",
+        "size": 6,
+        "bytes": "8a 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 2]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 60,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 64,
+        "address_hex": "0x0040",
+        "size": 2,
+        "bytes": "34 a4",
+        "mnemonic": "xor",
+        "op_str": "al, 0xa4",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 164,
+            "hex": "0xA4",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 66,
+        "address_hex": "0x0042",
+        "size": 6,
+        "bytes": "88 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 2], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 68,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 72,
+        "address_hex": "0x0048",
+        "size": 6,
+        "bytes": "8a 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 3]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 74,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 78,
+        "address_hex": "0x004E",
+        "size": 2,
+        "bytes": "34 b3",
+        "mnemonic": "xor",
+        "op_str": "al, 0xb3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 179,
+            "hex": "0xB3",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 80,
+        "address_hex": "0x0050",
+        "size": 6,
+        "bytes": "88 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 3], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 82,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 86,
+        "address_hex": "0x0056",
+        "size": 6,
+        "bytes": "8a 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 88,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 92,
+        "address_hex": "0x005C",
+        "size": 2,
+        "bytes": "34 2e",
+        "mnemonic": "xor",
+        "op_str": "al, 0x2e",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 46,
+            "hex": "0x2E",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 94,
+        "address_hex": "0x005E",
+        "size": 6,
+        "bytes": "88 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 4], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 96,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 100,
+        "address_hex": "0x0064",
+        "size": 6,
+        "bytes": "8a 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 5]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 102,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 106,
+        "address_hex": "0x006A",
+        "size": 2,
+        "bytes": "34 f7",
+        "mnemonic": "xor",
+        "op_str": "al, 0xf7",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 247,
+            "hex": "0xF7",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 108,
+        "address_hex": "0x006C",
+        "size": 6,
+        "bytes": "88 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 5], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 110,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 114,
+        "address_hex": "0x0072",
+        "size": 6,
+        "bytes": "8a 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 6]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 116,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 120,
+        "address_hex": "0x0078",
+        "size": 2,
+        "bytes": "34 99",
+        "mnemonic": "xor",
+        "op_str": "al, 0x99",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 153,
+            "hex": "0x99",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 122,
+        "address_hex": "0x007A",
+        "size": 6,
+        "bytes": "88 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 6], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 124,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 128,
+        "address_hex": "0x0080",
+        "size": 6,
+        "bytes": "8a 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 7]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 130,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 134,
+        "address_hex": "0x0086",
+        "size": 2,
+        "bytes": "34 fb",
+        "mnemonic": "xor",
+        "op_str": "al, 0xfb",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 251,
+            "hex": "0xFB",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 136,
+        "address_hex": "0x0088",
+        "size": 6,
+        "bytes": "88 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 7], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 138,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 142,
+        "address_hex": "0x008E",
+        "size": 6,
+        "bytes": "8a 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 8]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 144,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 148,
+        "address_hex": "0x0094",
+        "size": 2,
+        "bytes": "34 29",
+        "mnemonic": "xor",
+        "op_str": "al, 0x29",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 41,
+            "hex": "0x29",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 150,
+        "address_hex": "0x0096",
+        "size": 6,
+        "bytes": "88 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 8], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 152,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 156,
+        "address_hex": "0x009C",
+        "size": 6,
+        "bytes": "8a 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 9]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 158,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 162,
+        "address_hex": "0x00A2",
+        "size": 2,
+        "bytes": "34 7a",
+        "mnemonic": "xor",
+        "op_str": "al, 0x7a",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 122,
+            "hex": "0x7A",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 164,
+        "address_hex": "0x00A4",
+        "size": 6,
+        "bytes": "88 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 9], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 166,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 170,
+        "address_hex": "0x00AA",
+        "size": 6,
+        "bytes": "8a 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xa]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 172,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 176,
+        "address_hex": "0x00B0",
+        "size": 2,
+        "bytes": "34 b4",
+        "mnemonic": "xor",
+        "op_str": "al, 0xb4",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 180,
+            "hex": "0xB4",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 178,
+        "address_hex": "0x00B2",
+        "size": 6,
+        "bytes": "88 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xa], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 180,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 184,
+        "address_hex": "0x00B8",
+        "size": 6,
+        "bytes": "8a 05 0b 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xb]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 11,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 186,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 190,
+        "address_hex": "0x00BE",
+        "size": 2,
+        "bytes": "34 ca",
+        "mnemonic": "xor",
+        "op_str": "al, 0xca",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 202,
+            "hex": "0xCA",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 192,
+        "address_hex": "0x00C0",
+        "size": 6,
+        "bytes": "88 05 0b 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xb], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 11,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 194,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 198,
+        "address_hex": "0x00C6",
+        "size": 6,
+        "bytes": "8a 05 0c 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xc]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 12,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 200,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 204,
+        "address_hex": "0x00CC",
+        "size": 2,
+        "bytes": "34 66",
+        "mnemonic": "xor",
+        "op_str": "al, 0x66",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 102,
+            "hex": "0x66",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 206,
+        "address_hex": "0x00CE",
+        "size": 6,
+        "bytes": "88 05 0c 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xc], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 12,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 208,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 212,
+        "address_hex": "0x00D4",
+        "size": 6,
+        "bytes": "8a 05 0d 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xd]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 13,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 214,
+            "symbol_index": 16,
+            "symbol": "EncryptedString.1",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 218,
+        "address_hex": "0x00DA",
+        "size": 2,
+        "bytes": "34 14",
+        "mnemonic": "xor",
+        "op_str": "al, 0x14",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 20,
+            "hex": "0x14",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 220,
+        "address_hex": "0x00DC",
+        "size": 6,
+        "bytes": "88 05 0d 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xd], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 13,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 222,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 226,
+        "address_hex": "0x00E2",
+        "size": 6,
+        "bytes": "8a 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 228,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 232,
+        "address_hex": "0x00E8",
+        "size": 2,
+        "bytes": "34 bb",
+        "mnemonic": "xor",
+        "op_str": "al, 0xbb",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 187,
+            "hex": "0xBB",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 234,
+        "address_hex": "0x00EA",
+        "size": 6,
+        "bytes": "88 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 236,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 240,
+        "address_hex": "0x00F0",
+        "size": 6,
+        "bytes": "8a 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 1]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 242,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 246,
+        "address_hex": "0x00F6",
+        "size": 2,
+        "bytes": "34 52",
+        "mnemonic": "xor",
+        "op_str": "al, 0x52",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 82,
+            "hex": "0x52",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 248,
+        "address_hex": "0x00F8",
+        "size": 6,
+        "bytes": "88 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 1], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 250,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 254,
+        "address_hex": "0x00FE",
+        "size": 6,
+        "bytes": "8a 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 2]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 256,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 260,
+        "address_hex": "0x0104",
+        "size": 2,
+        "bytes": "34 99",
+        "mnemonic": "xor",
+        "op_str": "al, 0x99",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 153,
+            "hex": "0x99",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 262,
+        "address_hex": "0x0106",
+        "size": 6,
+        "bytes": "88 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 2], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 264,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 268,
+        "address_hex": "0x010C",
+        "size": 6,
+        "bytes": "8a 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 3]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 270,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 274,
+        "address_hex": "0x0112",
+        "size": 2,
+        "bytes": "34 e1",
+        "mnemonic": "xor",
+        "op_str": "al, 0xe1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 225,
+            "hex": "0xE1",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 276,
+        "address_hex": "0x0114",
+        "size": 6,
+        "bytes": "88 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 3], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 278,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 282,
+        "address_hex": "0x011A",
+        "size": 6,
+        "bytes": "8a 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 284,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 288,
+        "address_hex": "0x0120",
+        "size": 2,
+        "bytes": "34 c7",
+        "mnemonic": "xor",
+        "op_str": "al, 0xc7",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 199,
+            "hex": "0xC7",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 290,
+        "address_hex": "0x0122",
+        "size": 6,
+        "bytes": "88 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 4], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 292,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 296,
+        "address_hex": "0x0128",
+        "size": 6,
+        "bytes": "8a 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 5]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 298,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 302,
+        "address_hex": "0x012E",
+        "size": 2,
+        "bytes": "34 16",
+        "mnemonic": "xor",
+        "op_str": "al, 0x16",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 22,
+            "hex": "0x16",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 304,
+        "address_hex": "0x0130",
+        "size": 6,
+        "bytes": "88 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 5], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 306,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 310,
+        "address_hex": "0x0136",
+        "size": 6,
+        "bytes": "8a 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 6]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 312,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 316,
+        "address_hex": "0x013C",
+        "size": 2,
+        "bytes": "34 e0",
+        "mnemonic": "xor",
+        "op_str": "al, 0xe0",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 224,
+            "hex": "0xE0",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 318,
+        "address_hex": "0x013E",
+        "size": 6,
+        "bytes": "88 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 6], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 320,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 324,
+        "address_hex": "0x0144",
+        "size": 6,
+        "bytes": "8a 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 7]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 326,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 330,
+        "address_hex": "0x014A",
+        "size": 2,
+        "bytes": "34 f6",
+        "mnemonic": "xor",
+        "op_str": "al, 0xf6",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 246,
+            "hex": "0xF6",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 332,
+        "address_hex": "0x014C",
+        "size": 6,
+        "bytes": "88 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 7], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 334,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 338,
+        "address_hex": "0x0152",
+        "size": 6,
+        "bytes": "8a 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 8]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 340,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 344,
+        "address_hex": "0x0158",
+        "size": 2,
+        "bytes": "34 b1",
+        "mnemonic": "xor",
+        "op_str": "al, 0xb1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 177,
+            "hex": "0xB1",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 346,
+        "address_hex": "0x015A",
+        "size": 6,
+        "bytes": "88 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 8], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 348,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 352,
+        "address_hex": "0x0160",
+        "size": 6,
+        "bytes": "8a 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 9]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 354,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 358,
+        "address_hex": "0x0166",
+        "size": 2,
+        "bytes": "34 d9",
+        "mnemonic": "xor",
+        "op_str": "al, 0xd9",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 217,
+            "hex": "0xD9",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 360,
+        "address_hex": "0x0168",
+        "size": 6,
+        "bytes": "88 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 9], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 362,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 366,
+        "address_hex": "0x016E",
+        "size": 6,
+        "bytes": "8a 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xa]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 368,
+            "symbol_index": 22,
+            "symbol": "EncryptedString.3",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 372,
+        "address_hex": "0x0174",
+        "size": 2,
+        "bytes": "34 de",
+        "mnemonic": "xor",
+        "op_str": "al, 0xde",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 222,
+            "hex": "0xDE",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 374,
+        "address_hex": "0x0176",
+        "size": 6,
+        "bytes": "88 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xa], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 376,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 380,
+        "address_hex": "0x017C",
+        "size": 6,
+        "bytes": "8a 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 382,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 386,
+        "address_hex": "0x0182",
+        "size": 2,
+        "bytes": "34 ba",
+        "mnemonic": "xor",
+        "op_str": "al, 0xba",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 186,
+            "hex": "0xBA",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 388,
+        "address_hex": "0x0184",
+        "size": 6,
+        "bytes": "88 05 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 390,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 394,
+        "address_hex": "0x018A",
+        "size": 6,
+        "bytes": "8a 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 1]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 396,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 400,
+        "address_hex": "0x0190",
+        "size": 2,
+        "bytes": "34 79",
+        "mnemonic": "xor",
+        "op_str": "al, 0x79",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 121,
+            "hex": "0x79",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 402,
+        "address_hex": "0x0192",
+        "size": 6,
+        "bytes": "88 05 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 1], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 1,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 404,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 408,
+        "address_hex": "0x0198",
+        "size": 6,
+        "bytes": "8a 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 2]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 410,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 414,
+        "address_hex": "0x019E",
+        "size": 2,
+        "bytes": "34 fd",
+        "mnemonic": "xor",
+        "op_str": "al, 0xfd",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 253,
+            "hex": "0xFD",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 416,
+        "address_hex": "0x01A0",
+        "size": 6,
+        "bytes": "88 05 02 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 2], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 2,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 418,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 422,
+        "address_hex": "0x01A6",
+        "size": 6,
+        "bytes": "8a 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 3]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 424,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 428,
+        "address_hex": "0x01AC",
+        "size": 2,
+        "bytes": "34 22",
+        "mnemonic": "xor",
+        "op_str": "al, 0x22",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 34,
+            "hex": "0x22",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 430,
+        "address_hex": "0x01AE",
+        "size": 6,
+        "bytes": "88 05 03 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 3], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 3,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 432,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 436,
+        "address_hex": "0x01B4",
+        "size": 6,
+        "bytes": "8a 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 438,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 442,
+        "address_hex": "0x01BA",
+        "size": 2,
+        "bytes": "34 a4",
+        "mnemonic": "xor",
+        "op_str": "al, 0xa4",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 164,
+            "hex": "0xA4",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 444,
+        "address_hex": "0x01BC",
+        "size": 6,
+        "bytes": "88 05 04 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 4], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 4,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 446,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 450,
+        "address_hex": "0x01C2",
+        "size": 6,
+        "bytes": "8a 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 5]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 452,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 456,
+        "address_hex": "0x01C8",
+        "size": 2,
+        "bytes": "34 c5",
+        "mnemonic": "xor",
+        "op_str": "al, 0xc5",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 197,
+            "hex": "0xC5",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 458,
+        "address_hex": "0x01CA",
+        "size": 6,
+        "bytes": "88 05 05 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 5], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 5,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 460,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 464,
+        "address_hex": "0x01D0",
+        "size": 6,
+        "bytes": "8a 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 6]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 466,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 470,
+        "address_hex": "0x01D6",
+        "size": 2,
+        "bytes": "34 38",
+        "mnemonic": "xor",
+        "op_str": "al, 0x38",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 56,
+            "hex": "0x38",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 472,
+        "address_hex": "0x01D8",
+        "size": 6,
+        "bytes": "88 05 06 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 6], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 6,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 474,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 478,
+        "address_hex": "0x01DE",
+        "size": 6,
+        "bytes": "8a 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 7]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 480,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 484,
+        "address_hex": "0x01E4",
+        "size": 2,
+        "bytes": "34 2c",
+        "mnemonic": "xor",
+        "op_str": "al, 0x2c",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 44,
+            "hex": "0x2C",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 486,
+        "address_hex": "0x01E6",
+        "size": 6,
+        "bytes": "88 05 07 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 7], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 7,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 488,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 492,
+        "address_hex": "0x01EC",
+        "size": 6,
+        "bytes": "8a 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 8]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 494,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 498,
+        "address_hex": "0x01F2",
+        "size": 2,
+        "bytes": "34 d5",
+        "mnemonic": "xor",
+        "op_str": "al, 0xd5",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 213,
+            "hex": "0xD5",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 500,
+        "address_hex": "0x01F4",
+        "size": 6,
+        "bytes": "88 05 08 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 8], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 8,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 502,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 506,
+        "address_hex": "0x01FA",
+        "size": 6,
+        "bytes": "8a 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 9]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 508,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 512,
+        "address_hex": "0x0200",
+        "size": 2,
+        "bytes": "34 19",
+        "mnemonic": "xor",
+        "op_str": "al, 0x19",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 25,
+            "hex": "0x19",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 514,
+        "address_hex": "0x0202",
+        "size": 6,
+        "bytes": "88 05 09 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 9], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 9,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 516,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 520,
+        "address_hex": "0x0208",
+        "size": 6,
+        "bytes": "8a 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xa]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 522,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 526,
+        "address_hex": "0x020E",
+        "size": 2,
+        "bytes": "34 8e",
+        "mnemonic": "xor",
+        "op_str": "al, 0x8e",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 142,
+            "hex": "0x8E",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 528,
+        "address_hex": "0x0210",
+        "size": 6,
+        "bytes": "88 05 0a 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xa], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 10,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 530,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 534,
+        "address_hex": "0x0216",
+        "size": 6,
+        "bytes": "8a 05 0b 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xb]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 11,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 536,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 540,
+        "address_hex": "0x021C",
+        "size": 2,
+        "bytes": "34 68",
+        "mnemonic": "xor",
+        "op_str": "al, 0x68",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 104,
+            "hex": "0x68",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 542,
+        "address_hex": "0x021E",
+        "size": 6,
+        "bytes": "88 05 0b 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xb], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 11,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 544,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 548,
+        "address_hex": "0x0224",
+        "size": 6,
+        "bytes": "8a 05 0c 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xc]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 12,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 550,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 554,
+        "address_hex": "0x022A",
+        "size": 2,
+        "bytes": "34 c1",
+        "mnemonic": "xor",
+        "op_str": "al, 0xc1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 193,
+            "hex": "0xC1",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 556,
+        "address_hex": "0x022C",
+        "size": 6,
+        "bytes": "88 05 0c 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xc], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 12,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 558,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 562,
+        "address_hex": "0x0232",
+        "size": 6,
+        "bytes": "8a 05 0d 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xd]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 13,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 564,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 568,
+        "address_hex": "0x0238",
+        "size": 2,
+        "bytes": "34 0c",
+        "mnemonic": "xor",
+        "op_str": "al, 0xc",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 12,
+            "hex": "0xC",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 570,
+        "address_hex": "0x023A",
+        "size": 6,
+        "bytes": "88 05 0d 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xd], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 13,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 572,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 576,
+        "address_hex": "0x0240",
+        "size": 6,
+        "bytes": "8a 05 0e 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "al, byte ptr [rip + 0xe]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 14,
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "al"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 578,
+            "symbol_index": 28,
+            "symbol": "EncryptedString",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 582,
+        "address_hex": "0x0246",
+        "size": 2,
+        "bytes": "34 4a",
+        "mnemonic": "xor",
+        "op_str": "al, 0x4a",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          },
+          {
+            "type": "imm",
+            "value": 74,
+            "hex": "0x4A",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "al"
+        ],
+        "regs_write": [
+          "rflags",
+          "al"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 584,
+        "address_hex": "0x0248",
+        "size": 6,
+        "bytes": "88 05 0e 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "byte ptr [rip + 0xe], al",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 14,
+            "size": 1
+          },
+          {
+            "type": "reg",
+            "reg": "al",
+            "size": 1
+          }
+        ],
+        "regs_read": [
+          "rip",
+          "al"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 586,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 590,
+        "address_hex": "0x024E",
+        "size": 3,
+        "bytes": "8b 55 fc",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rbp - 4]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 593,
+        "address_hex": "0x0251",
+        "size": 4,
+        "bytes": "4c 8b 4d f0",
+        "mnemonic": "mov",
+        "op_str": "r9, qword ptr [rbp - 0x10]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -16,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "r9"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 597,
+        "address_hex": "0x0255",
+        "size": 10,
+        "bytes": "c7 05 fc ff ff ff 01 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rip - 4], 1",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": -4,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 1,
+            "hex": "0x1",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 599,
+            "symbol_index": 4,
+            "symbol": ".bss",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 607,
+        "address_hex": "0x025F",
+        "size": 5,
+        "bytes": "b8 10 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "eax, 0x10",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 16,
+            "hex": "0x10",
+            "size": 4
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 612,
+        "address_hex": "0x0264",
+        "size": 4,
+        "bytes": "48 89 45 e0",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x20], rax",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rax"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 616,
+        "address_hex": "0x0268",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x26d",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 621,
+            "hex": "0x26D",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 617,
+            "symbol_index": 34,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 621,
+        "address_hex": "0x026D",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 624,
+        "address_hex": "0x0270",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 628,
+        "address_hex": "0x0274",
+        "size": 3,
+        "bytes": "49 89 e2",
+        "mnemonic": "mov",
+        "op_str": "r10, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r10",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r10"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 631,
+        "address_hex": "0x0277",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x27c",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 636,
+            "hex": "0x27C",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 632,
+            "symbol_index": 34,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 636,
+        "address_hex": "0x027C",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 639,
+        "address_hex": "0x027F",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 643,
+        "address_hex": "0x0283",
+        "size": 3,
+        "bytes": "49 89 e0",
+        "mnemonic": "mov",
+        "op_str": "r8, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "r8",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "r8"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 646,
+        "address_hex": "0x0286",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x28b",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 651,
+            "hex": "0x28B",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 647,
+            "symbol_index": 34,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 651,
+        "address_hex": "0x028B",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 654,
+        "address_hex": "0x028E",
+        "size": 4,
+        "bytes": "48 8b 45 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x20]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -32,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 658,
+        "address_hex": "0x0292",
+        "size": 3,
+        "bytes": "48 89 e1",
+        "mnemonic": "mov",
+        "op_str": "rcx, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 661,
+        "address_hex": "0x0295",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x29a",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 666,
+            "hex": "0x29A",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 662,
+            "symbol_index": 34,
+            "symbol": "__chkstk",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 666,
+        "address_hex": "0x029A",
+        "size": 3,
+        "bytes": "48 29 c4",
+        "mnemonic": "sub",
+        "op_str": "rsp, rax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 669,
+        "address_hex": "0x029D",
+        "size": 3,
+        "bytes": "48 89 e0",
+        "mnemonic": "mov",
+        "op_str": "rax, rsp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 672,
+        "address_hex": "0x02A0",
+        "size": 4,
+        "bytes": "48 89 45 e8",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [rbp - 0x18], rax",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp",
+          "rax"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 676,
+        "address_hex": "0x02A4",
+        "size": 7,
+        "bytes": "41 c7 02 00 00 00 00",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [r10], 0",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r10",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "r10"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 683,
+        "address_hex": "0x02AB",
+        "size": 3,
+        "bytes": "4d 89 08",
+        "mnemonic": "mov",
+        "op_str": "qword ptr [r8], r9",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "r8",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "r9",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "r8",
+          "r9"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 686,
+        "address_hex": "0x02AE",
+        "size": 2,
+        "bytes": "89 11",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rcx], edx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx",
+          "edx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 688,
+        "address_hex": "0x02B0",
+        "size": 3,
+        "bytes": "6b 09 07",
+        "mnemonic": "imul",
+        "op_str": "ecx, dword ptr [rcx], 7",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rcx",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 7,
+            "hex": "0x7",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rcx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 691,
+        "address_hex": "0x02B3",
+        "size": 3,
+        "bytes": "83 c1 03",
+        "mnemonic": "add",
+        "op_str": "ecx, 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 694,
+        "address_hex": "0x02B6",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 696,
+        "address_hex": "0x02B8",
+        "size": 2,
+        "bytes": "8b 00",
+        "mnemonic": "mov",
+        "op_str": "eax, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 698,
+        "address_hex": "0x02BA",
+        "size": 3,
+        "bytes": "83 e0 01",
+        "mnemonic": "and",
+        "op_str": "eax, 1",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 1,
+            "hex": "0x1",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags",
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 701,
+        "address_hex": "0x02BD",
+        "size": 3,
+        "bytes": "83 f8 00",
+        "mnemonic": "cmp",
+        "op_str": "eax, 0",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 0,
+            "hex": "0x0",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 704,
+        "address_hex": "0x02C0",
+        "size": 6,
+        "bytes": "0f 85 25 00 00 00",
+        "mnemonic": "jne",
+        "op_str": "0x2eb",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 747,
+            "hex": "0x2EB",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 710,
+        "address_hex": "0x02C6",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 713,
+            "symbol_index": 31,
+            "symbol": "DecryptSpace",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 717,
+        "address_hex": "0x02CD",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 721,
+        "address_hex": "0x02D1",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x2d6",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 726,
+            "hex": "0x2D6",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 722,
+            "symbol_index": 35,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 726,
+        "address_hex": "0x02D6",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 730,
+        "address_hex": "0x02DA",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 734,
+        "address_hex": "0x02DE",
+        "size": 3,
+        "bytes": "6b 08 03",
+        "mnemonic": "imul",
+        "op_str": "ecx, dword ptr [rax], 3",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 3,
+            "hex": "0x3",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 737,
+        "address_hex": "0x02E1",
+        "size": 3,
+        "bytes": "83 f1 42",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x42",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 66,
+            "hex": "0x42",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 740,
+        "address_hex": "0x02E4",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 742,
+        "address_hex": "0x02E6",
+        "size": 5,
+        "bytes": "e9 22 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0x30d",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 781,
+            "hex": "0x30D",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 747,
+        "address_hex": "0x02EB",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 750,
+            "symbol_index": 19,
+            "symbol": "DecryptSpace.2",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 754,
+        "address_hex": "0x02F2",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 758,
+        "address_hex": "0x02F6",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x2fb",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 763,
+            "hex": "0x2FB",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 759,
+            "symbol_index": 35,
+            "symbol": "puts",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 763,
+        "address_hex": "0x02FB",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 767,
+        "address_hex": "0x02FF",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 771,
+        "address_hex": "0x0303",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 773,
+        "address_hex": "0x0305",
+        "size": 3,
+        "bytes": "83 c1 0d",
+        "mnemonic": "add",
+        "op_str": "ecx, 0xd",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 13,
+            "hex": "0xD",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 776,
+        "address_hex": "0x0308",
+        "size": 3,
+        "bytes": "83 f1 17",
+        "mnemonic": "xor",
+        "op_str": "ecx, 0x17",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 23,
+            "hex": "0x17",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 779,
+        "address_hex": "0x030B",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 781,
+        "address_hex": "0x030D",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 785,
+        "address_hex": "0x0311",
+        "size": 3,
+        "bytes": "83 38 64",
+        "mnemonic": "cmp",
+        "op_str": "dword ptr [rax], 0x64",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 100,
+            "hex": "0x64",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "rflags"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 788,
+        "address_hex": "0x0314",
+        "size": 6,
+        "bytes": "0f 86 10 00 00 00",
+        "mnemonic": "jbe",
+        "op_str": "0x32a",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 810,
+            "hex": "0x32A",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rflags"
+        ],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 794,
+        "address_hex": "0x031A",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 798,
+        "address_hex": "0x031E",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 800,
+        "address_hex": "0x0320",
+        "size": 3,
+        "bytes": "83 e9 11",
+        "mnemonic": "sub",
+        "op_str": "ecx, 0x11",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 17,
+            "hex": "0x11",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 803,
+        "address_hex": "0x0323",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 805,
+        "address_hex": "0x0325",
+        "size": 5,
+        "bytes": "e9 0b 00 00 00",
+        "mnemonic": "jmp",
+        "op_str": "0x335",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 821,
+            "hex": "0x335",
+            "size": 8
+          }
+        ],
+        "regs_read": [],
+        "regs_write": [],
+        "groups": [
+          "branch_relative",
+          "jump"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 810,
+        "address_hex": "0x032A",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 814,
+        "address_hex": "0x032E",
+        "size": 2,
+        "bytes": "8b 08",
+        "mnemonic": "mov",
+        "op_str": "ecx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 816,
+        "address_hex": "0x0330",
+        "size": 3,
+        "bytes": "83 c1 05",
+        "mnemonic": "add",
+        "op_str": "ecx, 5",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 5,
+            "hex": "0x5",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "ecx"
+        ],
+        "regs_write": [
+          "rflags",
+          "ecx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 819,
+        "address_hex": "0x0333",
+        "size": 2,
+        "bytes": "89 08",
+        "mnemonic": "mov",
+        "op_str": "dword ptr [rax], ecx",
+        "operands": [
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "ecx",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax",
+          "ecx"
+        ],
+        "regs_write": [],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 821,
+        "address_hex": "0x0335",
+        "size": 4,
+        "bytes": "48 8b 45 e8",
+        "mnemonic": "mov",
+        "op_str": "rax, qword ptr [rbp - 0x18]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rax",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rbp",
+            "index": null,
+            "scale": 1,
+            "disp": -24,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 825,
+        "address_hex": "0x0339",
+        "size": 2,
+        "bytes": "8b 10",
+        "mnemonic": "mov",
+        "op_str": "edx, dword ptr [rax]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rax",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "rax"
+        ],
+        "regs_write": [
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 827,
+        "address_hex": "0x033B",
+        "size": 6,
+        "bytes": "81 e2 ff 00 00 00",
+        "mnemonic": "and",
+        "op_str": "edx, 0xff",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "edx",
+            "size": 4
+          },
+          {
+            "type": "imm",
+            "value": 255,
+            "hex": "0xFF",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "edx"
+        ],
+        "regs_write": [
+          "rflags",
+          "edx"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 833,
+        "address_hex": "0x0341",
+        "size": 4,
+        "bytes": "48 83 ec 20",
+        "mnemonic": "sub",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 837,
+        "address_hex": "0x0345",
+        "size": 7,
+        "bytes": "48 8d 0d 00 00 00 00",
+        "mnemonic": "lea",
+        "op_str": "rcx, [rip]",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rcx",
+            "size": 8
+          },
+          {
+            "type": "mem",
+            "segment": null,
+            "base": "rip",
+            "index": null,
+            "scale": 1,
+            "disp": 0,
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rip"
+        ],
+        "regs_write": [
+          "rcx"
+        ],
+        "groups": [],
+        "relocations": [
+          {
+            "offset": 840,
+            "symbol_index": 25,
+            "symbol": "DecryptSpace.4",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 844,
+        "address_hex": "0x034C",
+        "size": 5,
+        "bytes": "e8 00 00 00 00",
+        "mnemonic": "call",
+        "op_str": "0x351",
+        "operands": [
+          {
+            "type": "imm",
+            "value": 849,
+            "hex": "0x351",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp",
+          "rip"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "call",
+          "branch_relative",
+          "mode64"
+        ],
+        "relocations": [
+          {
+            "offset": 845,
+            "symbol_index": 36,
+            "symbol": "printf",
+            "type_value": 4,
+            "type_name": "REL32"
+          }
+        ]
+      },
+      {
+        "address": 849,
+        "address_hex": "0x0351",
+        "size": 4,
+        "bytes": "48 83 c4 20",
+        "mnemonic": "add",
+        "op_str": "rsp, 0x20",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "imm",
+            "value": 32,
+            "hex": "0x20",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rflags",
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 853,
+        "address_hex": "0x0355",
+        "size": 2,
+        "bytes": "31 c0",
+        "mnemonic": "xor",
+        "op_str": "eax, eax",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          },
+          {
+            "type": "reg",
+            "reg": "eax",
+            "size": 4
+          }
+        ],
+        "regs_read": [
+          "eax"
+        ],
+        "regs_write": [
+          "rflags",
+          "eax"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 855,
+        "address_hex": "0x0357",
+        "size": 3,
+        "bytes": "48 89 ec",
+        "mnemonic": "mov",
+        "op_str": "rsp, rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rsp",
+            "size": 8
+          },
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rbp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [],
+        "relocations": []
+      },
+      {
+        "address": 858,
+        "address_hex": "0x035A",
+        "size": 1,
+        "bytes": "5d",
+        "mnemonic": "pop",
+        "op_str": "rbp",
+        "operands": [
+          {
+            "type": "reg",
+            "reg": "rbp",
+            "size": 8
+          }
+        ],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rsp",
+          "rbp"
+        ],
+        "groups": [
+          "mode64"
+        ],
+        "relocations": []
+      },
+      {
+        "address": 859,
+        "address_hex": "0x035B",
+        "size": 1,
+        "bytes": "c3",
+        "mnemonic": "ret",
+        "op_str": "",
+        "operands": [],
+        "regs_read": [
+          "rsp"
+        ],
+        "regs_write": [
+          "rsp"
+        ],
+        "groups": [
+          "ret",
+          "mode64"
+        ],
+        "relocations": []
+      }
+    ]
+  },
+  "machine_cfg": {
+    "entry_node_id": 0,
+    "nodes": [
+      {
+        "id": 0,
+        "start": 0,
+        "end": 30,
+        "instruction_addresses": [
+          0,
+          1,
+          5,
+          10,
+          14,
+          17,
+          24
+        ],
+        "order": 0
+      },
+      {
+        "id": 1,
+        "start": 30,
+        "end": 590,
+        "instruction_addresses": [
+          30,
+          36,
+          38,
+          44,
+          50,
+          52,
+          58,
+          64,
+          66,
+          72,
+          78,
+          80,
+          86,
+          92,
+          94,
+          100,
+          106,
+          108,
+          114,
+          120,
+          122,
+          128,
+          134,
+          136,
+          142,
+          148,
+          150,
+          156,
+          162,
+          164,
+          170,
+          176,
+          178,
+          184,
+          190,
+          192,
+          198,
+          204,
+          206,
+          212,
+          218,
+          220,
+          226,
+          232,
+          234,
+          240,
+          246,
+          248,
+          254,
+          260,
+          262,
+          268,
+          274,
+          276,
+          282,
+          288,
+          290,
+          296,
+          302,
+          304,
+          310,
+          316,
+          318,
+          324,
+          330,
+          332,
+          338,
+          344,
+          346,
+          352,
+          358,
+          360,
+          366,
+          372,
+          374,
+          380,
+          386,
+          388,
+          394,
+          400,
+          402,
+          408,
+          414,
+          416,
+          422,
+          428,
+          430,
+          436,
+          442,
+          444,
+          450,
+          456,
+          458,
+          464,
+          470,
+          472,
+          478,
+          484,
+          486,
+          492,
+          498,
+          500,
+          506,
+          512,
+          514,
+          520,
+          526,
+          528,
+          534,
+          540,
+          542,
+          548,
+          554,
+          556,
+          562,
+          568,
+          570,
+          576,
+          582,
+          584
+        ],
+        "order": 1
+      },
+      {
+        "id": 2,
+        "start": 590,
+        "end": 710,
+        "instruction_addresses": [
+          590,
+          593,
+          597,
+          607,
+          612,
+          616,
+          621,
+          624,
+          628,
+          631,
+          636,
+          639,
+          643,
+          646,
+          651,
+          654,
+          658,
+          661,
+          666,
+          669,
+          672,
+          676,
+          683,
+          686,
+          688,
+          691,
+          694,
+          696,
+          698,
+          701,
+          704
+        ],
+        "order": 2
+      },
+      {
+        "id": 3,
+        "start": 710,
+        "end": 747,
+        "instruction_addresses": [
+          710,
+          717,
+          721,
+          726,
+          730,
+          734,
+          737,
+          740,
+          742
+        ],
+        "order": 3
+      },
+      {
+        "id": 4,
+        "start": 747,
+        "end": 781,
+        "instruction_addresses": [
+          747,
+          754,
+          758,
+          763,
+          767,
+          771,
+          773,
+          776,
+          779
+        ],
+        "order": 4
+      },
+      {
+        "id": 5,
+        "start": 781,
+        "end": 794,
+        "instruction_addresses": [
+          781,
+          785,
+          788
+        ],
+        "order": 5
+      },
+      {
+        "id": 6,
+        "start": 794,
+        "end": 810,
+        "instruction_addresses": [
+          794,
+          798,
+          800,
+          803,
+          805
+        ],
+        "order": 6
+      },
+      {
+        "id": 7,
+        "start": 810,
+        "end": 821,
+        "instruction_addresses": [
+          810,
+          814,
+          816,
+          819
+        ],
+        "order": 7
+      },
+      {
+        "id": 8,
+        "start": 821,
+        "end": 860,
+        "instruction_addresses": [
+          821,
+          825,
+          827,
+          833,
+          837,
+          844,
+          849,
+          853,
+          855,
+          858,
+          859
+        ],
+        "order": 8
+      }
+    ],
+    "edges": [
+      {
+        "source": 0,
+        "target": 2,
+        "kind": "branch"
+      },
+      {
+        "source": 0,
+        "target": 1,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 1,
+        "target": 2,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 2,
+        "target": 4,
+        "kind": "branch"
+      },
+      {
+        "source": 2,
+        "target": 3,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 3,
+        "target": 5,
+        "kind": "jump"
+      },
+      {
+        "source": 4,
+        "target": 5,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 5,
+        "target": 7,
+        "kind": "branch"
+      },
+      {
+        "source": 5,
+        "target": 6,
+        "kind": "fallthrough"
+      },
+      {
+        "source": 6,
+        "target": 8,
+        "kind": "jump"
+      },
+      {
+        "source": 7,
+        "target": 8,
+        "kind": "fallthrough"
+      }
+    ]
+  },
+  "llvm_cfg": {
+    "entry_node_id": 0,
+    "nodes": [
+      {
+        "id": 0,
+        "label": "entry",
+        "instructions": [
+          "  %3 = load atomic i32, i32* @0 acquire, align 4",
+          "  %4 = icmp eq i32 %3, 0",
+          "  br i1 %4, label %5, label %86"
+        ],
+        "order": 0
+      },
+      {
+        "id": 1,
+        "label": "5",
+        "instructions": [
+          "  %6 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 0), align 1",
+          "  %7 = xor i8 %6, -70",
+          "  store i8 %7, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 0), align 1",
+          "  %8 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 1), align 1",
+          "  %9 = xor i8 %8, 121",
+          "  store i8 %9, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 1), align 1",
+          "  %10 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 2), align 1",
+          "  %11 = xor i8 %10, -3",
+          "  store i8 %11, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 2), align 1",
+          "  %12 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 3), align 1",
+          "  %13 = xor i8 %12, 34",
+          "  store i8 %13, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 3), align 1",
+          "  %14 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 4), align 1",
+          "  %15 = xor i8 %14, -92",
+          "  store i8 %15, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 4), align 1",
+          "  %16 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 5), align 1",
+          "  %17 = xor i8 %16, -59",
+          "  store i8 %17, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 5), align 1",
+          "  %18 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 6), align 1",
+          "  %19 = xor i8 %18, 56",
+          "  store i8 %19, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 6), align 1",
+          "  %20 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 7), align 1",
+          "  %21 = xor i8 %20, 44",
+          "  store i8 %21, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 7), align 1",
+          "  %22 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 8), align 1",
+          "  %23 = xor i8 %22, -43",
+          "  store i8 %23, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 8), align 1",
+          "  %24 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 9), align 1",
+          "  %25 = xor i8 %24, 25",
+          "  store i8 %25, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 9), align 1",
+          "  %26 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 10), align 1",
+          "  %27 = xor i8 %26, -114",
+          "  store i8 %27, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 10), align 1",
+          "  %28 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 11), align 1",
+          "  %29 = xor i8 %28, 104",
+          "  store i8 %29, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 11), align 1",
+          "  %30 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 12), align 1",
+          "  %31 = xor i8 %30, -63",
+          "  store i8 %31, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 12), align 1",
+          "  %32 = load i8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @EncryptedString, i32 0, i32 13), align 1",
+          "  %33 = xor i8 %32, 12",
+          "  store i8 %33, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @DecryptSpace, i32 0, i32 13), align 1",
+          "  %34 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 0), align 1",
+          "  %35 = xor i8 %34, 74",
+          "  store i8 %35, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 0), align 1",
+          "  %36 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 1), align 1",
+          "  %37 = xor i8 %36, 116",
+          "  store i8 %37, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 1), align 1",
+          "  %38 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 2), align 1",
+          "  %39 = xor i8 %38, 107",
+          "  store i8 %39, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 2), align 1",
+          "  %40 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 3), align 1",
+          "  %41 = xor i8 %40, -92",
+          "  store i8 %41, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 3), align 1",
+          "  %42 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 4), align 1",
+          "  %43 = xor i8 %42, -77",
+          "  store i8 %43, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 4), align 1",
+          "  %44 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 5), align 1",
+          "  %45 = xor i8 %44, 46",
+          "  store i8 %45, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 5), align 1",
+          "  %46 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 6), align 1",
+          "  %47 = xor i8 %46, -9",
+          "  store i8 %47, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 6), align 1",
+          "  %48 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 7), align 1",
+          "  %49 = xor i8 %48, -103",
+          "  store i8 %49, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 7), align 1",
+          "  %50 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 8), align 1",
+          "  %51 = xor i8 %50, -5",
+          "  store i8 %51, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 8), align 1",
+          "  %52 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 9), align 1",
+          "  %53 = xor i8 %52, 41",
+          "  store i8 %53, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 9), align 1",
+          "  %54 = load i8, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @EncryptedString.1, i32 0, i32 10), align 1",
+          "  %55 = xor i8 %54, 122",
+          "  store i8 %55, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @DecryptSpace.2, i32 0, i32 10), align 1",
+          "  %56 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 0), align 1",
+          "  %57 = xor i8 %56, -76",
+          "  store i8 %57, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 0), align 1",
+          "  %58 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 1), align 1",
+          "  %59 = xor i8 %58, -54",
+          "  store i8 %59, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 1), align 1",
+          "  %60 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 2), align 1",
+          "  %61 = xor i8 %60, 102",
+          "  store i8 %61, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 2), align 1",
+          "  %62 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 3), align 1",
+          "  %63 = xor i8 %62, 20",
+          "  store i8 %63, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 3), align 1",
+          "  %64 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 4), align 1",
+          "  %65 = xor i8 %64, -69",
+          "  store i8 %65, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 4), align 1",
+          "  %66 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 5), align 1",
+          "  %67 = xor i8 %66, 82",
+          "  store i8 %67, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 5), align 1",
+          "  %68 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 6), align 1",
+          "  %69 = xor i8 %68, -103",
+          "  store i8 %69, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 6), align 1",
+          "  %70 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 7), align 1",
+          "  %71 = xor i8 %70, -31",
+          "  store i8 %71, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 7), align 1",
+          "  %72 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 8), align 1",
+          "  %73 = xor i8 %72, -57",
+          "  store i8 %73, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 8), align 1",
+          "  %74 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 9), align 1",
+          "  %75 = xor i8 %74, 22",
+          "  store i8 %75, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 9), align 1",
+          "  %76 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 10), align 1",
+          "  %77 = xor i8 %76, -32",
+          "  store i8 %77, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 10), align 1",
+          "  %78 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 11), align 1",
+          "  %79 = xor i8 %78, -10",
+          "  store i8 %79, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 11), align 1",
+          "  %80 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 12), align 1",
+          "  %81 = xor i8 %80, -79",
+          "  store i8 %81, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 12), align 1",
+          "  %82 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 13), align 1",
+          "  %83 = xor i8 %82, -39",
+          "  store i8 %83, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 13), align 1",
+          "  %84 = load i8, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @EncryptedString.3, i32 0, i32 14), align 1",
+          "  %85 = xor i8 %84, -34",
+          "  store i8 %85, i8* getelementptr inbounds ([15 x i8], [15 x i8]* @DecryptSpace.4, i32 0, i32 14), align 1",
+          "  br label %86"
+        ],
+        "order": 1
+      },
+      {
+        "id": 2,
+        "label": "86",
+        "instructions": [
+          "  store atomic i32 1, i32* @0 release, align 4",
+          "  %87 = alloca i32, align 4",
+          "  %88 = alloca ptr, align 8",
+          "  %89 = alloca i32, align 4",
+          "  %90 = alloca i32, align 4",
+          "  store i32 0, ptr %87, align 4",
+          "  store ptr %1, ptr %88, align 8",
+          "  store i32 %0, ptr %89, align 4",
+          "  %91 = load i32, ptr %89, align 4",
+          "  %92 = mul i32 %91, 7",
+          "  %93 = add i32 %92, 3",
+          "  store i32 %93, ptr %90, align 4",
+          "  %94 = load i32, ptr %90, align 4",
+          "  %95 = and i32 %94, 1",
+          "  %96 = icmp eq i32 %95, 0",
+          "  br i1 %96, label %97, label %102"
+        ],
+        "order": 2
+      },
+      {
+        "id": 3,
+        "label": "97",
+        "instructions": [
+          "  %98 = call i32 @puts([15 x i8]* noundef @DecryptSpace.4)",
+          "  %99 = load i32, ptr %90, align 4",
+          "  %100 = mul i32 %99, 3",
+          "  %101 = xor i32 %100, 66",
+          "  store i32 %101, ptr %90, align 4",
+          "  br label %107"
+        ],
+        "order": 3
+      },
+      {
+        "id": 4,
+        "label": "102",
+        "instructions": [
+          "  %103 = call i32 @puts([14 x i8]* noundef @DecryptSpace)",
+          "  %104 = load i32, ptr %90, align 4",
+          "  %105 = add i32 %104, 13",
+          "  %106 = xor i32 %105, 23",
+          "  store i32 %106, ptr %90, align 4",
+          "  br label %107"
+        ],
+        "order": 4
+      },
+      {
+        "id": 5,
+        "label": "107",
+        "instructions": [
+          "  %108 = load i32, ptr %90, align 4",
+          "  %109 = icmp ugt i32 %108, 100",
+          "  br i1 %109, label %110, label %113"
+        ],
+        "order": 5
+      },
+      {
+        "id": 6,
+        "label": "110",
+        "instructions": [
+          "  %111 = load i32, ptr %90, align 4",
+          "  %112 = sub i32 %111, 17",
+          "  store i32 %112, ptr %90, align 4",
+          "  br label %116"
+        ],
+        "order": 6
+      },
+      {
+        "id": 7,
+        "label": "113",
+        "instructions": [
+          "  %114 = load i32, ptr %90, align 4",
+          "  %115 = add i32 %114, 5",
+          "  store i32 %115, ptr %90, align 4",
+          "  br label %116"
+        ],
+        "order": 7
+      },
+      {
+        "id": 8,
+        "label": "116",
+        "instructions": [
+          "  %117 = load i32, ptr %90, align 4",
+          "  %118 = and i32 %117, 255",
+          "  %119 = call i32 (ptr, ...) @printf([11 x i8]* noundef @DecryptSpace.2, i32 noundef %118)",
+          "  ret i32 0"
+        ],
+        "order": 8
+      }
+    ],
+    "edges": [
+      {
+        "source": 0,
+        "target": 1,
+        "kind": "true"
+      },
+      {
+        "source": 0,
+        "target": 2,
+        "kind": "false"
+      },
+      {
+        "source": 1,
+        "target": 2,
+        "kind": "branch"
+      },
+      {
+        "source": 2,
+        "target": 3,
+        "kind": "true"
+      },
+      {
+        "source": 2,
+        "target": 4,
+        "kind": "false"
+      },
+      {
+        "source": 3,
+        "target": 5,
+        "kind": "branch"
+      },
+      {
+        "source": 4,
+        "target": 5,
+        "kind": "branch"
+      },
+      {
+        "source": 5,
+        "target": 6,
+        "kind": "true"
+      },
+      {
+        "source": 5,
+        "target": 7,
+        "kind": "false"
+      },
+      {
+        "source": 6,
+        "target": 8,
+        "kind": "branch"
+      },
+      {
+        "source": 7,
+        "target": 8,
+        "kind": "branch"
+      }
+    ]
+  }
+}

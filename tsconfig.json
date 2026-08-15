@@ -11,7 +11,9 @@
     "moduleDetection": "force",
     "verbatimModuleSyntax": true,
     "useDefineForClassFields": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true
   },
-  "include": ["*.ts", "spec"]
+  "include": ["*.ts", "src", "spec"]
 }

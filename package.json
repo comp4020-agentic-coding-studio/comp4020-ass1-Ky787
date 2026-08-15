@@ -17,11 +17,16 @@
     "@types/node": "^24.0.0",
     "jsdom": "^29.1.1",
     "oxlint": "^1.75.0",
+    "playwright-core": "^1.62.1",
     "stylelint": "^17.14.1",
     "stylelint-config-standard": "^40.0.0",
     "typescript": "^6.0.3",
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
   },
-  "packageManager": "pnpm@11.9.0"
+  "packageManager": "pnpm@11.9.0",
+  "dependencies": {
+    "cytoscape": "^3.34.1",
+    "cytoscape-dagre": "^4.0.0"
+  }
 }
