@@ -38,6 +38,11 @@ describe("the page states its one idea", () => {
       .toLowerCase();
     expect(sub).toContain("transformations");
     expect(sub).toContain("harder to reason about");
+
+    const lede = (doc.querySelector(".masthead__lede")?.textContent ?? "")
+      .replace(/\s+/g, " ")
+      .toLowerCase();
+    expect(lede).toContain("never changes");
   });
 
   it("describes itself for a link preview", () => {
@@ -195,11 +200,41 @@ describe("wiring holds together", () => {
     }
   });
 
-  it("keeps source.c one click away", () => {
-    expect(doc.querySelector('[data-testid="open-source"]')).toBeTruthy();
-    expect(doc.querySelector('[data-testid="source-dialog"]')?.tagName).toBe(
-      "DIALOG",
+  it("puts the source and the assembly side by side", () => {
+    const panes = [...doc.querySelectorAll(".diptych .pane")];
+    expect(panes).toHaveLength(2);
+    expect(panes[0]?.querySelector(".pane__name")?.textContent).toContain(
+      "source.c",
     );
+    expect(panes[1]?.querySelector(".pane__name")?.textContent).toContain("x86");
+    for (const pane of panes) {
+      // Long lines scroll inside the pane, never widening the page.
+      expect(pane.querySelector("pre.code")?.getAttribute("tabindex")).toBe("0");
+    }
+  });
+
+  it("shows the build command and offers to copy it", () => {
+    expect(doc.querySelector('[data-testid="cli"]')?.tagName).toBe("PRE");
+    expect(doc.querySelector('[data-testid="cli-copy"]')?.tagName).toBe(
+      "BUTTON",
+    );
+  });
+
+  it("says the command is reconstructed, not recorded", () => {
+    const note = doc
+      .querySelector('[data-testid="cli"]')
+      ?.closest("section")
+      ?.querySelector(".panel__note")?.textContent;
+    expect(note?.replace(/\s+/g, " ")).toMatch(
+      /reconstructed from the configuration/i,
+    );
+  });
+
+  it("pins the controls so they stay with the graph", () => {
+    const dock = doc.querySelector('[data-testid="dock"]');
+    expect(dock).toBeTruthy();
+    expect(dock?.querySelector('[data-testid="reset"]')).toBeTruthy();
+    expect(dock?.querySelector("input[data-transform]")).toBeTruthy();
   });
 
   it("keeps the compiler detail secondary", () => {

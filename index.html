@@ -26,9 +26,7 @@
             <span>obfuscation&nbsp;explorer</span>
           </a>
         </nav>
-        <button type="button" class="btn btn--quiet" data-testid="open-source">
-          <span aria-hidden="true">{ }</span> source.c
-        </button>
+        <p class="masthead__meta" data-testid="dataset-note">&nbsp;</p>
       </div>
       <div class="masthead__headline">
         <h1 class="masthead__title">The program didn't change</h1>
@@ -37,10 +35,15 @@
           reason about.
         </p>
       </div>
+      <p class="masthead__lede">
+        The C on the left is the whole program, and it never changes. Everything
+        on the right — the instructions, the basic blocks, the edges between
+        them — is the same behaviour, recompiled to be harder to read.
+      </p>
     </header>
 
-    <main>
-      <!-- 1. CONTROLS -->
+    <!-- 1. CONTROLS — sticky, so they stay with the graph further down -->
+    <div class="dock" data-testid="dock">
       <section class="panel controls" aria-labelledby="controls-h">
         <div class="panel__head">
           <h2 id="controls-h" class="panel__title">Compiler configuration</h2>
@@ -152,16 +155,58 @@
           </fieldset>
         </div>
       </section>
+    </div>
 
-      <!-- 2. COMPLEXITY SUMMARY -->
-      <section class="panel metrics" aria-labelledby="metrics-h">
+    <main>
+      <!-- 2. THE COMMAND, AND WHAT IT DOES TO THE CODE -->
+      <section class="panel pipeline" aria-labelledby="pipeline-h">
         <div class="panel__head">
-          <h2 id="metrics-h" class="panel__title">Complexity</h2>
+          <h2 id="pipeline-h" class="panel__title">Build command</h2>
           <p class="panel__note">
-            clean <code>O0</code> baseline <span aria-hidden="true">→</span>
-            selected variant
+            reconstructed from the configuration — the dataset holds the
+            compiled objects, not the command that produced them
           </p>
+          <button type="button" class="btn" data-testid="cli-copy">
+            Copy
+          </button>
         </div>
+
+        <pre
+          class="code code--cli"
+          data-testid="cli"
+        ><code data-role="cli"></code></pre>
+
+        <div class="diptych">
+          <figure class="pane pane--source">
+            <figcaption class="pane__head">
+              <span class="pane__name">source.c</span>
+              <span class="pane__note" data-testid="source-note"></span>
+            </figcaption>
+            <pre
+              class="code code--c"
+              data-testid="source"
+              tabindex="0"
+            ><code></code></pre>
+          </figure>
+
+          <figure class="pane pane--asm">
+            <figcaption class="pane__head">
+              <span class="pane__name">main — x86-64</span>
+              <span class="pane__note" data-testid="asm-full-note"></span>
+            </figcaption>
+            <pre
+              class="code code--asm"
+              data-testid="asm-full"
+              tabindex="0"
+            ><code data-role="asm-full"></code></pre>
+          </figure>
+        </div>
+      </section>
+
+      <!-- 3. THE GRAPH GETS THE REST OF THE SCREEN -->
+      <section class="stage" id="cfg" aria-labelledby="stage-h">
+        <h2 id="stage-h" class="sr-only">Complexity and control-flow graph</h2>
+
         <ul class="metrics__grid" data-testid="metrics">
           <li class="metric" data-metric="instructions">
             <span class="metric__label" aria-hidden="true">Instructions</span>
@@ -243,201 +288,201 @@
             <span class="sr-only" data-role="sr"></span>
           </li>
         </ul>
-      </section>
 
-      <!-- 3. GRAPH + SIDE COLUMN -->
-      <div class="workspace">
-        <section class="panel graph-panel" id="cfg" aria-labelledby="cfg-h">
-          <div class="panel__head">
-            <h2 id="cfg-h" class="panel__title">LLVM control-flow graph</h2>
-            <p class="panel__note" data-testid="graph-counts">&nbsp;</p>
-            <div class="graph-tools" role="group" aria-label="Graph view">
-              <button
-                type="button"
-                class="btn btn--icon"
-                data-graph="zoom-out"
-                aria-label="Zoom out"
-              >
-                <span aria-hidden="true">−</span>
-              </button>
-              <button
-                type="button"
-                class="btn btn--icon"
-                data-graph="zoom-in"
-                aria-label="Zoom in"
-              >
-                <span aria-hidden="true">+</span>
-              </button>
-              <button
-                type="button"
-                class="btn"
-                data-graph="fit"
-                data-testid="fit"
-              >
-                Fit view
-              </button>
-            </div>
-          </div>
-
-          <div class="graph-stage">
-            <div
-              class="graph-canvas"
-              data-testid="graph"
-              tabindex="0"
-              role="application"
-              aria-label="Control-flow graph of main"
-              aria-describedby="graph-help"
-            ></div>
-            <div class="graph-overlay" data-role="overlay" hidden></div>
-          </div>
-
-          <p id="graph-help" class="sr-only">
-            Interactive graph. Drag to pan, scroll or use the zoom buttons to
-            zoom. When the graph has focus, arrow keys step between basic
-            blocks, Enter opens the block inspector, plus and minus zoom, and 0
-            fits the graph to the view.
-          </p>
-          <p class="sr-only" aria-live="polite" data-testid="graph-status"></p>
-
-          <ul class="legend" data-testid="legend">
-            <li class="legend__item">
-              <span class="legend__node" aria-hidden="true"></span>
-              <span>block label over IR instruction count</span>
-            </li>
-            <li class="legend__item">
-              <span
-                class="legend__node legend__node--entry"
-                aria-hidden="true"
-              ></span>
-              <span>entry block</span>
-            </li>
-            <li class="legend__item" data-kind="true">
-              <span class="legend__edge" aria-hidden="true"></span>
-              <span>true</span>
-            </li>
-            <li class="legend__item" data-kind="false">
-              <span class="legend__edge" aria-hidden="true"></span>
-              <span>false</span>
-            </li>
-            <li class="legend__item" data-kind="branch">
-              <span class="legend__edge" aria-hidden="true"></span>
-              <span>branch</span>
-            </li>
-            <li class="legend__item" data-kind="case">
-              <span class="legend__edge" aria-hidden="true"></span>
-              <span>switch case</span>
-            </li>
-            <li class="legend__item" data-kind="default">
-              <span class="legend__edge" aria-hidden="true"></span>
-              <span>switch default</span>
-            </li>
-          </ul>
-        </section>
-
-        <div class="sidecol">
-          <section class="panel strings" aria-labelledby="strings-h">
+        <div class="workspace">
+          <section class="panel graph-panel" aria-labelledby="cfg-h">
             <div class="panel__head">
-              <h2 id="strings-h" class="panel__title">Watched strings</h2>
+              <h3 id="cfg-h" class="panel__title">LLVM control-flow graph</h3>
+              <p class="panel__note" data-testid="graph-counts">&nbsp;</p>
+              <div class="graph-tools" role="group" aria-label="Graph view">
+                <button
+                  type="button"
+                  class="btn btn--icon"
+                  data-graph="zoom-out"
+                  aria-label="Zoom out"
+                >
+                  <span aria-hidden="true">−</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn--icon"
+                  data-graph="zoom-in"
+                  aria-label="Zoom in"
+                >
+                  <span aria-hidden="true">+</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  data-graph="fit"
+                  data-testid="fit"
+                >
+                  Fit view
+                </button>
+              </div>
             </div>
-            <ul class="strings__list" data-testid="strings"></ul>
-            <p class="strings__note" data-testid="strings-note"></p>
-          </section>
 
-          <section
-            class="panel inspector"
-            data-open="false"
-            data-testid="inspector"
-            aria-labelledby="insp-h"
-          >
-            <div class="panel__head">
-              <h2 id="insp-h" class="panel__title" tabindex="-1">
-                Block inspector
-              </h2>
-              <button
-                type="button"
-                class="btn btn--icon inspector__close"
-                data-testid="inspector-close"
-                aria-label="Close block inspector"
-              >
-                <span aria-hidden="true">✕</span>
-              </button>
+            <div class="graph-stage">
+              <div
+                class="graph-canvas"
+                data-testid="graph"
+                tabindex="0"
+                role="application"
+                aria-label="Control-flow graph of main"
+                aria-describedby="graph-help"
+              ></div>
+              <div class="graph-overlay" data-role="overlay" hidden></div>
             </div>
 
-            <p class="inspector__empty" data-role="empty">
-              Select a block in the graph to read its LLVM IR and the machine
-              code from the same compilation.
+            <p id="graph-help" class="sr-only">
+              Interactive graph. Drag to pan, scroll or use the zoom buttons to
+              zoom. When the graph has focus, arrow keys step between basic
+              blocks, Enter opens the block inspector, plus and minus zoom, and
+              0 fits the graph to the view.
             </p>
+            <p class="sr-only" aria-live="polite" data-testid="graph-status"></p>
 
-            <div class="inspector__body" data-role="body" hidden>
-              <div class="inspector__ident">
-                <span class="chip chip--block" data-role="block-label"></span>
-                <span class="chip chip--entry" data-role="block-entry" hidden>
-                  entry point
-                </span>
-              </div>
-              <dl class="inspector__meta" data-testid="inspector-meta"></dl>
-
-              <div class="tabs" role="tablist" aria-label="Block detail">
-                <button
-                  type="button"
-                  role="tab"
-                  id="tab-ir"
-                  aria-controls="panel-ir"
-                  aria-selected="true"
-                  class="tabs__tab"
-                  data-testid="tab-ir"
-                >
-                  LLVM IR
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  id="tab-asm"
-                  aria-controls="panel-asm"
-                  aria-selected="false"
-                  tabindex="-1"
-                  class="tabs__tab"
-                  data-testid="tab-asm"
-                >
-                  x86
-                </button>
-              </div>
-
-              <div
-                role="tabpanel"
-                id="panel-ir"
-                aria-labelledby="tab-ir"
-                tabindex="0"
-                class="tabpanel"
-              >
-                <pre
-                  class="code code--ir"
-                  data-testid="ir"
-                ><code data-role="ir"></code></pre>
-              </div>
-
-              <div
-                role="tabpanel"
-                id="panel-asm"
-                aria-labelledby="tab-asm"
-                tabindex="0"
-                class="tabpanel"
-                hidden
-              >
-                <p class="provenance" data-testid="asm-provenance"></p>
-                <label class="asm-picker">
-                  <span>Machine block</span>
-                  <select data-role="mblock" data-testid="mblock"></select>
-                </label>
-                <pre
-                  class="code code--asm"
-                  data-testid="asm"
-                ><code data-role="asm"></code></pre>
-              </div>
-            </div>
+            <ul class="legend" data-testid="legend">
+              <li class="legend__item">
+                <span class="legend__node" aria-hidden="true"></span>
+                <span>block label over IR instruction count</span>
+              </li>
+              <li class="legend__item">
+                <span
+                  class="legend__node legend__node--entry"
+                  aria-hidden="true"
+                ></span>
+                <span>entry block</span>
+              </li>
+              <li class="legend__item" data-kind="true">
+                <span class="legend__edge" aria-hidden="true"></span>
+                <span>true</span>
+              </li>
+              <li class="legend__item" data-kind="false">
+                <span class="legend__edge" aria-hidden="true"></span>
+                <span>false</span>
+              </li>
+              <li class="legend__item" data-kind="branch">
+                <span class="legend__edge" aria-hidden="true"></span>
+                <span>branch</span>
+              </li>
+              <li class="legend__item" data-kind="case">
+                <span class="legend__edge" aria-hidden="true"></span>
+                <span>switch case</span>
+              </li>
+              <li class="legend__item" data-kind="default">
+                <span class="legend__edge" aria-hidden="true"></span>
+                <span>switch default</span>
+              </li>
+            </ul>
           </section>
+
+          <div class="sidecol">
+            <section class="panel strings" aria-labelledby="strings-h">
+              <div class="panel__head">
+                <h3 id="strings-h" class="panel__title">Watched strings</h3>
+              </div>
+              <ul class="strings__list" data-testid="strings"></ul>
+              <p class="strings__note" data-testid="strings-note"></p>
+            </section>
+
+            <section
+              class="panel inspector"
+              data-open="false"
+              data-selected="false"
+              data-testid="inspector"
+              aria-labelledby="insp-h"
+            >
+              <div class="panel__head">
+                <h3 id="insp-h" class="panel__title" tabindex="-1">
+                  Block inspector
+                </h3>
+                <button
+                  type="button"
+                  class="btn btn--icon inspector__close"
+                  data-testid="inspector-close"
+                  aria-label="Close block inspector"
+                >
+                  <span aria-hidden="true">✕</span>
+                </button>
+              </div>
+
+              <p class="inspector__empty" data-role="empty">
+                Select a block in the graph to read its LLVM IR and the machine
+                code from the same compilation.
+              </p>
+
+              <div class="inspector__body" data-role="body" hidden>
+                <div class="inspector__ident">
+                  <span class="chip chip--block" data-role="block-label"></span>
+                  <span class="chip chip--entry" data-role="block-entry" hidden>
+                    entry point
+                  </span>
+                </div>
+                <dl class="inspector__meta" data-testid="inspector-meta"></dl>
+
+                <div class="tabs" role="tablist" aria-label="Block detail">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="tab-ir"
+                    aria-controls="panel-ir"
+                    aria-selected="true"
+                    class="tabs__tab"
+                    data-testid="tab-ir"
+                  >
+                    LLVM IR
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="tab-asm"
+                    aria-controls="panel-asm"
+                    aria-selected="false"
+                    tabindex="-1"
+                    class="tabs__tab"
+                    data-testid="tab-asm"
+                  >
+                    x86
+                  </button>
+                </div>
+
+                <div
+                  role="tabpanel"
+                  id="panel-ir"
+                  aria-labelledby="tab-ir"
+                  tabindex="0"
+                  class="tabpanel"
+                >
+                  <pre
+                    class="code code--ir"
+                    data-testid="ir"
+                  ><code data-role="ir"></code></pre>
+                </div>
+
+                <div
+                  role="tabpanel"
+                  id="panel-asm"
+                  aria-labelledby="tab-asm"
+                  tabindex="0"
+                  class="tabpanel"
+                  hidden
+                >
+                  <p class="provenance" data-testid="asm-provenance"></p>
+                  <label class="asm-picker">
+                    <span>Machine block</span>
+                    <select data-role="mblock" data-testid="mblock"></select>
+                  </label>
+                  <pre
+                    class="code code--asm"
+                    data-testid="asm"
+                  ><code data-role="asm"></code></pre>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
-      </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -448,31 +493,13 @@
           Every instruction, block, edge and count on this page is read from the
           pre-generated dataset in <code>web_data/</code>. Nothing is
           disassembled, lowered to IR, or otherwise regenerated in the browser.
-          Toolchain and seed are the fixed parameters of the experiment that
-          produced the dataset; every other row is read from the selected
-          variant's JSON.
+          Toolchain, seed and the build command are the fixed parameters of the
+          experiment that produced the dataset, reconstructed from the selected
+          configuration; every other row is read from the selected variant's
+          JSON.
         </p>
       </details>
     </footer>
-
-    <dialog class="dialog" data-testid="source-dialog">
-      <div class="dialog__head">
-        <h2 class="dialog__title">source.c</h2>
-          <button
-            type="button"
-            class="btn btn--icon"
-            data-testid="source-close"
-            aria-label="Close source code"
-          >
-            <span aria-hidden="true">✕</span>
-          </button>
-      </div>
-      <p class="dialog__note">
-        All 256 variants on this page are compiled from exactly this file. The
-        source never changes — only what the compiler is asked to do with it.
-      </p>
-      <pre class="code code--c" data-testid="source"><code></code></pre>
-    </dialog>
 
     <script type="module" src="./main.ts"></script>
   </body>

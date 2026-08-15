@@ -362,6 +362,66 @@ withBrowser("desktop 1920x1080", () => {
     );
   }, 40_000);
 
+  it("shows the source and the assembly side by side", async () => {
+    const source = await session.page.locator('[data-testid="source"]').boundingBox();
+    const asm = await session.page.locator('[data-testid="asm-full"]').boundingBox();
+    expect(source).not.toBeNull();
+    expect(asm).not.toBeNull();
+    // Same row, different columns.
+    expect(Math.abs((source!.y ?? 0) - (asm!.y ?? 0))).toBeLessThan(8);
+    expect(asm!.x).toBeGreaterThan(source!.x + source!.width - 8);
+    expect((await text(session.page, '[data-testid="source"]')).length)
+      .toBeGreaterThan(100);
+  });
+
+  it("gives the graph the lower viewport once scrolled to it", async () => {
+    await session.page.locator('[data-testid="fit"]').scrollIntoViewIfNeeded();
+    await session.page.waitForTimeout(250);
+    const stage = await session.page.locator(".graph-stage").boundingBox();
+    expect(stage?.height ?? 0).toBeGreaterThan(500);
+    const canvas = await session.page
+      .locator('[data-testid="graph"] canvas')
+      .first()
+      .boundingBox();
+    expect(canvas?.height ?? 0).toBeGreaterThan(500);
+  });
+
+  it("keeps the controls pinned while the graph is on screen", async () => {
+    await session.page.evaluate(() =>
+      document.querySelector("#cfg")?.scrollIntoView({ block: "start" }),
+    );
+    await session.page.waitForTimeout(250);
+    expect(
+      await session.page.evaluate(() => window.scrollY),
+      "the page should have scrolled to the graph",
+    ).toBeGreaterThan(200);
+
+    const dock = await session.page.locator('[data-testid="dock"]').boundingBox();
+    expect(dock).not.toBeNull();
+    expect(dock!.y, "controls should be pinned to the top").toBeLessThan(24);
+    expect(
+      await session.page.locator('[data-transform="bcf"]').isVisible(),
+    ).toBe(true);
+
+    // The pinned bar must not be sitting on top of the graph's own toolbar.
+    const tools = await session.page.locator(".graph-tools").boundingBox();
+    expect(tools!.y).toBeGreaterThanOrEqual(dock!.y + dock!.height - 12);
+  });
+
+  it("shows the build command and updates it with the controls", async () => {
+    await resetAll(session.page);
+    expect(await text(session.page, '[data-testid="cli"]')).toContain(
+      "# no obfuscation passes enabled",
+    );
+    await setSwitch(session.page, "flattening", true);
+    await pickRadio(session.page, "split", "3");
+    const cli = await text(session.page, '[data-testid="cli"]');
+    expect(cli).toContain("-mllvm -enable-cffobf");
+    expect(cli).toContain("-mllvm -split_num=3");
+    expect(await overflow(session.page)).toBeLessThanOrEqual(0);
+    await resetAll(session.page);
+  }, 60_000);
+
   it("logs nothing to the console error channel", () => {
     expect(session.errors, session.errors.join(" | ")).toEqual([]);
   });
@@ -394,8 +454,29 @@ withBrowser("mobile 390x844", () => {
 
   it("keeps the graph big enough to read", async () => {
     const box = await session.page.locator(".graph-stage").boundingBox();
-    expect(box?.height ?? 0).toBeGreaterThan(280);
+    expect(box?.height ?? 0).toBeGreaterThan(330);
     expect(box?.width ?? 0).toBeLessThanOrEqual(MOBILE.width);
+  });
+
+  it("stacks the two code panes instead of squeezing them", async () => {
+    const source = await session.page.locator('[data-testid="source"]').boundingBox();
+    const asm = await session.page.locator('[data-testid="asm-full"]').boundingBox();
+    expect(asm!.y).toBeGreaterThan(source!.y + source!.height - 8);
+    expect(source!.width).toBeLessThanOrEqual(MOBILE.width);
+    expect(asm!.width).toBeLessThanOrEqual(MOBILE.width);
+  });
+
+  it("does not pin the controls over a small screen", async () => {
+    const before = await session.page
+      .locator('[data-testid="dock"]')
+      .boundingBox();
+    await session.page.locator('[data-testid="fit"]').scrollIntoViewIfNeeded();
+    await session.page.waitForTimeout(200);
+    const after = await session.page
+      .locator('[data-testid="dock"]')
+      .boundingBox();
+    // Static, so scrolling moves it off screen rather than parking it on top.
+    expect(after!.y).toBeLessThan(before!.y);
   });
 
   it("hides the inspector until a block is chosen, then shows it as a sheet", async () => {

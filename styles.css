@@ -34,6 +34,7 @@
     sans-serif;
   --gap: 16px;
   --radius: 10px;
+  --dock-h: 132px;
 
   color-scheme: dark;
 }
@@ -191,6 +192,26 @@ select {
   font-size: clamp(14px, 1.4vw, 16px);
 }
 
+.masthead__meta {
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.masthead__lede {
+  max-width: 88ch;
+  margin-top: 12px;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.masthead__lede strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ---------------------------------------------------------------- shell --- */
 
 main {
@@ -238,6 +259,28 @@ main {
   font-size: 11.5px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ dock --- */
+
+.dock {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  max-width: 1760px;
+  margin: 0 auto;
+  padding: 10px clamp(14px, 2.2vw, 32px);
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    var(--bg) 82%,
+    transparent 100%
+  );
+}
+
+.dock .panel {
+  box-shadow: 0 10px 26px rgb(4 7 11 / 55%);
 }
 
 /* --------------------------------------------------------------- button --- */
@@ -438,6 +481,74 @@ main {
   outline-offset: -2px;
 }
 
+/* ------------------------------------------------------------- pipeline --- */
+
+.code--cli {
+  max-height: none;
+  margin-bottom: 12px;
+  border-color: var(--accent-deep);
+  font-size: 12px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.cli-base {
+  color: var(--text);
+}
+
+.cli-flag {
+  color: var(--warm);
+  font-weight: 600;
+}
+
+.cli-cont {
+  color: var(--text-faint);
+}
+
+.cli-comment {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+.diptych {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
+}
+
+.pipeline .panel__note {
+  overflow: visible;
+  white-space: normal;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+}
+
+.pane__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.pane__name {
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pane__note {
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 10.5px;
+}
+
 /* -------------------------------------------------------------- metrics --- */
 
 .metrics__grid {
@@ -534,7 +645,15 @@ main {
   background: var(--green);
 }
 
-/* ------------------------------------------------------------ workspace --- */
+/* ---------------------------------------------------------------- stage --- */
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  scroll-margin-top: var(--dock-h);
+}
 
 .workspace {
   display: flex;
@@ -972,6 +1091,23 @@ main {
   font-size: 12.5px;
 }
 
+/* The row is as tall as the source needs, capped; the assembly then fills that
+   height and scrolls, which is the comparison the section is making. */
+.pane .code {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+}
+
+.pane--source .code {
+  max-height: 52vh;
+}
+
+.pane--asm .code {
+  height: 0;
+}
+
 .asm-addr {
   display: inline-block;
   min-width: 8ch;
@@ -1077,43 +1213,6 @@ main {
   color: var(--tok-global);
 }
 
-/* --------------------------------------------------------------- dialog --- */
-
-.dialog {
-  width: min(700px, 92vw);
-  max-height: 86dvh;
-  padding: 18px 20px 20px;
-  overflow: auto;
-  border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  background: var(--bg-panel);
-  color: var(--text);
-}
-
-.dialog::backdrop {
-  background: rgb(4 7 11 / 74%);
-}
-
-.dialog__head {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.dialog__title {
-  flex: 1 1 auto;
-  font-family: var(--mono);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.dialog__note {
-  margin-bottom: 12px;
-  color: var(--text-faint);
-  font-size: 12.5px;
-}
-
 /* --------------------------------------------------------------- footer --- */
 
 .footer {
@@ -1167,7 +1266,30 @@ main {
 
 /* ----------------------------------------------------------- responsive --- */
 
+@media (width <= 559px) {
+  /* Decorative metadata, not worth a second line beside the wordmark. */
+  .masthead__meta {
+    display: none;
+  }
+}
+
 @media (width <= 899px) {
+  /* A stacked control panel is too tall to pin: it would own the screen. */
+  .dock {
+    position: static;
+    padding-top: 14px;
+    padding-bottom: 0;
+    background: none;
+  }
+
+  .dock .panel {
+    box-shadow: none;
+  }
+
+  .graph-stage {
+    height: clamp(340px, 62vh, 560px);
+  }
+
   .inspector {
     position: fixed;
     right: 0;
@@ -1192,6 +1314,17 @@ main {
   .code {
     max-height: 210px;
   }
+
+  .pane .code {
+    height: clamp(190px, 34vh, 300px);
+    max-height: none;
+  }
+
+  .pane--source .code,
+  .pane--asm .code {
+    height: clamp(190px, 34vh, 300px);
+    max-height: none;
+  }
 }
 
 @media (width >= 640px) {
@@ -1210,11 +1343,22 @@ main {
     align-items: start;
   }
 
+  .diptych {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* The graph owns the screen below the fold: one viewport, minus whatever
+     the pinned controls are currently taking. --dock-h is measured in app.ts. */
+  .stage {
+    min-height: calc(100dvh - var(--dock-h));
+    padding-bottom: 4px;
+  }
+
   .workspace {
     display: grid;
     flex: 1 1 auto;
     grid-template-columns: minmax(0, 1fr) 372px;
-    min-height: 360px;
+    min-height: 340px;
   }
 
   .sidecol {
@@ -1225,6 +1369,22 @@ main {
   .graph-stage {
     flex: 1 1 auto;
     height: auto;
+  }
+}
+
+@media (width >= 1400px) {
+  /* Keep the pinned controls to one row of switches so the graph keeps the
+     height back. */
+  .switches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .controls__grid {
+    grid-template-columns: minmax(0, 4.4fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .switch__text {
+    font-size: 13px;
   }
 }
 

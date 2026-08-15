@@ -50,8 +50,13 @@ describe("first load", () => {
     expect(el("variant-id").textContent).toBe(CLEAN);
   });
 
-  it("fetches the index and exactly one variant", () => {
-    expect(mounted.control.requests).toEqual(["index.json", fileOf(CLEAN)]);
+  it("fetches the index, one variant, and the source — nothing else", () => {
+    expect([...mounted.control.requests].sort()).toEqual(
+      ["index.json", "source.c", fileOf(CLEAN)].sort(),
+    );
+    expect(
+      mounted.control.requests.filter((path) => path.startsWith("variants/")),
+    ).toHaveLength(1);
   });
 
   it("renders that variant's graph, fitted", () => {
@@ -566,6 +571,118 @@ describe("viewport changes", () => {
   });
 });
 
+describe("the source and the assembly, side by side", () => {
+  beforeEach(async () => {
+    mounted = await mountApp();
+  });
+
+  it("shows source.c unchanged, without waiting to be asked", () => {
+    const source = readFileSync(resolve("web_data/source.c"), "utf8");
+    expect(el("source").textContent).toBe(source);
+    expect(mounted.control.requests).toContain("source.c");
+    const lines = source.replace(/\n+$/, "").split("\n").length;
+    expect(el("source-note").textContent).toContain(`${lines} lines`);
+    expect(el("source-note").textContent).toMatch(/all 256 variants/);
+  });
+
+  it("leaves the source alone as the configuration changes", async () => {
+    const before = el("source").textContent;
+    await setControls(mounted.app, {
+      optimization: "O3",
+      bcf: true,
+      flattening: true,
+      substitution: true,
+      string_encryption: true,
+      split_level: 4,
+    });
+    expect(el("source").textContent).toBe(before);
+  });
+
+  it("prints the whole function, verbatim, for the selected variant", async () => {
+    for (const id of [CLEAN, "o0-bcf1-fla0-sub0-str0-split0"]) {
+      const expected = onDisk(id);
+      await setControls(mounted.app, expected.config);
+
+      const lines = [...el("asm-full").querySelectorAll(".asm-line")];
+      expect(lines, id).toHaveLength(expected.metrics.instruction_count);
+      expected.disassembly.instructions.forEach((instruction, i) => {
+        const reloc =
+          instruction.relocations.length > 0
+            ? `; ${instruction.relocations.map((r) => r.symbol).join(", ")}`
+            : "";
+        expect(lines[i]!.textContent, `${id}#${i}`).toBe(
+          `${instruction.address_hex}${instruction.mnemonic}${instruction.op_str}${reloc}`,
+        );
+      });
+      expect(el("asm-full-note").textContent).toContain(
+        expected.metrics.instruction_count.toLocaleString("en-AU"),
+      );
+      expect(el("asm-full-note").textContent).toContain(
+        expected.metrics.main_byte_size.toLocaleString("en-AU"),
+      );
+    }
+  });
+});
+
+describe("the build command", () => {
+  beforeEach(async () => {
+    mounted = await mountApp();
+  });
+
+  it("is a plain clang line when nothing is switched on", () => {
+    const text = el("cli").textContent ?? "";
+    expect(text).toContain("clang");
+    expect(text).toContain("-target x86_64-pc-windows-msvc");
+    expect(text).toContain("-O0");
+    expect(text).not.toContain("-mllvm");
+    expect(text).toContain("# no obfuscation passes enabled");
+  });
+
+  it("adds one flag per transformation, in control order", async () => {
+    await setControls(mounted.app, {
+      bcf: true,
+      flattening: true,
+      substitution: true,
+      string_encryption: true,
+    });
+    const flags = [...el("cli").querySelectorAll(".cli-flag")].map(
+      (node) => node.textContent,
+    );
+    expect(flags).toEqual([
+      "-mllvm -enable-bcfobf",
+      "-mllvm -enable-cffobf",
+      "-mllvm -enable-subobf",
+      "-mllvm -enable-strcry",
+    ]);
+  });
+
+  it("carries the split level into the command", async () => {
+    await setControls(mounted.app, { split_level: 3 });
+    const text = el("cli").textContent ?? "";
+    expect(text).toContain("-mllvm -enable-splitobf");
+    expect(text).toContain("-mllvm -split_num=3");
+
+    await setControls(mounted.app, { split_level: 0 });
+    expect(el("cli").textContent).not.toContain("split_num");
+  });
+
+  it("tracks the optimization level", async () => {
+    await setControls(mounted.app, { optimization: "O2" });
+    expect(el("cli").textContent).toContain("-O2");
+    expect(el("cli").textContent).not.toContain("-O0");
+  });
+
+  it("still describes the configuration when the variant fails to load", async () => {
+    const control = makeLoader();
+    mounted.app.destroy();
+    mounted = await mountApp(control);
+    control.failures.add(fileOf("o0-bcf1-fla0-sub0-str0-split0"));
+    await setControls(mounted.app, { bcf: true });
+    expect(mounted.app.variant()).toBeNull();
+    expect(el("cli").textContent).toContain("-mllvm -enable-bcfobf");
+  });
+});
+
 describe("technical details", () => {
   beforeEach(async () => {
     mounted = await mountApp();
@@ -586,13 +703,5 @@ describe("technical details", () => {
     expect(text).toContain("o2-bcf1-fla0-sub1-str0-split3");
     expect(text).toContain("web_data/variants/o2-bcf1-fla0-sub1-str0-split3.json");
     expect(text).toMatch(/not recorded in this dataset/);
-  });
-
-  it("shows source.c on demand, unchanged", async () => {
-    click(el("open-source"));
-    await new Promise((done) => setTimeout(done, 0));
-    const shown = el("source").textContent;
-    expect(shown).toBe(readFileSync(resolve("web_data/source.c"), "utf8"));
-    expect(mounted.control.requests).toContain("source.c");
   });
 });

@@ -25,6 +25,13 @@ dependencies; everything else lives in `src/`:
 - `src/graph.ts` — Cytoscape.js + dagre. The only module that imports either.
 - `src/asm.ts`, `src/highlight.ts` — colouring for text that came out of the
   dataset.
+- `src/command.ts` — the **one** thing on the page that is not read from
+  `web_data/`. The dataset records the compiled objects, not the command that
+  built them, so the displayed `clang` line is a reconstruction from the six
+  controls and is labelled as one wherever it appears. It must stay a pure
+  function of the configuration: no flag may appear that no control asked for,
+  and no seed flag may be invented (the seed's spelling is not recorded).
+  `spec/command.test.ts` holds that line.
 
 `web_data/` stays at that path. `vite.config.ts` copies it into `dist/` at build
 time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
@@ -54,9 +61,18 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
 - `spec/app.test.ts` — the controller against the real markup and real data
   with a stubbed graph. jsdom environment (`// @vitest-environment jsdom`).
 - `spec/page.test.ts` — the built markup's control and accessibility contract.
+- `spec/command.test.ts` — the reconstructed build command against every
+  configuration.
 - `spec/viewports.test.ts` — the built site in a real Chromium at 1920×1080 and
-  390×844. Skips itself when no system browser can be launched.
+  390×844, including that the graph owns the lower viewport and the controls
+  stay pinned above it. Skips itself when no system browser can be launched.
 - `spec/harness.ts` — shared mounting helpers, not a test file.
+
+The page is two screens: a hero (headline, pinned controls, build command,
+`source.c` beside the current disassembly) and a full-viewport analysis stage
+(metrics plus the graph). The controls are `position: sticky`, and the stage
+sizes itself with `calc(100dvh - var(--dock-h))` — `--dock-h` is measured from
+the real dock in `app.ts`, so changing the controls' height needs no CSS edit.
 
 Do not add `overflow-x: hidden` to `html` or `body`: it clamps `scrollWidth` and
 makes the no-sideways-scroll checks pass without meaning anything.

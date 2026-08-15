@@ -6,6 +6,7 @@
 // be driven in a DOM without a canvas.
 
 import { instructionsByAddress, renderInstruction } from "./asm.js";
+import { buildCommand, commandText } from "./command.js";
 import {
   BASELINE_CONFIG,
   Dataset,
@@ -129,8 +130,13 @@ export async function createApp(deps: AppDeps): Promise<App> {
   const asmProvenance = must(doc, '[data-testid="asm-provenance"]');
   const mblockSelect = must<HTMLSelectElement>(doc, '[data-testid="mblock"]');
   const techList = must(doc, "[data-role='tech-list']");
-  const sourceDialog = must<HTMLDialogElement>(doc, '[data-testid="source-dialog"]');
   const sourceCode = must(doc, '[data-testid="source"] code');
+  const sourceNote = must(doc, '[data-testid="source-note"]');
+  const asmFull = must(doc, "[data-role='asm-full']");
+  const asmFullNote = must(doc, '[data-testid="asm-full-note"]');
+  const cliCode = must(doc, "[data-role='cli']");
+  const datasetNote = must(doc, '[data-testid="dataset-note"]');
+  const dock = must<HTMLElement>(doc, '[data-testid="dock"]');
   const tabs = [
     must<HTMLButtonElement>(doc, '[data-testid="tab-ir"]'),
     must<HTMLButtonElement>(doc, '[data-testid="tab-asm"]'),
@@ -313,6 +319,58 @@ export async function createApp(deps: AppDeps): Promise<App> {
         : `None of the ${total} watched literals appear in the compiled object.`;
     } else {
       stringsNote.textContent = `${present} of ${total} watched literals appear in the compiled object.`;
+    }
+  }
+
+  // -------------------------------------------------- command and diptych ---
+  function paintCommand(config: VariantConfig): void {
+    clear(cliCode);
+    const parts = buildCommand(config);
+    const base = parts
+      .filter((part) => !part.obfuscating)
+      .map((part) => part.text)
+      .join(" ");
+    const flags = parts.filter((part) => part.obfuscating);
+
+    cliCode.append(span2("cli-base", base));
+    for (const flag of flags) {
+      cliCode.append(span2("cli-cont", " \\"), "\n  ", span2("cli-flag", flag.text));
+    }
+    if (flags.length === 0) {
+      cliCode.append("\n", span2("cli-comment", "# no obfuscation passes enabled"));
+    }
+  }
+
+  function paintFullAssembly(variant: Variant | null): void {
+    clear(asmFull);
+    if (!variant) {
+      asmFullNote.textContent = "unavailable";
+      return;
+    }
+    const instructions = variant.disassembly.instructions;
+    const fragment = doc.createDocumentFragment();
+    instructions.forEach((instruction, i) => {
+      fragment.append(renderInstruction(instruction));
+      if (i < instructions.length - 1) fragment.append("\n");
+    });
+    asmFull.append(fragment);
+    asmFullNote.textContent = `${variant.metrics.instruction_count.toLocaleString(
+      "en-AU",
+    )} instructions · ${variant.metrics.main_byte_size.toLocaleString("en-AU")} bytes`;
+  }
+
+  async function loadSource(): Promise<void> {
+    try {
+      const text = await dataset.source();
+      clear(sourceCode);
+      sourceCode.append(highlightC(text));
+      const lines = text.replace(/\n+$/, "").split("\n").length;
+      sourceNote.textContent = `${lines} lines · identical for all ${dataset.index.variant_count} variants`;
+    } catch (error) {
+      sourceCode.textContent = `Could not load ${dataset.index.source_file}: ${
+        error instanceof Error ? error.message : String(error)
+      }`;
+      sourceNote.textContent = "unavailable";
     }
   }
 
@@ -578,6 +636,7 @@ export async function createApp(deps: AppDeps): Promise<App> {
 
     paintMetrics(variant);
     paintStrings(variant);
+    paintFullAssembly(variant);
     paintTech(entry, variant);
 
     if (!reducedMotion()) {
@@ -596,6 +655,7 @@ export async function createApp(deps: AppDeps): Promise<App> {
     selectedNode = null;
     paintMetrics(null);
     paintStrings(null);
+    paintFullAssembly(null);
     paintInspector();
     paintTech(entry, null);
     graphCounts.textContent = "unavailable";
@@ -616,6 +676,9 @@ export async function createApp(deps: AppDeps): Promise<App> {
     if (destroyed) return;
     const config = readConfig();
     paintSwitchStates();
+    // The command follows the controls, not the fetch: it is true of the
+    // configuration whether or not the variant loads.
+    paintCommand(config);
 
     let entry: IndexVariant;
     try {
@@ -779,28 +842,25 @@ export async function createApp(deps: AppDeps): Promise<App> {
     if (inspector.getAttribute("data-open") === "true" && isSheet()) closeInspector();
   });
 
-  // source.c dialog
-  let sourceLoaded = false;
-  on(must(doc, '[data-testid="open-source"]'), "click", () => {
-    if (!sourceLoaded) {
-      sourceLoaded = true;
-      dataset
-        .source()
-        .then((text) => {
-          clear(sourceCode);
-          sourceCode.append(highlightC(text));
-        })
-        .catch((error: unknown) => {
-          sourceLoaded = false;
-          sourceCode.textContent = `Could not load ${dataset.index.source_file}: ${
-            error instanceof Error ? error.message : String(error)
-          }`;
-        });
+  const copyButton = must<HTMLButtonElement>(doc, '[data-testid="cli-copy"]');
+  on(copyButton, "click", () => {
+    const text = commandText(readConfig());
+    const clipboard = doc.defaultView?.navigator?.clipboard;
+    const done = (label: string): void => {
+      copyButton.textContent = label;
+      doc.defaultView?.setTimeout(() => {
+        copyButton.textContent = "Copy";
+      }, 1400);
+    };
+    if (!clipboard) {
+      done("Ctrl+C");
+      return;
     }
-    if (typeof sourceDialog.showModal === "function") sourceDialog.showModal();
-    else sourceDialog.setAttribute("open", "");
+    clipboard.writeText(text).then(
+      () => done("Copied"),
+      () => done("Ctrl+C"),
+    );
   });
-  on(must(doc, '[data-testid="source-close"]'), "click", () => sourceDialog.close());
 
   // Viewport changes must not disturb the selected configuration.
   const view = doc.defaultView;
@@ -808,6 +868,17 @@ export async function createApp(deps: AppDeps): Promise<App> {
     const observer = new view.ResizeObserver(() => graph.resize());
     observer.observe(graphCanvas);
     listeners.push(() => observer.disconnect());
+
+    // The graph section sizes itself against the sticky controls, so their
+    // height has to be a number the stylesheet can read.
+    const dockObserver = new view.ResizeObserver(() => {
+      doc.documentElement.style.setProperty(
+        "--dock-h",
+        `${Math.round(dock.getBoundingClientRect().height)}px`,
+      );
+    });
+    dockObserver.observe(dock);
+    listeners.push(() => dockObserver.disconnect());
   } else if (view) {
     on(view, "resize", () => graph.resize());
   }
@@ -815,8 +886,9 @@ export async function createApp(deps: AppDeps): Promise<App> {
   // ------------------------------------------------------------------ boot ---
   writeConfig(BASELINE_CONFIG);
   paintTech(baselineEntry, null);
+  datasetNote.textContent = `${dataset.index.variant_count} pre-built variants`;
   schedule();
-  await settled();
+  await Promise.all([settled(), loadSource()]);
 
   return {
     config: readConfig,
