@@ -578,11 +578,33 @@ describe("the source and the assembly, side by side", () => {
 
   it("shows source.c unchanged, without waiting to be asked", () => {
     const source = readFileSync(resolve("web_data/source.c"), "utf8");
-    expect(el("source").textContent).toBe(source);
+    // The plain-English notes live in their own spans; what is rendered as
+    // code is still the exact bytes that were compiled.
+    const rendered = [...document.querySelectorAll(".c-code")]
+      .map((node) => node.textContent)
+      .join("\n");
+    expect(rendered).toBe(source.replace(/\n+$/, ""));
     expect(mounted.control.requests).toContain("source.c");
     const lines = source.replace(/\n+$/, "").split("\n").length;
     expect(el("source-note").textContent).toContain(`${lines} lines`);
     expect(el("source-note").textContent).toMatch(/all 256 variants/);
+  });
+
+  it("annotates the source without putting the notes in the code", () => {
+    const notes = [...document.querySelectorAll(".c-note")];
+    expect(notes.length).toBeGreaterThan(8);
+    for (const note of notes) expect(note.textContent).toMatch(/^\s*\/\//);
+    expect(el("source-note").textContent).toMatch(/added by this page/);
+    expect(el("source-note").textContent).not.toMatch(/no longer match/);
+  });
+
+  it("labels the two panes for a reader who does not know the difference", async () => {
+    expect(el("source-role").textContent?.trim()).toBe("What the human wrote");
+    expect(el("asm-role").textContent?.trim()).toBe(
+      "What the CPU executes — without obfuscation",
+    );
+    await setControls(mounted.app, { bcf: true, split_level: 2 });
+    expect(el("asm-role").textContent).toContain("2 transformations on");
   });
 
   it("leaves the source alone as the configuration changes", async () => {

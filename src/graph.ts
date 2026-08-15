@@ -26,9 +26,33 @@ export interface GraphViewOptions {
   reducedMotion(): boolean;
 }
 
-/** Node box height nudges up with instruction count, within readable limits. */
-function nodeHeight(instructionCount: number): number {
-  return Math.min(72, Math.max(26, 22 + instructionCount * 1.9));
+/** How many of a block's instructions are previewed inside its box. */
+const PREVIEW_LINES = 4;
+const PREVIEW_WIDTH = 34;
+
+/**
+ * The text drawn inside a block: its label and count, then the first few of its
+ * own IR instructions.
+ *
+ * This is a preview, not a listing — long lines are cut with an ellipsis and
+ * the rest is summarised as "+N more", so at a distance a block reads as a
+ * quantity of code rather than as something to be read. The full text of every
+ * block is in the inspector, untruncated. The lines are the LLVM IR the node
+ * actually carries; x86 is deliberately not shown here, because the dataset
+ * records no mapping from an LLVM block to a machine block.
+ */
+function nodeText(node: { label: string; instructions: string[] }): string {
+  const total = node.instructions.length;
+  const head = `${node.label} · ${total}`;
+  const shown = node.instructions.slice(0, PREVIEW_LINES).map((line) => {
+    const trimmed = line.trim();
+    return trimmed.length > PREVIEW_WIDTH
+      ? `${trimmed.slice(0, PREVIEW_WIDTH - 1)}…`
+      : trimmed;
+  });
+  const rest = total - shown.length;
+  if (rest > 0) shown.push(`+${rest} more`);
+  return [head, ...shown].join("\n");
 }
 
 const ROW_GAP = 18;
@@ -153,16 +177,20 @@ const STYLE: cytoscape.StylesheetStyle[] = [
       "border-style": "solid",
       label: "data(display)",
       "text-wrap": "wrap",
-      "text-max-width": "140px",
+      "text-max-width": "250px",
       "text-valign": "center",
       "text-halign": "center",
-      color: "#cddae6",
+      "text-justification": "left",
+      color: "#9fb3c6",
       "font-family": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
-      "font-size": 11,
-      "line-height": 1.25,
+      "font-size": 9,
+      "line-height": 1.35,
+      // Below this the preview is a smudge; cytoscape drops it and draws the
+      // boxes alone, which is the view you want when zoomed out anyway.
+      "min-zoomed-font-size": 5,
       width: "label",
-      height: "data(h)",
-      padding: "9px",
+      height: "label",
+      padding: "8px",
       "transition-property": "border-color, background-color, border-width",
       "transition-duration": 120,
     },
@@ -267,6 +295,17 @@ export function createGraphView(options: GraphViewOptions): GraphView {
     pixelRatio: "auto",
   });
 
+  // Whether the reader has taken the view over. Until they do, the graph stays
+  // auto-fitted, so a panel above it collapsing or the window changing shape
+  // re-fits instead of leaving the graph cropped. Once they have zoomed or
+  // dragged, their view is theirs and a resize only keeps it centred.
+  let userAdjusted = false;
+  const markAdjusted = (): void => {
+    userAdjusted = true;
+  };
+  options.container.addEventListener("wheel", markAdjusted, { passive: true });
+  options.container.addEventListener("pointerdown", markAdjusted);
+
   cy.on("tap", "node", (event) => {
     options.onSelect(Number(event.target.id()));
   });
@@ -288,8 +327,7 @@ export function createGraphView(options: GraphViewOptions): GraphView {
           group: "nodes",
           data: {
             id: String(node.id),
-            display: `${node.label}\n${node.instructions.length}`,
-            h: nodeHeight(node.instructions.length),
+            display: nodeText(node),
             entry: node.id === cfg.entry_node_id ? 1 : 0,
           },
         });
@@ -315,9 +353,12 @@ export function createGraphView(options: GraphViewOptions): GraphView {
         name: "dagre",
         rankDir: "TB",
         ranker: "network-simplex",
-        nodeSep: 26,
-        edgeSep: 12,
-        rankSep: 46,
+        // Tighter than dagre's defaults: the boxes now carry a code preview,
+        // so they are large and the gaps between them are what pushes a deep
+        // chain off the bottom of the stage.
+        nodeSep: 20,
+        edgeSep: 10,
+        rankSep: 28,
         animate: false,
         fit: false,
         padding: 30,
@@ -328,6 +369,7 @@ export function createGraphView(options: GraphViewOptions): GraphView {
         w: cy.width() - padding * 2,
         h: cy.height() - padding * 2,
       });
+      userAdjusted = false;
       cy.fit(undefined, padding);
     },
 
@@ -348,6 +390,7 @@ export function createGraphView(options: GraphViewOptions): GraphView {
     },
 
     zoomBy(factor) {
+      userAdjusted = true;
       const next = Math.min(3, Math.max(0.02, cy.zoom() * factor));
       cy.zoom({
         level: next,
@@ -356,11 +399,21 @@ export function createGraphView(options: GraphViewOptions): GraphView {
     },
 
     fit() {
-      cy.fit(undefined, 28);
+      userAdjusted = false;
+      cy.fit(undefined, 22);
     },
 
     resize() {
-      // Keep whatever is in the middle of the viewport in the middle of it.
+      // A centre animation from a block selection can still be running when a
+      // panel above the graph grows and shrinks the stage; letting it finish
+      // after the re-fit leaves the graph parked off to one side.
+      cy.stop();
+      if (!userAdjusted) {
+        cy.resize();
+        cy.fit(undefined, 22);
+        return;
+      }
+      // Their view: keep whatever is in the middle of it in the middle of it.
       const zoom = cy.zoom();
       const pan = cy.pan();
       const centre = {
@@ -375,6 +428,8 @@ export function createGraphView(options: GraphViewOptions): GraphView {
     },
 
     destroy() {
+      options.container.removeEventListener("wheel", markAdjusted);
+      options.container.removeEventListener("pointerdown", markAdjusted);
       cy.destroy();
     },
   };

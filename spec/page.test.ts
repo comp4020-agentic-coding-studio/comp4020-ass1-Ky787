@@ -213,6 +213,51 @@ describe("wiring holds together", () => {
     }
   });
 
+  it("labels each pane for a reader who cannot tell them apart", () => {
+    const human = doc.querySelector('[data-testid="source-role"]');
+    const machine = doc.querySelector('[data-testid="asm-role"]');
+    expect(human?.textContent?.trim()).toBe("What the human wrote");
+    expect(machine?.textContent?.trim()).toContain("What the CPU executes");
+    // Different classes, so they can carry different colours.
+    expect(human?.className).not.toBe(machine?.className);
+  });
+
+  it("offers a hint beside everything a newcomer would trip on", () => {
+    const keys = [...doc.querySelectorAll("[data-hint]")].map(
+      (slot) => slot.getAttribute("data-hint"),
+    );
+    for (const needed of [
+      "bcf",
+      "flattening",
+      "substitution",
+      "string_encryption",
+      "split",
+      "optimization",
+      "graph",
+      "source",
+      "disassembly",
+      "instructions",
+      "watched",
+      "inspector",
+    ]) {
+      expect(keys, `no hint for ${needed}`).toContain(needed);
+    }
+  });
+
+  it("puts the strings and the inspector above the graph, not beside it", () => {
+    const side = doc.querySelector(".stage__side");
+    expect(side?.querySelector('[data-testid="strings"]')).toBeTruthy();
+    expect(side?.querySelector('[data-testid="inspector"]')).toBeTruthy();
+    expect(doc.querySelector(".sidecol")).toBeNull();
+
+    const children = [...(doc.querySelector(".stage")?.children ?? [])];
+    const sideAt = children.findIndex((el) => el.classList.contains("stage__side"));
+    const graphAt = children.findIndex((el) => el.classList.contains("workspace"));
+    expect(sideAt).toBeGreaterThan(-1);
+    expect(graphAt).toBeGreaterThan(sideAt);
+    expect(doc.querySelector(".workspace .graph-panel")).toBeTruthy();
+  });
+
   it("shows the build command and offers to copy it", () => {
     expect(doc.querySelector('[data-testid="cli"]')?.tagName).toBe("PRE");
     expect(doc.querySelector('[data-testid="cli-copy"]')?.tagName).toBe(

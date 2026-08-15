@@ -35,6 +35,8 @@
   --gap: 16px;
   --radius: 10px;
   --dock-h: 132px;
+  --shell: 2160px;
+  --pad: clamp(12px, 1.2vw, 24px);
 
   color-scheme: dark;
 }
@@ -138,9 +140,9 @@ select {
 
 .masthead {
   width: 100%;
-  max-width: 1760px;
+  max-width: var(--shell);
   margin: 0 auto;
-  padding: 12px clamp(14px, 2.2vw, 32px) 2px;
+  padding: 12px var(--pad) 2px;
 }
 
 .masthead__bar {
@@ -221,9 +223,9 @@ main {
   gap: 12px;
   width: 100%;
   min-height: 0;
-  max-width: 1760px;
+  max-width: var(--shell);
   margin: 0 auto;
-  padding: 14px clamp(14px, 2.2vw, 32px);
+  padding: 14px var(--pad);
 }
 
 .panel {
@@ -268,9 +270,9 @@ main {
   top: 0;
   z-index: 30;
   width: 100%;
-  max-width: 1760px;
+  max-width: var(--shell);
   margin: 0 auto;
-  padding: 10px clamp(14px, 2.2vw, 32px);
+  padding: 10px var(--pad);
   background: linear-gradient(
     to bottom,
     var(--bg) 0%,
@@ -281,6 +283,80 @@ main {
 
 .dock .panel {
   box-shadow: 0 10px 26px rgb(4 7 11 / 55%);
+}
+
+/* ----------------------------------------------------------------- hint --- */
+
+.hint {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  vertical-align: middle;
+}
+
+.hint__btn {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--bg-raised);
+  color: var(--text-faint);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: help;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.hint__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.hint__bubble {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: -6px;
+  z-index: 60;
+  display: none;
+  width: max-content;
+  max-width: min(300px, 68vw);
+  padding: 9px 11px;
+  border: 1px solid var(--accent-deep);
+  border-radius: 8px;
+  background: #101a23;
+  box-shadow: 0 10px 28px rgb(2 5 9 / 70%);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.45;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+}
+
+.hint__bubble strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--accent);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hint--flip .hint__bubble {
+  right: -6px;
+  left: auto;
+}
+
+.hint[data-open="true"] .hint__bubble {
+  display: block;
 }
 
 /* --------------------------------------------------------------- button --- */
@@ -536,6 +612,28 @@ main {
   margin-bottom: 6px;
 }
 
+.pane__role {
+  padding: 2px 9px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.pane__role--human {
+  border-color: #2f6f4e;
+  background: #10241a;
+  color: #7fd8a0;
+}
+
+.pane__role--machine {
+  border-color: #7a4a1e;
+  background: #241a10;
+  color: var(--warm);
+}
+
 .pane__name {
   color: var(--text);
   font-family: var(--mono);
@@ -558,13 +656,20 @@ main {
 }
 
 .metric {
+  position: relative;
   display: grid;
-  gap: 4px;
+  gap: 3px;
   min-width: 0;
-  padding: 9px 12px 10px;
+  padding: 7px 12px 8px;
   border: 1px solid var(--line);
   border-radius: 9px;
   background: var(--bg-inset);
+}
+
+.metric > .hint {
+  position: absolute;
+  top: 8px;
+  right: 9px;
 }
 
 .metric__label {
@@ -576,7 +681,8 @@ main {
 
 .metric__values {
   display: flex;
-  gap: 7px;
+  flex-wrap: wrap;
+  gap: 3px 7px;
   align-items: baseline;
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
@@ -599,6 +705,7 @@ main {
 }
 
 .metric__delta {
+  margin-left: auto;
   color: var(--text-faint);
   font-family: var(--mono);
   font-size: 10.5px;
@@ -658,12 +765,12 @@ main {
 .workspace {
   display: flex;
   flex-direction: column;
-  gap: var(--gap);
   min-width: 0;
 }
 
 .graph-panel {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   min-width: 0;
 }
@@ -827,10 +934,10 @@ main {
 
 /* -------------------------------------------------------------- sidecol --- */
 
-.sidecol {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap);
+.stage__side {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr;
   min-width: 0;
 }
 
@@ -1091,6 +1198,11 @@ main {
   font-size: 12.5px;
 }
 
+.c-note {
+  color: #6f8598;
+  font-style: italic;
+}
+
 /* The row is as tall as the source needs, capped; the assembly then fills that
    height and scrolls, which is the comparison the section is making. */
 .pane .code {
@@ -1217,9 +1329,9 @@ main {
 
 .footer {
   width: 100%;
-  max-width: 1760px;
+  max-width: var(--shell);
   margin: 0 auto;
-  padding: 0 clamp(14px, 2.2vw, 32px) 16px;
+  padding: 0 var(--pad) 16px;
 }
 
 .tech {
@@ -1354,17 +1466,25 @@ main {
     padding-bottom: 4px;
   }
 
+  /* Nothing beside the graph any more: strings and the inspector sit above
+     it, so it gets the full width of the shell as well as the height. */
   .workspace {
-    display: grid;
     flex: 1 1 auto;
-    grid-template-columns: minmax(0, 1fr) 372px;
-    min-height: 340px;
+    min-height: 320px;
   }
 
-  .sidecol {
+  /* Sizes to whatever the panels hold, up to a ceiling — an empty inspector
+     must not sit on 200px of nothing the graph could be using. */
+  .stage__side {
+    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+    max-height: 200px;
+  }
+
+  .stage__side > .panel {
     min-height: 0;
     overflow-y: auto;
   }
+
 
   .graph-stage {
     flex: 1 1 auto;
@@ -1385,12 +1505,6 @@ main {
 
   .switch__text {
     font-size: 13px;
-  }
-}
-
-@media (width >= 1500px) {
-  .workspace {
-    grid-template-columns: minmax(0, 1fr) 420px;
   }
 }
 

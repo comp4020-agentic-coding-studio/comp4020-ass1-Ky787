@@ -33,6 +33,15 @@ dependencies; everything else lives in `src/`:
   the configuration: no flag may appear that no control asked for, and no seed
   flag may be invented — the seed is fixed at 12345, but nothing records which
   switch carried it. `spec/command.test.ts` holds that line.
+- `src/hints.ts`, `src/annotations.ts` — the other page-authored text: the
+  question-mark explanations, and the plain-English notes beside `source.c`.
+  Both explain general compiler ideas; neither states anything about the
+  dataset. The notes are **never merged into the code** — `annotate` returns the
+  source line untouched and the note separately, the code goes in a `.c-code`
+  span and the note in a `.c-note` one, and `spec/explainers.test.ts` asserts
+  the `.c-code` spans still concatenate to the file byte for byte. Notes are
+  matched on a snippet rather than a line number, and a snippet that matches
+  nothing is surfaced in the pane's caption rather than silently dropped.
 
 `web_data/` stays at that path. `vite.config.ts` copies it into `dist/` at build
 time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
@@ -51,6 +60,11 @@ time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
 - Node placement is presentation and may be changed (`wrapWideRows` folds an
   over-wide dagre row so a flattened CFG is not a hairline). Nodes and edges
   themselves are never added, dropped, merged, or reordered.
+- The code preview drawn inside each graph box is the node's **own LLVM IR**,
+  truncated with a visible ellipsis and a "+N more" tail. x86 is deliberately
+  not drawn on graph nodes: the dataset records no LLVM-to-machine mapping, so
+  putting machine code on an LLVM block would be a claim the data cannot make.
+  The untruncated text is always one click away in the inspector.
 
 ## Checks
 
@@ -62,8 +76,11 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
 - `spec/app.test.ts` — the controller against the real markup and real data
   with a stubbed graph. jsdom environment (`// @vitest-environment jsdom`).
 - `spec/page.test.ts` — the built markup's control and accessibility contract.
-- `spec/command.test.ts` — the reconstructed build command against every
-  configuration.
+- `spec/command.test.ts` — the build command against every configuration.
+- `spec/explainers.test.ts` — the hints and the source notes: that the notes
+  leave the code exactly as the dataset has it, that a drifted source is
+  reported rather than mis-annotated, and that a hint inside a `<label>` never
+  flips the switch it is explaining.
 - `spec/viewports.test.ts` — the built site in a real Chromium at 1920×1080 and
   390×844, including that the graph owns the lower viewport and the controls
   stay pinned above it. Skips itself when no system browser can be launched.
@@ -71,7 +88,8 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
 
 The page is two screens: a hero (headline, pinned controls, build command,
 `source.c` beside the current disassembly) and a full-viewport analysis stage
-(metrics plus the graph). The controls are `position: sticky`, and the stage
+(metrics, then watched strings and the inspector in a capped row, then the
+graph across the full width — nothing sits beside the graph). The controls are `position: sticky`, and the stage
 sizes itself with `calc(100dvh - var(--dock-h))` — `--dock-h` is measured from
 the real dock in `app.ts`, so changing the controls' height needs no CSS edit.
 

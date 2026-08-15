@@ -5,6 +5,7 @@
 // The graph view is injected rather than imported so the whole controller can
 // be driven in a DOM without a canvas.
 
+import { annotate } from "./annotations.js";
 import { instructionsByAddress, renderInstruction } from "./asm.js";
 import { buildCommand, commandText } from "./command.js";
 import {
@@ -15,6 +16,7 @@ import {
   SPLIT_LEVELS,
 } from "./dataset.js";
 import { highlightC, highlightIr } from "./highlight.js";
+import { mountHints } from "./hints.js";
 import type { GraphView, GraphViewOptions } from "./graph.js";
 import type {
   BooleanTransform,
@@ -139,6 +141,7 @@ export async function createApp(deps: AppDeps): Promise<App> {
   const asmFullNote = must(doc, '[data-testid="asm-full-note"]');
   const cliCode = must(doc, "[data-role='cli']");
   const datasetNote = must(doc, '[data-testid="dataset-note"]');
+  const asmRole = must(doc, '[data-testid="asm-role"]');
   const dock = must<HTMLElement>(doc, '[data-testid="dock"]');
   const tabs = [
     must<HTMLButtonElement>(doc, '[data-testid="tab-ir"]'),
@@ -360,15 +363,42 @@ export async function createApp(deps: AppDeps): Promise<App> {
     asmFullNote.textContent = `${variant.metrics.instruction_count.toLocaleString(
       "en-AU",
     )} instructions · ${variant.metrics.main_byte_size.toLocaleString("en-AU")} bytes`;
+
+    const on = TRANSFORMS.filter(({ key }) => variant.config[key]).length;
+    const split = variant.config.split_level !== 0;
+    asmRole.textContent =
+      on === 0 && !split
+        ? "What the CPU executes — without obfuscation"
+        : `What the CPU executes — with ${on + (split ? 1 : 0)} transformation${
+            on + (split ? 1 : 0) === 1 ? "" : "s"
+          } on`;
   }
 
   async function loadSource(): Promise<void> {
     try {
       const text = await dataset.source();
+      // The code is rendered verbatim, line by line. The plain-English notes
+      // are this page's, in their own span and their own colour — the compiled
+      // file has no comments in it.
+      const { lines, unmatched } = annotate(text);
       clear(sourceCode);
-      sourceCode.append(highlightC(text));
-      const lines = text.replace(/\n+$/, "").split("\n").length;
-      sourceNote.textContent = `${lines} lines · identical for all ${dataset.index.variant_count} variants`;
+      lines.forEach(({ code, note }, i) => {
+        const row = doc.createElement("span");
+        row.className = "c-line";
+        const codeSpan = doc.createElement("span");
+        codeSpan.className = "c-code";
+        codeSpan.append(highlightC(code));
+        row.append(codeSpan);
+        if (note) row.append(span2("c-note", `${code.trim() ? "  " : ""}// ${note}`));
+        sourceCode.append(row);
+        if (i < lines.length - 1) sourceCode.append("\n");
+      });
+      sourceNote.textContent =
+        `${lines.length} lines · identical for all ${dataset.index.variant_count} variants` +
+        ` · notes in grey are added by this page`;
+      if (unmatched.length > 0) {
+        sourceNote.textContent += ` · ${unmatched.length} note(s) no longer match the source`;
+      }
     } catch (error) {
       sourceCode.textContent = `Could not load ${dataset.index.source_file}: ${
         error instanceof Error ? error.message : String(error)
@@ -886,6 +916,8 @@ export async function createApp(deps: AppDeps): Promise<App> {
   }
 
   // ------------------------------------------------------------------ boot ---
+  listeners.push(mountHints(doc));
+
   writeConfig(BASELINE_CONFIG);
   paintTech(baselineEntry, null);
   datasetNote.textContent = `${dataset.index.variant_count} pre-built variants`;
