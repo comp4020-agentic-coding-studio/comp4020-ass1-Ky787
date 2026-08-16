@@ -33,7 +33,7 @@ describe("the page states its one idea", () => {
   });
 
   it("says what to do next", () => {
-    const sub = (doc.querySelector(".masthead__sub")?.textContent ?? "")
+    const sub = (doc.querySelector('[data-testid="thesis"]')?.textContent ?? "")
       .replace(/\s+/g, " ")
       .trim()
       .toLowerCase();
@@ -44,6 +44,18 @@ describe("the page states its one idea", () => {
       .replace(/\s+/g, " ")
       .toLowerCase();
     expect(lede).toContain("never changes");
+  });
+
+  it("puts that line under the controls, not in the masthead", () => {
+    const order = [...doc.body.children].map((el) => el.className || el.tagName);
+    const dock = order.indexOf("dock");
+    const thesis = order.indexOf("thesis");
+    expect(dock).toBeGreaterThan(-1);
+    expect(thesis).toBe(dock + 1);
+    // Outside the sticky dock on purpose: --dock-h is subtracted from the
+    // graph's height, so anything inside the dock is taken off the graph.
+    expect(doc.querySelector('.dock [data-testid="thesis"]')).toBeNull();
+    expect(doc.querySelector('.masthead [data-testid="thesis"]')).toBeNull();
   });
 
   it("describes itself for a link preview", () => {
