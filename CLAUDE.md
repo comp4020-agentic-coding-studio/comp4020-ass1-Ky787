@@ -112,5 +112,18 @@ header carries the x86 / LLVM IR switch beside zoom and fit. The controls are `p
 sizes itself with `calc(100dvh - var(--dock-h))` — `--dock-h` is measured from
 the real dock in `app.ts`, so changing the controls' height needs no CSS edit.
 
+Every control that has a clean end and a hard-to-read end runs along one
+intensity ramp (`--scale-0` green … `--scale-3` red), left to right, so the dock
+reads as a single scale: a switch is green off and red on, and the two
+`.segmented--scale` groups tick each step in its own phase colour. That is why
+optimization is listed **O3 first** — it puts the clean end of both scales on
+the same side. The view switch is `.segmented--view` and stays off the ramp:
+x86 and IR are two ways of looking, not two amounts of obfuscation.
+
+Colour is never the only signal — each switch also says ON or OFF and moves its
+thumb, and each step of a scale keeps its own label and position, because
+red/green is exactly the pair a colour-blind reader cannot separate.
+`spec/viewports.test.ts` holds both halves of that.
+
 Do not add `overflow-x: hidden` to `html` or `body`: it clamps `scrollWidth` and
 makes the no-sideways-scroll checks pass without meaning anything.

@@ -120,7 +120,7 @@
             <legend class="field__legend">
               Basic Block Splitting <span data-hint="split"></span>
             </legend>
-            <div class="segmented" data-testid="split-group">
+            <div class="segmented segmented--scale" data-testid="split-group">
               <label class="segmented__opt">
                 <input type="radio" name="split" value="0" checked />
                 <span>Off</span>
@@ -144,22 +144,25 @@
             <legend class="field__legend">
               Compiler Optimization <span data-hint="optimization"></span>
             </legend>
-            <div class="segmented" data-testid="opt-group">
+            <!-- Highest optimization first, so this control runs the same way
+                 as the one above it: the clean end on the left, the end that
+                 leaves the most code to read on the right. -->
+            <div class="segmented segmented--scale" data-testid="opt-group">
               <label class="segmented__opt">
-                <input type="radio" name="opt" value="O0" />
-                <span>O0</span>
-              </label>
-              <label class="segmented__opt">
-                <input type="radio" name="opt" value="O1" />
-                <span>O1</span>
+                <input type="radio" name="opt" value="O3" checked />
+                <span>O3</span>
               </label>
               <label class="segmented__opt">
                 <input type="radio" name="opt" value="O2" />
                 <span>O2</span>
               </label>
               <label class="segmented__opt">
-                <input type="radio" name="opt" value="O3" checked />
-                <span>O3</span>
+                <input type="radio" name="opt" value="O1" />
+                <span>O1</span>
+              </label>
+              <label class="segmented__opt">
+                <input type="radio" name="opt" value="O0" />
+                <span>O0</span>
               </label>
             </div>
           </fieldset>

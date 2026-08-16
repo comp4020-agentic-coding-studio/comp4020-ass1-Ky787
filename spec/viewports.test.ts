@@ -136,6 +136,40 @@ async function open(viewport: {
 const text = async (page: Page, selector: string): Promise<string> =>
   (await page.textContent(selector))?.trim() ?? "";
 
+/**
+ * A colour as 0-255 channels. Chromium serialises a colour-mix() as
+ * `color(srgb 0..1 0..1 0..1)` rather than `rgb()`, and a custom property keeps
+ * whatever the stylesheet wrote, so all three spellings are read here.
+ */
+function channels(computed: string): [number, number, number] {
+  const value = computed.trim();
+
+  const rgb = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(value);
+  if (rgb) return [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])];
+
+  const srgb = /color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/.exec(value);
+  if (srgb) {
+    return [
+      Number(srgb[1]) * 255,
+      Number(srgb[2]) * 255,
+      Number(srgb[3]) * 255,
+    ];
+  }
+
+  const hex = /^#([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec(value);
+  if (hex) {
+    return [
+      parseInt(hex[1]!, 16),
+      parseInt(hex[2]!, 16),
+      parseInt(hex[3]!, 16),
+    ];
+  }
+  throw new Error(
+    `no colour in "${computed}" — an oklab() here means a transition was ` +
+      `still running when it was read`,
+  );
+}
+
 const variantId = (page: Page): Promise<string> =>
   text(page, '[data-testid="variant-id"]');
 
@@ -353,6 +387,59 @@ withBrowser("desktop 1920x1080", () => {
     });
     expect(outlined).toBe(true);
   });
+
+  it("colours the controls from green to red, and never by colour alone", async () => {
+    await resetAll(session.page);
+    await session.page.waitForTimeout(250);
+    const track = ".switch:has([data-transform='bcf']) .switch__track";
+    const state = ".switch:has([data-transform='bcf']) .switch__state";
+
+    const off = channels(
+      await session.page.evaluate(
+        (sel) => getComputedStyle(document.querySelector(sel)!).backgroundColor,
+        track,
+      ),
+    );
+    expect(await text(session.page, state)).toBe("OFF");
+    expect(off[0], "an untouched switch reads green").toBeLessThan(off[1]);
+
+    await setSwitch(session.page, "bcf", true);
+    // The track cross-fades over 150ms, and a colour caught mid-transition is
+    // serialised in a different space entirely. Read it once it has landed.
+    await session.page.waitForTimeout(250);
+    const on = channels(
+      await session.page.evaluate(
+        (sel) => getComputedStyle(document.querySelector(sel)!).backgroundColor,
+        track,
+      ),
+    );
+    // The word is the accessible signal; the colour only reinforces it.
+    expect(await text(session.page, state)).toBe("ON");
+    expect(on[0], "an enabled switch reads red").toBeGreaterThan(on[1]);
+
+    // Both scales walk the same ramp, step by step, in DOM order.
+    const ramps = await session.page.evaluate(() =>
+      ["split-group", "opt-group"].map((id) =>
+        [
+          ...document.querySelectorAll<HTMLElement>(
+            `[data-testid="${id}"] .segmented__opt`,
+          ),
+        ].map((step) => getComputedStyle(step).getPropertyValue("--phase")),
+      ),
+    );
+    for (const ramp of ramps) {
+      expect(ramp).toHaveLength(4);
+      const warmth = ramp.map((phase) => {
+        const [r, g] = channels(phase);
+        return r - g;
+      });
+      for (let i = 1; i < warmth.length; i += 1) {
+        expect(warmth[i], `step ${i} is warmer than step ${i - 1}`).toBeGreaterThan(
+          warmth[i - 1]!,
+        );
+      }
+    }
+  }, 40_000);
 
   it("resets to the clean variant", async () => {
     await resetAll(session.page);

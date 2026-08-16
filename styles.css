@@ -28,6 +28,16 @@
   --tok-var: #66d0f5;
   --tok-global: #f0a5c0;
   --tok-punct: #7b8fa3;
+
+  /* Obfuscation intensity. Every control that has a "clean" end and a "hard to
+     read" end runs along this ramp, left to right, so the dock reads as one
+     scale rather than four unrelated widgets. Colour is never the only signal:
+     each switch also says ON or OFF, and each step of a scale keeps its own
+     label and position. */
+  --scale-0: #4fc07d;
+  --scale-1: #c4c063;
+  --scale-2: #e09a56;
+  --scale-3: #e0685d;
   --mono: ui-monospace, sfmono-regular, "SF Mono", menlo, consolas,
     "Liberation Mono", monospace;
   --sans: system-ui, -apple-system, "Segoe UI", roboto, helvetica, arial,
@@ -442,9 +452,11 @@ main {
   outline-offset: 2px;
 }
 
+/* Off is the clean end of the ramp, on is the obfuscated one — so a switch
+   turns from green to red as it is enabled, not from grey to "highlighted". */
 .switch[data-on="true"] {
-  border-color: var(--accent-deep);
-  background: #0e1a22;
+  border-color: color-mix(in srgb, var(--scale-3) 45%, var(--line));
+  background: color-mix(in srgb, var(--scale-3) 9%, var(--bg-inset));
 }
 
 .switch__input {
@@ -461,7 +473,7 @@ main {
   width: 34px;
   height: 18px;
   border-radius: 999px;
-  background: var(--line-strong);
+  background: color-mix(in srgb, var(--scale-0) 26%, var(--bg-inset));
   transition: background-color 0.15s ease;
 }
 
@@ -472,7 +484,7 @@ main {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #91a6ba;
+  background: var(--scale-0);
   transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
@@ -484,23 +496,23 @@ main {
 
 .switch__state {
   flex: none;
-  color: var(--text-faint);
+  color: var(--scale-0);
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.12em;
 }
 
 .switch[data-on="true"] .switch__track {
-  background: var(--accent-deep);
+  background: color-mix(in srgb, var(--scale-3) 30%, var(--bg-inset));
 }
 
 .switch[data-on="true"] .switch__thumb {
   transform: translateX(16px);
-  background: var(--accent);
+  background: var(--scale-3);
 }
 
 .switch[data-on="true"] .switch__state {
-  color: var(--accent);
+  color: var(--scale-3);
 }
 
 .segmented {
@@ -554,6 +566,31 @@ main {
   font-size: 11px;
 }
 
+/* A scale control is an intensity axis, so its steps run along the ramp: each
+   one carries a tick in its own phase colour, and the chosen step fills with
+   it. The view switch is not on this scale — x86 and IR are two ways of
+   looking, not two amounts of obfuscation. The tick is an inset shadow rather
+   than a border so adding it costs the dock no height. */
+.segmented--scale .segmented__opt:nth-child(1) {
+  --phase: var(--scale-0);
+}
+
+.segmented--scale .segmented__opt:nth-child(2) {
+  --phase: var(--scale-1);
+}
+
+.segmented--scale .segmented__opt:nth-child(3) {
+  --phase: var(--scale-2);
+}
+
+.segmented--scale .segmented__opt:nth-child(4) {
+  --phase: var(--scale-3);
+}
+
+.segmented--scale .segmented__opt span {
+  box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--phase) 34%, transparent);
+}
+
 .segmented__opt span:hover {
   background: #131e28;
 }
@@ -568,6 +605,12 @@ main {
 .segmented__opt input:focus-visible + span {
   outline: 2px solid var(--accent);
   outline-offset: -2px;
+}
+
+.segmented--scale .segmented__opt input:checked + span {
+  background: color-mix(in srgb, var(--phase) 20%, transparent);
+  color: color-mix(in srgb, var(--phase) 30%, #fff);
+  box-shadow: inset 0 2px 0 var(--phase), inset 0 -3px 0 var(--phase);
 }
 
 /* ------------------------------------------------------------- pipeline --- */

@@ -95,11 +95,11 @@ describe("controls", () => {
     ).toContain("Basic Block Splitting");
   });
 
-  it("offers O0 / O1 / O2 / O3 for optimization", () => {
+  it("offers optimization highest-first, so both scales run clean to noisy", () => {
     const values = [
       ...doc.querySelectorAll<HTMLInputElement>('input[name="opt"]'),
     ].map((input) => input.value);
-    expect(values).toEqual(["O0", "O1", "O2", "O3"]);
+    expect(values).toEqual(["O3", "O2", "O1", "O0"]);
     expect(
       doc
         .querySelector('[data-testid="opt-group"]')
