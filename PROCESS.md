@@ -15,24 +15,19 @@ Making the model show the actual C and assembly code at the top allows for an ea
 
 ### 2. Using ground truth in Claude.md
 
-I replaced the CLAUDE.md with a much smaller note saying to use a pre-computed data binary. The smaller CLAUDE.md made the initial prompt easier to process since I used my personal AI account to generate an initial prompt after some brainstorming. This helped put the initial model commit on the right track early on. Claude later on added more sentences to the CLAUDE.md with suggestions I gave it. 
+I replaced the CLAUDE.md with a much smaller note saying to use a pre-computed data binary in the dataset integrity section. The smaller CLAUDE.md made the initial prompt easier to process since I used my personal AI account to generate an initial prompt after some brainstorming. This helped put the initial model commit on the right track early on. Claude later on added more sentences to the CLAUDE.md with suggestions I gave it. 
 
 [`5240896`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-Ky787/commit/5240896)
 
-### 3. Added small explainers to Hikari switches and confirmed with ground truth
 
-I got a list of build commands along with the source json to feed into claude so it would produce the correct clang build args. This involved getting it to generate a separate Python script to parse my build data to correctly build the jsons. With this, the real CLI build options can be visualised and are sourced from the actual build args instead of getting claude to generate what they probably were since this niche use case would probably result in hallucinations. 
-
-[`ee6c9ea`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-Ky787/commit/ee6c9ea)
-
-### 4. Made graph main page attraction
+### 3 Made graph main page attraction
 
 The graph was the main part of the website apart from the original C and assembly, so I removed the older "Watched strings" and "block inspector" parts and just made the graph the entire bottom half of the website in order to give it more space. I told claude to put in the original assembly for all the blocks and always render them as the point was not to get precision with the graph but to grasp the complexity of the overall program. Overall I found a framing of my idea that worked well without breaking the data integrity of the actual code. 
 
 [`e06a9ec`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-Ky787/commit/e06a9ec)
 [`88187f1`](https://github.com/comp4020-agentic-coding-studio/comp4020-ass1-Ky787/commit/88187f1)
 
-### 5. Added red to green
+### 4. Added red to green
 
 As the block splitting and compiler optimisations run in contrast to each other, I decided to swap the compiler slider direction (so it starts at O3 instead of O0) so that the user interaction is the same for the sliders. I also added red-green colouring to demonstrate to the user that setting the options made the code harder to read as naturally, red means bad and green means good — which is a concept claude might not originally infer. I set the compiler optimisation at O3 which removes some obfuscations even though it defaults as an on setting since it made more sense from a programmer's view: most programmers enable optimisations, and disabling them allows for greater obfuscation.
 
