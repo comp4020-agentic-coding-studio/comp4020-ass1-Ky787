@@ -560,8 +560,10 @@ main {
 }
 
 .segmented--view .segmented__opt span {
+  min-width: 4.6rem;
   padding: 5px 10px;
   font-size: 11px;
+  white-space: nowrap;
 }
 
 /* A scale control is an intensity axis, so its steps run along the ramp: each
@@ -980,6 +982,14 @@ main {
 .legend__item[data-kind="case"] .legend__edge {
   border-top-style: dotted;
   border-top-color: var(--blue);
+}
+
+.legend__note {
+  width: 12px;
+  height: 12px;
+  border: 1px dashed var(--line-strong);
+  border-radius: 3px;
+  background: var(--bg-inset);
 }
 
 .legend__item[data-kind="default"] .legend__edge {

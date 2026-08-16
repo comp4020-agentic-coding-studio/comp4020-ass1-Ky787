@@ -17,7 +17,19 @@ cytoscape.use(dagre);
  */
 export interface GraphModel {
   entryId: number;
-  nodes: { id: number; label: string; lines: string[]; total: number }[];
+  nodes: {
+    id: number;
+    label: string;
+    /** The block's own code, verbatim. */
+    lines: string[];
+    total: number;
+    /**
+     * What this block reaches for by name — a string literal it references, or
+     * the symbol it calls. Kept apart from `lines` because these are not code
+     * the block holds; they are drawn as `;` comments below it.
+     */
+    notes?: string[];
+  }[];
   edges: { source: number; target: number; kind: string }[];
 }
 
@@ -40,26 +52,38 @@ export interface GraphViewOptions {
 const PREVIEW_LINES = 4;
 const PREVIEW_WIDTH = 34;
 
+/** How many `;` notes a block shows before the rest are summarised. */
+const NOTE_LINES = 3;
+
+function clip(text: string): string {
+  const trimmed = text.trim();
+  return trimmed.length > PREVIEW_WIDTH
+    ? `${trimmed.slice(0, PREVIEW_WIDTH - 1)}…`
+    : trimmed;
+}
+
 /**
- * The text drawn inside a block: its label and count, then the first few of the
- * lines it actually holds.
+ * The text drawn inside a block: its label and count, the first few of the
+ * lines it actually holds, then what it reaches for by name.
  *
  * This is a preview, not a listing — long lines are cut with an ellipsis and
  * the rest is summarised as "+N more", so at a distance a block reads as a
- * quantity of code rather than as something to be read. The full text of every
- * block is in the inspector, untruncated.
+ * quantity of code rather than as something to be read. The notes carry a `;`
+ * so they read as comments and cannot be mistaken for instructions the block
+ * contains.
  */
 function nodeText(node: GraphModel["nodes"][number]): string {
   const total = node.total;
   const head = `${node.label} · ${total}`;
-  const shown = node.lines.slice(0, PREVIEW_LINES).map((line) => {
-    const trimmed = line.trim();
-    return trimmed.length > PREVIEW_WIDTH
-      ? `${trimmed.slice(0, PREVIEW_WIDTH - 1)}…`
-      : trimmed;
-  });
+  const shown = node.lines.slice(0, PREVIEW_LINES).map(clip);
   const rest = total - Math.min(node.lines.length, PREVIEW_LINES);
   if (rest > 0) shown.push(`+${rest} more`);
+
+  const notes = node.notes ?? [];
+  for (const note of notes.slice(0, NOTE_LINES)) shown.push(clip(`; ${note}`));
+  if (notes.length > NOTE_LINES) {
+    shown.push(`; +${notes.length - NOTE_LINES} more`);
+  }
   return [head, ...shown].join("\n");
 }
 

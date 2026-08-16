@@ -27,9 +27,9 @@ function accessibleName(el: Element): string {
 describe("the page states its one idea", () => {
   it("leads with the site's name", () => {
     expect(doc.querySelector("h1")?.textContent?.trim()).toBe(
-      "Obfuscation Explorer",
+      "Assembly Obfuscation Explorer",
     );
-    expect(doc.title).toBe("Obfuscation Explorer");
+    expect(doc.title).toBe("Assembly Obfuscation Explorer");
   });
 
   it("says what to do next", () => {

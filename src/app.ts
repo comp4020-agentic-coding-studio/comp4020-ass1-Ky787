@@ -7,6 +7,7 @@
 
 import { OVERVIEW, annotate } from "./annotations.js";
 import { instructionsByAddress, renderInstruction } from "./asm.js";
+import { watchedIn } from "./strings.js";
 import { buildCommand, commandText } from "./command.js";
 import {
   Dataset,
@@ -390,9 +391,35 @@ export async function createApp(deps: AppDeps): Promise<App> {
             return trimLine(`${instruction.mnemonic} ${instruction.op_str}`);
           })
           .filter(Boolean),
+        notes: machineNotes(variant, node.instruction_addresses),
       })),
       edges: variant.machine_cfg.edges.map((edge) => ({ ...edge })),
     };
+  }
+
+  /**
+   * What a machine block reaches for by name. Every symbol here is attached by
+   * the dataset to an instruction whose address is in this block, so "this
+   * block references that symbol" is a fact rather than a reconstruction. A
+   * symbol carrying one of the variant's own watched literals is shown as that
+   * literal; anything else is printed exactly as the dataset spells it, which
+   * is what makes String Encryption legible — the readable literals are
+   * replaced by EncryptedString/DecryptSpace, in the same place on screen.
+   */
+  function machineNotes(variant: Variant, addresses: number[]): string[] {
+    const watched = Object.keys(variant.watched_plaintext_strings);
+    const notes: string[] = [];
+    for (const address of addresses) {
+      for (const relocation of addressIndex.get(address)?.relocations ?? []) {
+        const literals = watchedIn(relocation.symbol, watched);
+        for (const note of literals.length
+          ? literals.map((literal) => JSON.stringify(literal))
+          : [relocation.symbol]) {
+          if (!notes.includes(note)) notes.push(note);
+        }
+      }
+    }
+    return notes;
   }
 
   /** The LLVM CFG, with the IR each block carries. */
@@ -404,6 +431,12 @@ export async function createApp(deps: AppDeps): Promise<App> {
         label: node.label,
         total: node.instructions.length,
         lines: node.instructions.slice(0, 6).map(trimLine),
+        // The IR names its string globals inline, but the preview truncates
+        // long lines — so the literals are lifted out where they stay visible.
+        notes: watchedIn(
+          node.instructions.join("\n"),
+          Object.keys(variant.watched_plaintext_strings),
+        ).map((literal) => JSON.stringify(literal)),
       })),
       edges: variant.llvm_cfg.edges.map((edge) => ({ ...edge })),
     };
@@ -430,6 +463,7 @@ export async function createApp(deps: AppDeps): Promise<App> {
       legendList.append(li);
     };
     item("legend__node", null, "block label, instruction count, first lines");
+    item("legend__note", null, "; string or symbol the block references");
     item("legend__node legend__node--entry", null, "entry block");
     for (const kind of VIEWS[mode].kinds) item("legend__edge", kind, kind);
   }

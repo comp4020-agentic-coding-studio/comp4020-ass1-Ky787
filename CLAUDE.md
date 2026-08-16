@@ -37,6 +37,13 @@ dependencies; everything else lives in `src/`:
   dataset: x86 in the disassembly pane, C in the source pane. Nothing colours
   IR any more — the IR on screen is the graph's node previews, which cytoscape
   draws as plain label text.
+- `src/strings.ts` — finds a watched literal inside a mangled MSVC symbol. It
+  never *decodes* a symbol: it re-encodes a literal the dataset already lists in
+  `watched_plaintext_strings` and asks whether that appears in a symbol the
+  dataset already holds. A hit is checkable from `web_data/` alone; a miss is
+  silent and the caller falls back to printing the raw symbol, so a wrong
+  encoding can only lose a label, never attach the wrong one.
+  `spec/strings.test.ts` holds it to all 256 variants' own flags.
 - `src/command.ts` — the **one** module that does not read from `web_data/`:
   the dataset holds the compiled objects, so the `clang` line is assembled from
   the six controls. The switch spellings are verified against the archived
@@ -82,6 +89,14 @@ time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
   be a claim the data cannot make. Selecting a block highlights it and
   describes it to a screen reader; there is no detail panel behind it, so the
   box has to carry enough of the code to be worth reading.
+- A block's `notes` are what it reaches for **by name**, drawn as `;` comments
+  under its code so they cannot be read as instructions it contains. In the
+  machine view they come from the relocations on that block's own instruction
+  addresses; in the LLVM view from the block's own IR text. A symbol carrying a
+  watched literal prints as that literal, and anything else prints exactly as
+  the dataset spells it — which is what makes String Encryption legible in the
+  graph, since the readable literals are replaced in place by
+  `EncryptedString`/`DecryptSpace`.
 - Labels never disappear as the reader zooms out (`min-zoomed-font-size: 0`).
   A flattened CFG is unreadably small at fit zoom, and that *is* the finding —
   dropping the text would hide it behind a rendering optimisation.
@@ -101,6 +116,9 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
   leave the code exactly as the dataset has it, that a drifted source is
   reported rather than mis-annotated, and that a hint inside a `<label>` never
   flips the switch it is explaining.
+- `spec/strings.test.ts` — the watched-literal matcher against all 256
+  variants: "some symbol matches this literal" must agree with that variant's
+  own `watched_plaintext_strings` flag, every time. Node environment.
 - `spec/viewports.test.ts` — the built site in a real Chromium at 1920×1080 and
   390×844, including that the graph owns the lower viewport and the controls
   stay pinned above it. Skips itself when no system browser can be launched.
