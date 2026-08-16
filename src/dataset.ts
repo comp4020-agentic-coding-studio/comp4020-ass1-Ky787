@@ -33,7 +33,11 @@ export interface DataLoader {
   text(relativePath: string): Promise<string>;
 }
 
-/** The clean reference point: no transformations, no splitting, O0. */
+/**
+ * The clean reference point the complexity summary counts up from: no
+ * transformations, no splitting, O0. This is the comparison baseline, not the
+ * state the page opens in.
+ */
 export const BASELINE_CONFIG: VariantConfig = Object.freeze({
   optimization: "O0",
   bcf: false,
@@ -41,6 +45,15 @@ export const BASELINE_CONFIG: VariantConfig = Object.freeze({
   substitution: false,
   string_encryption: false,
   split_level: 0,
+});
+
+/**
+ * What the controls read on first load and after Reset: still clean, but at the
+ * optimization level a program actually ships at.
+ */
+export const INITIAL_CONFIG: VariantConfig = Object.freeze({
+  ...BASELINE_CONFIG,
+  optimization: "O3",
 });
 
 export const OPTIMIZATION_LEVELS: readonly OptimizationLevel[] = [

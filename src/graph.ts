@@ -7,12 +7,22 @@
 
 import cytoscape from "cytoscape";
 import dagre from "cytoscape-dagre";
-import type { Variant } from "./types.js";
 
 cytoscape.use(dagre);
 
+/**
+ * What the view draws. The caller builds this from either CFG in the dataset,
+ * so this module holds no opinion about which one is on screen and never has to
+ * reach across from an LLVM block to a machine one.
+ */
+export interface GraphModel {
+  entryId: number;
+  nodes: { id: number; label: string; lines: string[]; total: number }[];
+  edges: { source: number; target: number; kind: string }[];
+}
+
 export interface GraphView {
-  render(variant: Variant): void;
+  render(model: GraphModel): void;
   select(nodeId: number | null, options?: { center?: boolean }): void;
   zoomBy(factor: number): void;
   fit(): void;
@@ -31,26 +41,24 @@ const PREVIEW_LINES = 4;
 const PREVIEW_WIDTH = 34;
 
 /**
- * The text drawn inside a block: its label and count, then the first few of its
- * own IR instructions.
+ * The text drawn inside a block: its label and count, then the first few of the
+ * lines it actually holds.
  *
  * This is a preview, not a listing — long lines are cut with an ellipsis and
  * the rest is summarised as "+N more", so at a distance a block reads as a
  * quantity of code rather than as something to be read. The full text of every
- * block is in the inspector, untruncated. The lines are the LLVM IR the node
- * actually carries; x86 is deliberately not shown here, because the dataset
- * records no mapping from an LLVM block to a machine block.
+ * block is in the inspector, untruncated.
  */
-function nodeText(node: { label: string; instructions: string[] }): string {
-  const total = node.instructions.length;
+function nodeText(node: GraphModel["nodes"][number]): string {
+  const total = node.total;
   const head = `${node.label} · ${total}`;
-  const shown = node.instructions.slice(0, PREVIEW_LINES).map((line) => {
+  const shown = node.lines.slice(0, PREVIEW_LINES).map((line) => {
     const trimmed = line.trim();
     return trimmed.length > PREVIEW_WIDTH
       ? `${trimmed.slice(0, PREVIEW_WIDTH - 1)}…`
       : trimmed;
   });
-  const rest = total - shown.length;
+  const rest = total - Math.min(node.lines.length, PREVIEW_LINES);
   if (rest > 0) shown.push(`+${rest} more`);
   return [head, ...shown].join("\n");
 }
@@ -185,9 +193,9 @@ const STYLE: cytoscape.StylesheetStyle[] = [
       "font-family": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
       "font-size": 9,
       "line-height": 1.35,
-      // Below this the preview is a smudge; cytoscape drops it and draws the
-      // boxes alone, which is the view you want when zoomed out anyway.
-      "min-zoomed-font-size": 5,
+      // 0 = never drop the label. Zoomed out the preview turns into texture
+      // rather than text, which is the point: it shows how much code there is.
+      "min-zoomed-font-size": 0,
       width: "label",
       height: "label",
       padding: "8px",
@@ -273,6 +281,24 @@ const STYLE: cytoscape.StylesheetStyle[] = [
     },
   },
   {
+    selector: 'edge[kind = "fallthrough"]',
+    style: {
+      "line-color": "#7c93a8",
+      "target-arrow-color": "#7c93a8",
+      "line-style": "dotted",
+      "line-dash-pattern": [2, 4],
+    },
+  },
+  {
+    selector: 'edge[kind = "jump"]',
+    style: {
+      "line-color": "#5f9ff0",
+      "target-arrow-color": "#5f9ff0",
+      "line-style": "dashed",
+      "line-dash-pattern": [8, 4],
+    },
+  },
+  {
     selector: "edge.is-incident",
     style: {
       width: 2.4,
@@ -319,20 +345,19 @@ export function createGraphView(options: GraphViewOptions): GraphView {
   }
 
   return {
-    render(variant) {
-      const { llvm_cfg: cfg } = variant;
+    render(model) {
       const elements: cytoscape.ElementDefinition[] = [];
-      for (const node of cfg.nodes) {
+      for (const node of model.nodes) {
         elements.push({
           group: "nodes",
           data: {
             id: String(node.id),
             display: nodeText(node),
-            entry: node.id === cfg.entry_node_id ? 1 : 0,
+            entry: node.id === model.entryId ? 1 : 0,
           },
         });
       }
-      cfg.edges.forEach((edge, i) => {
+      model.edges.forEach((edge, i) => {
         elements.push({
           group: "edges",
           data: {

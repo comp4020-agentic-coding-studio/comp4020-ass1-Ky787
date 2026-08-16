@@ -19,7 +19,7 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 const DIST = resolve("dist");
 const DESKTOP = { width: 1920, height: 1080 };
 const MOBILE = { width: 390, height: 844 };
-const CLEAN = "o0-bcf0-fla0-sub0-str0-split0";
+const CLEAN = "o3-bcf0-fla0-sub0-str0-split0";
 
 const MIME: Record<string, string> = {
   ".html": "text/html; charset=utf-8",
@@ -224,10 +224,13 @@ withBrowser("desktop 1920x1080", () => {
     await session?.close();
   });
 
-  it("opens on the clean O0 variant", async () => {
+  it("opens clean at O3, showing the machine CFG", async () => {
     expect(await variantId(session.page)).toBe(CLEAN);
     expect(await text(session.page, '[data-testid="graph-counts"]')).toBe(
-      "7 blocks · 8 edges",
+      "4 blocks · 4 edges",
+    );
+    expect(await text(session.page, '[data-testid="graph-title"]')).toMatch(
+      /x86/i,
     );
   });
 
@@ -244,10 +247,10 @@ withBrowser("desktop 1920x1080", () => {
     expect(await overflow(session.page)).toBeLessThanOrEqual(0);
   });
 
-  it("loads only the variant it needs", async () => {
+  it("loads the shown variant and the comparison baseline, nothing more", async () => {
     expect(
       session.requests.filter((url) => url.includes("/web_data/variants/")),
-    ).toHaveLength(1);
+    ).toHaveLength(2);
     expect(
       session.requests.filter((url) => url.includes("/web_data/index.json")),
     ).toHaveLength(1);
@@ -257,8 +260,8 @@ withBrowser("desktop 1920x1080", () => {
     await session.page.evaluate(() => {
       (window as unknown as Record<string, unknown>).__sentinel = "alive";
     });
-    await setSwitch(session.page, "bcf", true);
-    expect(await variantId(session.page)).toBe("o0-bcf1-fla0-sub0-str0-split0");
+    await setSwitch(session.page, "flattening", true);
+    expect(await variantId(session.page)).toBe("o3-bcf0-fla1-sub0-str0-split0");
     expect(
       await session.page.evaluate(
         () => (window as unknown as Record<string, unknown>).__sentinel,
@@ -273,7 +276,7 @@ withBrowser("desktop 1920x1080", () => {
         "data-blocks",
       ),
     );
-    expect(blocks).toBeGreaterThan(7);
+    expect(blocks).toBeGreaterThan(4);
     expect(await text(session.page, '[data-testid="graph-counts"]')).toContain(
       `${blocks} blocks`,
     );
@@ -295,8 +298,8 @@ withBrowser("desktop 1920x1080", () => {
     const before = session.requests.filter((url) =>
       url.includes("/web_data/variants/"),
     ).length;
-    await setSwitch(session.page, "bcf", false);
-    await setSwitch(session.page, "bcf", true);
+    await setSwitch(session.page, "flattening", false);
+    await setSwitch(session.page, "flattening", true);
     expect(
       session.requests.filter((url) => url.includes("/web_data/variants/")),
     ).toHaveLength(before);
@@ -308,7 +311,7 @@ withBrowser("desktop 1920x1080", () => {
     expect(
       await visible(session.page, '[data-testid="inspector"] [data-role="body"]'),
     ).toBe(true);
-    expect((await text(session.page, '[data-testid="ir"]')).length).toBeGreaterThan(
+    expect((await text(session.page, '[data-testid="asm"]')).length).toBeGreaterThan(
       10,
     );
     expect(
@@ -355,10 +358,10 @@ withBrowser("desktop 1920x1080", () => {
     await resetAll(session.page);
     expect(await variantId(session.page)).toBe(CLEAN);
     expect(
-      await session.page.locator('[data-transform="bcf"]').isChecked(),
+      await session.page.locator('[data-transform="flattening"]').isChecked(),
     ).toBe(false);
     expect(await text(session.page, '[data-testid="graph-counts"]')).toBe(
-      "7 blocks · 8 edges",
+      "4 blocks · 4 edges",
     );
   }, 40_000);
 
@@ -418,6 +421,7 @@ withBrowser("desktop 1920x1080", () => {
     const cli = await text(session.page, '[data-testid="cli"]');
     expect(cli).toContain("-mllvm -enable-cffobf");
     expect(cli).toContain("-mllvm -split_num=3");
+    expect(cli.split("\n").filter((line) => line.trim())).toHaveLength(1);
     expect(await overflow(session.page)).toBeLessThanOrEqual(0);
     await resetAll(session.page);
   }, 60_000);
@@ -442,6 +446,9 @@ withBrowser("mobile 390x844", () => {
 
   it("never scrolls sideways, clean or obfuscated", async () => {
     expect(await overflow(session.page)).toBeLessThanOrEqual(0);
+    // O0 first: at O3 the optimiser deletes bogus control flow and splitting
+    // outright, so toggling them would not change the variant at all.
+    await pickRadio(session.page, "opt", "O0");
     for (const key of ["bcf", "flattening", "substitution", "string_encryption"]) {
       await setSwitch(session.page, key, true);
       expect(await overflow(session.page), key).toBeLessThanOrEqual(0);

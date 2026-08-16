@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
-    <title>The program didn't change — an obfuscation explorer</title>
+    <title>Obfuscation Explorer</title>
     <meta
       name="description"
       content="Configure real Hikari/OLLVM-style compiler transformations and watch the same C program's control-flow graph and complexity grow."
@@ -29,10 +29,10 @@
         <p class="masthead__meta" data-testid="dataset-note">&nbsp;</p>
       </div>
       <div class="masthead__headline">
-        <h1 class="masthead__title">The program didn't change</h1>
+        <h1 class="masthead__title">Obfuscation Explorer</h1>
         <p class="masthead__sub">
-          Turn compiler transformations on. Watch the code become harder to
-          reason about.
+          The program doesn't change. Turn compiler transformations on and watch
+          the code become harder to reason about.
         </p>
       </div>
       <p class="masthead__lede">
@@ -146,7 +146,7 @@
             </legend>
             <div class="segmented" data-testid="opt-group">
               <label class="segmented__opt">
-                <input type="radio" name="opt" value="O0" checked />
+                <input type="radio" name="opt" value="O0" />
                 <span>O0</span>
               </label>
               <label class="segmented__opt">
@@ -158,7 +158,7 @@
                 <span>O2</span>
               </label>
               <label class="segmented__opt">
-                <input type="radio" name="opt" value="O3" />
+                <input type="radio" name="opt" value="O3" checked />
                 <span>O3</span>
               </label>
             </div>
@@ -412,9 +412,22 @@
         <div class="workspace">
           <section class="panel graph-panel" aria-labelledby="cfg-h">
             <div class="panel__head">
-              <h3 id="cfg-h" class="panel__title">LLVM control-flow graph</h3>
+              <h3 id="cfg-h" class="panel__title" data-testid="graph-title">
+                Control-flow graph
+              </h3>
               <span data-hint="graph"></span>
               <p class="panel__note" data-testid="graph-counts">&nbsp;</p>
+              <fieldset class="segmented segmented--view" data-testid="view-group">
+                <legend class="sr-only">Graph contents</legend>
+                <label class="segmented__opt">
+                  <input type="radio" name="view" value="x86" checked />
+                  <span>x86</span>
+                </label>
+                <label class="segmented__opt">
+                  <input type="radio" name="view" value="ir" />
+                  <span>LLVM IR</span>
+                </label>
+              </fieldset>
               <div class="graph-tools" role="group" aria-label="Graph view">
                 <button
                   type="button"
@@ -463,39 +476,7 @@
             </p>
             <p class="sr-only" aria-live="polite" data-testid="graph-status"></p>
 
-            <ul class="legend" data-testid="legend">
-              <li class="legend__item">
-                <span class="legend__node" aria-hidden="true"></span>
-                <span>block label, instruction count, first lines</span>
-              </li>
-              <li class="legend__item">
-                <span
-                  class="legend__node legend__node--entry"
-                  aria-hidden="true"
-                ></span>
-                <span>entry block</span>
-              </li>
-              <li class="legend__item" data-kind="true">
-                <span class="legend__edge" aria-hidden="true"></span>
-                <span>true</span>
-              </li>
-              <li class="legend__item" data-kind="false">
-                <span class="legend__edge" aria-hidden="true"></span>
-                <span>false</span>
-              </li>
-              <li class="legend__item" data-kind="branch">
-                <span class="legend__edge" aria-hidden="true"></span>
-                <span>branch</span>
-              </li>
-              <li class="legend__item" data-kind="case">
-                <span class="legend__edge" aria-hidden="true"></span>
-                <span>switch case</span>
-              </li>
-              <li class="legend__item" data-kind="default">
-                <span class="legend__edge" aria-hidden="true"></span>
-                <span>switch default</span>
-              </li>
-            </ul>
+            <ul class="legend" data-testid="legend"></ul>
           </section>
         </div>
       </section>

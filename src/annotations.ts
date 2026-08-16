@@ -21,62 +21,41 @@ interface Annotation {
   note: string;
 }
 
+/**
+ * A short overview of the program, shown above the code. Like the line notes,
+ * this is written by this page: the compiled file carries no comments.
+ */
+export const OVERVIEW: string[] = [
+  "This program looks at how many words you typed after its name,",
+  "turns that into a number, prints one of two messages depending",
+  "on whether the number is even, then prints the final value.",
+  "That is all it does — in every one of the 256 builds.",
+];
+
 export const ANNOTATIONS: Annotation[] = [
   {
-    match: "extern int puts",
-    note: "borrow the system's print-a-line function",
-  },
-  {
-    match: "extern int printf",
-    note: "and its fill-in-the-blanks version",
-  },
-  {
     match: "int main(",
-    note: "the program starts here; argc counts the words you typed after its name",
+    note: "the program starts here",
   },
   {
     match: "unsigned x =",
-    note: "turn that count into a number: times 7, plus 3",
+    note: "make a number out of the input",
   },
   {
     match: "if ((x & 1u) == 0)",
-    note: "is that number even?",
+    note: "is it even?",
   },
   {
     match: 'puts("ACCESS GRANTED")',
-    note: "if it is, say so",
-  },
-  {
-    match: "x = (x * 3u)",
-    note: "then scramble the number one way",
+    note: "yes: print this",
   },
   {
     match: 'puts("ACCESS DENIED")',
-    note: "if it is odd, say this instead",
-  },
-  {
-    match: "x = (x + 13u)",
-    note: "and scramble it a different way",
-  },
-  {
-    match: "if (x > 100u)",
-    note: "is the result over 100?",
-  },
-  {
-    match: "x -= 17u",
-    note: "if so, take 17 off",
-  },
-  {
-    match: "x += 5u",
-    note: "if not, add 5",
+    note: "no: print this",
   },
   {
     match: "printf(",
-    note: "print the last two hex digits of the answer",
-  },
-  {
-    match: "return 0",
-    note: "0 means it finished without an error",
+    note: "print the answer",
   },
 ];
 

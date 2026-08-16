@@ -5,19 +5,19 @@
 // The graph view is injected rather than imported so the whole controller can
 // be driven in a DOM without a canvas.
 
-import { annotate } from "./annotations.js";
+import { OVERVIEW, annotate } from "./annotations.js";
 import { instructionsByAddress, renderInstruction } from "./asm.js";
 import { buildCommand, commandText } from "./command.js";
 import {
-  BASELINE_CONFIG,
   Dataset,
+  INITIAL_CONFIG,
   DatasetError,
   OPTIMIZATION_LEVELS,
   SPLIT_LEVELS,
 } from "./dataset.js";
 import { highlightC, highlightIr } from "./highlight.js";
 import { mountHints } from "./hints.js";
-import type { GraphView, GraphViewOptions } from "./graph.js";
+import type { GraphModel, GraphView, GraphViewOptions } from "./graph.js";
 import type {
   BooleanTransform,
   IndexVariant,
@@ -41,6 +41,29 @@ const TRANSFORMS: { key: BooleanTransform; label: string }[] = [
   { key: "substitution", label: "Instruction Substitution" },
   { key: "string_encryption", label: "String Encryption" },
 ];
+
+type GraphMode = "x86" | "ir";
+
+/**
+ * The two CFGs the dataset carries. The x86 view draws the machine CFG, whose
+ * blocks really do hold machine instructions — rather than putting x86 on an
+ * LLVM block, which the dataset gives no basis for.
+ */
+const VIEWS: Record<
+  GraphMode,
+  { title: string; kinds: string[]; unit: string }
+> = {
+  x86: {
+    title: "Machine control-flow graph — x86-64",
+    kinds: ["branch", "fallthrough", "jump"],
+    unit: "x86 instructions",
+  },
+  ir: {
+    title: "LLVM control-flow graph — IR",
+    kinds: ["true", "false", "branch", "case", "default"],
+    unit: "IR instructions",
+  },
+};
 
 const METRIC_ROWS = [
   { cell: "instructions", key: "instruction_count", label: "x86 instructions" },
@@ -143,6 +166,11 @@ export async function createApp(deps: AppDeps): Promise<App> {
   const datasetNote = must(doc, '[data-testid="dataset-note"]');
   const asmRole = must(doc, '[data-testid="asm-role"]');
   const dock = must<HTMLElement>(doc, '[data-testid="dock"]');
+  const graphTitle = must(doc, '[data-testid="graph-title"]');
+  const legendList = must(doc, '[data-testid="legend"]');
+  const viewInputs = Array.from(
+    doc.querySelectorAll<HTMLInputElement>('input[name="view"]'),
+  );
   const tabs = [
     must<HTMLButtonElement>(doc, '[data-testid="tab-ir"]'),
     must<HTMLButtonElement>(doc, '[data-testid="tab-asm"]'),
@@ -166,6 +194,8 @@ export async function createApp(deps: AppDeps): Promise<App> {
   let currentVariant: Variant | null = null;
   let selectedNode: number | null = null;
   let addressIndex = new Map<number, Instruction>();
+  let mode: GraphMode = "x86";
+  let currentModel: GraphModel | null = null;
   let sequence = 0;
   // Every scheduled update, until it settles. A later control change often
   // resolves to the variant already being fetched and returns immediately, so
@@ -340,10 +370,10 @@ export async function createApp(deps: AppDeps): Promise<App> {
 
     cliCode.append(span2("cli-base", base));
     for (const flag of flags) {
-      cliCode.append(span2("cli-cont", " \\"), "\n  ", span2("cli-flag", flag.text));
+      cliCode.append(" ", span2("cli-flag", flag.text));
     }
     if (flags.length === 0) {
-      cliCode.append("\n", span2("cli-comment", "# no obfuscation passes enabled"));
+      cliCode.append("  ", span2("cli-comment", "# no obfuscation passes enabled"));
     }
   }
 
@@ -382,6 +412,10 @@ export async function createApp(deps: AppDeps): Promise<App> {
       // file has no comments in it.
       const { lines, unmatched } = annotate(text);
       clear(sourceCode);
+      for (const line of OVERVIEW) {
+        sourceCode.append(span2("c-note", `// ${line}`), "\n");
+      }
+      sourceCode.append("\n");
       lines.forEach(({ code, note }, i) => {
         const row = doc.createElement("span");
         row.className = "c-line";
@@ -407,15 +441,91 @@ export async function createApp(deps: AppDeps): Promise<App> {
     }
   }
 
+  // ----------------------------------------------------------------- graph ---
+  function trimLine(text: string): string {
+    return text.trim();
+  }
+
+  /** The machine CFG: real x86, straight out of the disassembly. */
+  function machineModel(variant: Variant): GraphModel {
+    return {
+      entryId: variant.machine_cfg.entry_node_id,
+      nodes: variant.machine_cfg.nodes.map((node) => ({
+        id: node.id,
+        label: hex(node.start),
+        total: node.instruction_addresses.length,
+        lines: node.instruction_addresses
+          .slice(0, 6)
+          .map((address) => {
+            const instruction = addressIndex.get(address);
+            if (!instruction) return "";
+            return trimLine(`${instruction.mnemonic} ${instruction.op_str}`);
+          })
+          .filter(Boolean),
+      })),
+      edges: variant.machine_cfg.edges.map((edge) => ({ ...edge })),
+    };
+  }
+
+  /** The LLVM CFG, with the IR each block carries. */
+  function llvmModel(variant: Variant): GraphModel {
+    return {
+      entryId: variant.llvm_cfg.entry_node_id,
+      nodes: variant.llvm_cfg.nodes.map((node) => ({
+        id: node.id,
+        label: node.label,
+        total: node.instructions.length,
+        lines: node.instructions.slice(0, 6).map(trimLine),
+      })),
+      edges: variant.llvm_cfg.edges.map((edge) => ({ ...edge })),
+    };
+  }
+
+  function modelFor(variant: Variant): GraphModel {
+    return mode === "x86" ? machineModel(variant) : llvmModel(variant);
+  }
+
+  function paintLegend(): void {
+    clear(legendList);
+    const item = (
+      className: string,
+      kind: string | null,
+      text: string,
+    ): void => {
+      const li = doc.createElement("li");
+      li.className = "legend__item";
+      if (kind) li.setAttribute("data-kind", kind);
+      const swatch = doc.createElement("span");
+      swatch.className = className;
+      swatch.setAttribute("aria-hidden", "true");
+      li.append(swatch, span2("", text));
+      legendList.append(li);
+    };
+    item("legend__node", null, "block label, instruction count, first lines");
+    item("legend__node legend__node--entry", null, "entry block");
+    for (const kind of VIEWS[mode].kinds) item("legend__edge", kind, kind);
+  }
+
+  function paintGraph(variant: Variant): void {
+    graphTitle.textContent = VIEWS[mode].title;
+    const model = modelFor(variant);
+    currentModel = model;
+    graphCounts.textContent = `${model.nodes.length} blocks · ${model.edges.length} edges`;
+    graphCounts.setAttribute("data-blocks", String(model.nodes.length));
+    graphCounts.setAttribute("data-edges", String(model.edges.length));
+    paintLegend();
+    graph.render(model);
+  }
+
   // ------------------------------------------------------------- inspector ---
   function edgeChips(
-    variant: Variant,
+    model: GraphModel,
     nodeId: number,
     outgoing: boolean,
   ): HTMLElement {
     const dd = doc.createElement("dd");
-    const labels = new Map(variant.llvm_cfg.nodes.map((n) => [n.id, n.label]));
-    const matches = variant.llvm_cfg.edges.filter((edge) =>
+    const labels = new Map(model.nodes.map((n) => [n.id, n.label]));
+    const matches = model.edges.filter((edge) =>
       outgoing ? edge.source === nodeId : edge.target === nodeId,
     );
     if (matches.length === 0) {
@@ -528,30 +638,52 @@ export async function createApp(deps: AppDeps): Promise<App> {
 
   function paintInspector(): void {
     const variant = currentVariant;
-    if (!variant || selectedNode === null) {
+    const model = currentModel;
+    if (!variant || !model || selectedNode === null) {
       clearInspector();
       return;
     }
-    const node = variant.llvm_cfg.nodes.find((n) => n.id === selectedNode);
-    if (!node) {
+    const block = model.nodes.find((n) => n.id === selectedNode);
+    if (!block) {
       clearInspector();
       return;
     }
 
     inspector.setAttribute("data-selected", "true");
+    inspector.setAttribute("data-mode", mode);
     inspectorEmpty.hidden = true;
     inspectorBody.hidden = false;
-    blockLabel.textContent = node.label;
-    blockEntry.hidden = node.id !== variant.llvm_cfg.entry_node_id;
+    blockLabel.textContent = block.label;
+    blockEntry.hidden = block.id !== model.entryId;
 
     clear(inspectorMeta);
-    metaRow("IR instructions", String(node.instructions.length));
-    metaRow("Layout order", String(node.order));
-    metaRow("Predecessors", edgeChips(variant, node.id, false));
-    metaRow("Successors", edgeChips(variant, node.id, true));
+    metaRow(VIEWS[mode].unit, String(block.total));
 
+    if (mode === "x86") {
+      const machine = variant.machine_cfg.nodes.find((n) => n.id === block.id);
+      if (machine) {
+        metaRow("Address range", `${hex(machine.start)}–${hex(machine.end)}`);
+      }
+      metaRow("Predecessors", edgeChips(model, block.id, false));
+      metaRow("Successors", edgeChips(model, block.id, true));
+      // The block on screen *is* a machine block, so there is nothing to
+      // reconcile and nothing to disclaim.
+      paintMachineBlock(variant, block.id);
+      activateTab(1, false);
+      return;
+    }
+
+    const node = variant.llvm_cfg.nodes.find((n) => n.id === block.id);
+    if (!node) {
+      clearInspector();
+      return;
+    }
+    metaRow("Layout order", String(node.order));
+    metaRow("Predecessors", edgeChips(model, block.id, false));
+    metaRow("Successors", edgeChips(model, block.id, true));
     paintIr(node);
     paintMachineTab(variant, node.id);
+    activateTab(0, false);
   }
 
   function selectBlock(
@@ -561,13 +693,11 @@ export async function createApp(deps: AppDeps): Promise<App> {
     selectedNode = nodeId;
     graph.select(nodeId, { center: options.center });
     paintInspector();
-    if (nodeId !== null && currentVariant) {
-      const node = currentVariant.llvm_cfg.nodes.find((n) => n.id === nodeId);
-      const out = currentVariant.llvm_cfg.edges.filter(
-        (e) => e.source === nodeId,
-      ).length;
-      graphStatus.textContent = node
-        ? `Block ${node.label}, ${node.instructions.length} IR instructions, ${out} outgoing edge${out === 1 ? "" : "s"}.`
+    if (nodeId !== null && currentModel) {
+      const block = currentModel.nodes.find((n) => n.id === nodeId);
+      const out = currentModel.edges.filter((e) => e.source === nodeId).length;
+      graphStatus.textContent = block
+        ? `Block ${block.label}, ${block.total} ${VIEWS[mode].unit}, ${out} outgoing edge${out === 1 ? "" : "s"}.`
         : "";
       if (options.reveal) {
         inspector.setAttribute("data-open", "true");
@@ -662,9 +792,6 @@ export async function createApp(deps: AppDeps): Promise<App> {
     if (entry.id === baselineEntry.id) baselineVariant = variant;
 
     variantLabel.textContent = entry.id;
-    graphCounts.textContent = `${variant.llvm_cfg.nodes.length} blocks · ${variant.llvm_cfg.edges.length} edges`;
-    graphCounts.setAttribute("data-blocks", String(variant.llvm_cfg.nodes.length));
-    graphCounts.setAttribute("data-edges", String(variant.llvm_cfg.edges.length));
 
     paintMetrics(variant);
     paintStrings(variant);
@@ -675,11 +802,11 @@ export async function createApp(deps: AppDeps): Promise<App> {
       graphCanvas.classList.add("is-swapping");
       doc.defaultView?.setTimeout(() => graphCanvas.classList.remove("is-swapping"), 160);
     }
-    graph.render(variant);
+    paintGraph(variant);
     selectedNode = null;
     paintInspector();
     inspector.setAttribute("data-open", "false");
-    graphStatus.textContent = `${variant.llvm_cfg.nodes.length} basic blocks, ${variant.llvm_cfg.edges.length} edges.`;
+    graphStatus.textContent = graphCounts.textContent ?? "";
   }
 
   function failVariant(entry: IndexVariant | null, error: unknown): void {
@@ -773,9 +900,22 @@ export async function createApp(deps: AppDeps): Promise<App> {
   }
 
   on(resetButton, "click", () => {
-    writeConfig(BASELINE_CONFIG);
+    writeConfig(INITIAL_CONFIG);
     schedule();
   });
+
+  for (const input of viewInputs) {
+    on(input, "change", () => {
+      if (!input.checked) return;
+      mode = input.value === "ir" ? "ir" : "x86";
+      const variant = currentVariant;
+      if (!variant) return;
+      selectedNode = null;
+      paintGraph(variant);
+      paintInspector();
+      inspector.setAttribute("data-open", "false");
+    });
+  }
 
   on(must(doc, '[data-graph="zoom-in"]'), "click", () => graph.zoomBy(1.3));
   on(must(doc, '[data-graph="zoom-out"]'), "click", () => graph.zoomBy(1 / 1.3));
@@ -811,9 +951,7 @@ export async function createApp(deps: AppDeps): Promise<App> {
   // Keyboard navigation of the graph itself.
   on(graphCanvas, "keydown", (event) => {
     const key = (event as KeyboardEvent).key;
-    const variant = currentVariant;
-    if (!variant) return;
-    const order = [...variant.llvm_cfg.nodes].sort((a, b) => a.order - b.order);
+    const order = currentModel?.nodes ?? [];
     if (order.length === 0) return;
     const at = order.findIndex((n) => n.id === selectedNode);
 
@@ -918,11 +1056,24 @@ export async function createApp(deps: AppDeps): Promise<App> {
   // ------------------------------------------------------------------ boot ---
   listeners.push(mountHints(doc));
 
-  writeConfig(BASELINE_CONFIG);
+  writeConfig(INITIAL_CONFIG);
   paintTech(baselineEntry, null);
-  datasetNote.textContent = `${dataset.index.variant_count} pre-built variants`;
+  datasetNote.textContent = `${dataset.index.variant_count} pre-built Windows x86 binaries`;
   schedule();
-  await Promise.all([settled(), loadSource()]);
+
+  // The page no longer opens on the comparison baseline, so fetch it too:
+  // without it the watched-strings row has no left-hand number to show.
+  const baselineWarmup = dataset
+    .variant(baselineEntry)
+    .then((variant) => {
+      baselineVariant ??= variant;
+      if (currentVariant) paintMetrics(currentVariant);
+    })
+    .catch(() => {
+      /* the metrics fall back to "—"; the selected variant still renders */
+    });
+
+  await Promise.all([settled(), loadSource(), baselineWarmup]);
 
   return {
     config: readConfig,

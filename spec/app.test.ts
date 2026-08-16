@@ -7,7 +7,7 @@
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { BASELINE_CONFIG } from "../src/dataset.js";
+import { BASELINE_CONFIG, INITIAL_CONFIG } from "../src/dataset.js";
 import type { Variant } from "../src/types.js";
 import {
   click,
@@ -18,10 +18,12 @@ import {
   numberIn,
   press,
   setControls,
+  setView,
   type Mounted,
 } from "./harness.js";
 
-const CLEAN = "o0-bcf0-fla0-sub0-str0-split0";
+const BASELINE = "o0-bcf0-fla0-sub0-str0-split0";
+const CLEAN = "o3-bcf0-fla0-sub0-str0-split0";
 
 function fileOf(id: string): string {
   return `variants/${id}.json`;
@@ -44,24 +46,37 @@ describe("first load", () => {
     mounted = await mountApp();
   });
 
-  it("starts at the clean O0 variant with everything off", () => {
-    expect(mounted.app.config()).toEqual(BASELINE_CONFIG);
+  it("starts clean at O3, with every transformation off", () => {
+    expect(mounted.app.config()).toEqual(INITIAL_CONFIG);
+    expect(mounted.app.config().optimization).toBe("O3");
     expect(mounted.app.variant()?.id).toBe(CLEAN);
     expect(el("variant-id").textContent).toBe(CLEAN);
   });
 
-  it("fetches the index, one variant, and the source — nothing else", () => {
-    expect([...mounted.control.requests].sort()).toEqual(
-      ["index.json", "source.c", fileOf(CLEAN)].sort(),
-    );
-    expect(
-      mounted.control.requests.filter((path) => path.startsWith("variants/")),
-    ).toHaveLength(1);
+  it("has the two ids this file names still meaning what it thinks", () => {
+    // BASELINE and CLEAN are written out above so the assertions read plainly;
+    // this keeps them honest if either config constant is ever changed.
+    expect(mounted.dataset.lookup(BASELINE_CONFIG).id).toBe(BASELINE);
+    expect(mounted.dataset.lookup(INITIAL_CONFIG).id).toBe(CLEAN);
   });
 
-  it("renders that variant's graph, fitted", () => {
-    expect(mounted.graph.rendered).toHaveLength(1);
-    expect(mounted.graph.lastRendered()?.id).toBe(CLEAN);
+  it("fetches the index, the source, the shown variant and the baseline", () => {
+    expect([...mounted.control.requests].sort()).toEqual(
+      ["index.json", "source.c", fileOf(CLEAN), fileOf(BASELINE)].sort(),
+    );
+    // The baseline is the left-hand number in every metric; without it the
+    // watched-strings row would have nothing to compare against.
+    expect(
+      mounted.control.requests.filter((path) => path.startsWith("variants/")),
+    ).toHaveLength(2);
+  });
+
+  it("draws the machine CFG of that variant", () => {
+    const model = mounted.graph.lastRendered();
+    const expected = onDisk(CLEAN);
+    expect(model?.nodes).toHaveLength(expected.machine_cfg.nodes.length);
+    expect(model?.edges).toHaveLength(expected.machine_cfg.edges.length);
+    expect(model?.entryId).toBe(expected.machine_cfg.entry_node_id);
   });
 
   it("shows no block inspector until a block is picked", () => {
@@ -79,17 +94,17 @@ describe("the controls select the variant", () => {
 
   it("loads the BCF variant when Bogus Control Flow is switched on", async () => {
     await setControls(mounted.app, { bcf: true });
-    expect(mounted.app.variant()?.id).toBe("o0-bcf1-fla0-sub0-str0-split0");
+    expect(mounted.app.variant()?.id).toBe("o3-bcf1-fla0-sub0-str0-split0");
     expect(mounted.control.requests).toContain(
-      fileOf("o0-bcf1-fla0-sub0-str0-split0"),
+      fileOf("o3-bcf1-fla0-sub0-str0-split0"),
     );
   });
 
   const singles = [
-    ["bcf", "o0-bcf1-fla0-sub0-str0-split0"],
-    ["flattening", "o0-bcf0-fla1-sub0-str0-split0"],
-    ["substitution", "o0-bcf0-fla0-sub1-str0-split0"],
-    ["string_encryption", "o0-bcf0-fla0-sub0-str1-split0"],
+    ["bcf", "o3-bcf1-fla0-sub0-str0-split0"],
+    ["flattening", "o3-bcf0-fla1-sub0-str0-split0"],
+    ["substitution", "o3-bcf0-fla0-sub1-str0-split0"],
+    ["string_encryption", "o3-bcf0-fla0-sub0-str1-split0"],
   ] as const;
 
   for (const [key, id] of singles) {
@@ -104,7 +119,7 @@ describe("the controls select the variant", () => {
     it(`split ${level === 0 ? "Off" : level} loads split${level}`, async () => {
       await setControls(mounted.app, { split_level: level });
       expect(mounted.app.variant()?.id).toBe(
-        `o0-bcf0-fla0-sub0-str0-split${level}`,
+        `o3-bcf0-fla0-sub0-str0-split${level}`,
       );
     });
   }
@@ -150,11 +165,11 @@ describe("the controls select the variant", () => {
     await setControls(mounted.app, { bcf: false });
     await setControls(mounted.app, { bcf: true });
     expect(mounted.control.requests).toHaveLength(before);
-    expect(mounted.app.variant()?.id).toBe("o0-bcf1-fla0-sub0-str0-split0");
+    expect(mounted.app.variant()?.id).toBe("o3-bcf1-fla0-sub0-str0-split0");
   });
 
   it("ignores a slow response that has been overtaken", async () => {
-    const slow = fileOf("o0-bcf1-fla0-sub0-str0-split0");
+    const slow = fileOf("o3-bcf1-fla0-sub0-str0-split0");
     mounted.control.delays.set(slow, 80);
 
     const bcf = el<HTMLInputElement>("toggle-bcf");
@@ -171,9 +186,6 @@ describe("the controls select the variant", () => {
     expect(mounted.app.variant()?.id).toBe("o1-bcf1-fla0-sub0-str0-split0");
 
     await new Promise((done) => setTimeout(done, 140));
-    expect(mounted.graph.lastRendered()?.id).toBe(
-      "o1-bcf1-fla0-sub0-str0-split0",
-    );
     expect(mounted.app.variant()?.id).toBe("o1-bcf1-fla0-sub0-str0-split0");
   });
 
@@ -207,7 +219,7 @@ describe("Reset", () => {
     click(el("reset"));
     await mounted.app.ready();
 
-    expect(mounted.app.config()).toEqual(BASELINE_CONFIG);
+    expect(mounted.app.config()).toEqual(INITIAL_CONFIG);
     expect(mounted.app.variant()?.id).toBe(CLEAN);
     for (const input of document.querySelectorAll<HTMLInputElement>(
       "[data-transform]",
@@ -219,7 +231,7 @@ describe("Reset", () => {
         ?.checked,
     ).toBe(true);
     expect(
-      document.querySelector<HTMLInputElement>('input[name="opt"][value="O0"]')
+      document.querySelector<HTMLInputElement>('input[name="opt"][value="O3"]')
         ?.checked,
     ).toBe(true);
   });
@@ -237,11 +249,13 @@ describe("the complexity summary reads from the loaded JSON", () => {
     ["bytes", "main_byte_size"],
   ] as const;
 
-  it("keeps the clean baseline on the left for every metric", async () => {
-    const clean = onDisk(CLEAN);
-    await setControls(mounted.app, { optimization: "O3", bcf: true });
+  it("keeps the clean O0 baseline on the left for every metric", async () => {
+    const baseline = onDisk(BASELINE);
+    await setControls(mounted.app, { optimization: "O3", flattening: true });
     for (const [cell, key] of cells) {
-      expect(numberIn(metricCell(cell), "base"), cell).toBe(clean.metrics[key]);
+      expect(numberIn(metricCell(cell), "base"), cell).toBe(
+        baseline.metrics[key],
+      );
     }
   });
 
@@ -250,7 +264,7 @@ describe("the complexity summary reads from the loaded JSON", () => {
       CLEAN,
       "o0-bcf1-fla0-sub0-str0-split0",
       "o3-bcf1-fla1-sub1-str1-split4",
-    ]) {
+    ] as const) {
       const expected = onDisk(id);
       await setControls(mounted.app, expected.config);
       expect(mounted.app.variant()?.id).toBe(id);
@@ -270,7 +284,7 @@ describe("the complexity summary reads from the loaded JSON", () => {
   });
 
   it("marks the direction of change without relying on colour", async () => {
-    await setControls(mounted.app, { bcf: true });
+    await setControls(mounted.app, { flattening: true });
     expect(metricCell("instructions").getAttribute("data-direction")).toBe("up");
     expect(
       metricCell("instructions").querySelector("[data-role='delta']")
@@ -287,30 +301,89 @@ describe("the graph gets exactly the dataset's blocks and edges", () => {
     mounted = await mountApp();
   });
 
-  it("hands the view the variant's own CFG", async () => {
+  it("hands the view the machine CFG, edge kinds and all", async () => {
     for (const id of [CLEAN, "o1-bcf1-fla1-sub0-str1-split4"]) {
       const expected = onDisk(id);
       await setControls(mounted.app, expected.config);
-      const rendered = mounted.graph.lastRendered();
-      expect(rendered?.id).toBe(id);
-      expect(rendered?.llvm_cfg.nodes).toEqual(expected.llvm_cfg.nodes);
-      expect(rendered?.llvm_cfg.edges).toEqual(expected.llvm_cfg.edges);
+      const model = mounted.graph.lastRendered();
+      expect(model?.entryId, id).toBe(expected.machine_cfg.entry_node_id);
+      expect(model?.nodes.map((n) => n.id), id).toEqual(
+        expected.machine_cfg.nodes.map((n) => n.id),
+      );
+      expect(model?.edges, id).toEqual(
+        expected.machine_cfg.edges.map((e) => ({ ...e })),
+      );
     }
   });
 
-  it("reports the same counts in the heading as the data holds", async () => {
-    const expected = onDisk("o0-bcf0-fla1-sub0-str0-split0");
+  it("hands the view the LLVM CFG when the reader asks for IR", async () => {
+    const expected = onDisk("o1-bcf1-fla1-sub0-str1-split4");
+    await setControls(mounted.app, expected.config);
+    setView("ir");
+    const model = mounted.graph.lastRendered();
+    expect(model?.entryId).toBe(expected.llvm_cfg.entry_node_id);
+    expect(model?.nodes.map((n) => n.id)).toEqual(
+      expected.llvm_cfg.nodes.map((n) => n.id),
+    );
+    expect(model?.nodes.map((n) => n.label)).toEqual(
+      expected.llvm_cfg.nodes.map((n) => n.label),
+    );
+    expect(model?.edges).toEqual(expected.llvm_cfg.edges.map((e) => ({ ...e })));
+    setView("x86");
+    expect(mounted.graph.lastRendered()?.nodes).toHaveLength(
+      expected.machine_cfg.nodes.length,
+    );
+  });
+
+  it("previews each block's own code inside it, truncated not invented", async () => {
+    const expected = onDisk(CLEAN);
+    const model = mounted.graph.lastRendered()!;
+    const byAddress = new Map(
+      expected.disassembly.instructions.map((i) => [i.address, i]),
+    );
+    for (const block of model.nodes) {
+      const machine = expected.machine_cfg.nodes.find((n) => n.id === block.id)!;
+      expect(block.total).toBe(machine.instruction_addresses.length);
+      block.lines.forEach((line, i) => {
+        const instruction = byAddress.get(machine.instruction_addresses[i]!)!;
+        expect(line).toBe(
+          `${instruction.mnemonic} ${instruction.op_str}`.trim(),
+        );
+      });
+    }
+  });
+
+  it("reports the counts of whichever CFG is on screen", async () => {
+    const expected = onDisk("o3-bcf0-fla1-sub0-str0-split0");
     await setControls(mounted.app, { flattening: true });
     const counts = el("graph-counts");
     expect(counts.getAttribute("data-blocks")).toBe(
-      String(expected.llvm_cfg.nodes.length),
+      String(expected.metrics.machine_basic_block_count),
     );
     expect(counts.getAttribute("data-edges")).toBe(
-      String(expected.llvm_cfg.edges.length),
+      String(expected.metrics.machine_cfg_edge_count),
     );
-    expect(counts.textContent).toContain(
-      `${expected.metrics.llvm_basic_block_count} blocks`,
+    expect(el("graph-title").textContent).toMatch(/x86/i);
+
+    setView("ir");
+    expect(counts.getAttribute("data-blocks")).toBe(
+      String(expected.metrics.llvm_basic_block_count),
     );
+    expect(el("graph-title").textContent).toMatch(/LLVM/i);
+  });
+
+  it("labels the legend for whichever CFG is on screen", () => {
+    const kinds = () =>
+      [...el("legend").querySelectorAll("[data-kind]")].map((li) =>
+        li.getAttribute("data-kind"),
+      );
+    expect(kinds()).toEqual(["branch", "fallthrough", "jump"]);
+    setView("ir");
+    expect(kinds()).toEqual(["true", "false", "branch", "case", "default"]);
+    // Every entry names its kind in words, not just a colour.
+    for (const li of el("legend").querySelectorAll(".legend__item")) {
+      expect(li.textContent?.trim()).not.toBe("");
+    }
   });
 
   it("drives zoom and fit from the toolbar", () => {
@@ -329,16 +402,39 @@ describe("the block inspector shows the block's own text", () => {
     mounted = await mountApp();
   });
 
-  it("prints the LLVM IR verbatim", () => {
+  it("prints the selected machine block's x86 verbatim", () => {
     const clean = onDisk(CLEAN);
+    mounted.graph.clickNode(1);
+    const block = clean.machine_cfg.nodes.find((n) => n.id === 1)!;
+    const byAddress = new Map(
+      clean.disassembly.instructions.map((i) => [i.address, i]),
+    );
+    const lines = [...el("asm").querySelectorAll(".asm-line")];
+    expect(lines).toHaveLength(block.instruction_addresses.length);
+    block.instruction_addresses.forEach((address, i) => {
+      const instruction = byAddress.get(address)!;
+      const reloc =
+        instruction.relocations.length > 0
+          ? `; ${instruction.relocations.map((r) => r.symbol).join(", ")}`
+          : "";
+      expect(lines[i]!.textContent).toBe(
+        `${instruction.address_hex}${instruction.mnemonic}${instruction.op_str}${reloc}`,
+      );
+    });
+    expect(mounted.app.selectedBlock()).toBe(1);
+  });
+
+  it("prints the LLVM IR verbatim in the IR view", () => {
+    const clean = onDisk(CLEAN);
+    setView("ir");
     mounted.graph.clickNode(1);
     const node = clean.llvm_cfg.nodes.find((n) => n.id === 1)!;
     expect(el("ir").textContent).toBe(node.instructions.join("\n"));
-    expect(mounted.app.selectedBlock()).toBe(1);
   });
 
   it("labels the entry block and lists real successors", () => {
     const clean = onDisk(CLEAN);
+    setView("ir");
     mounted.graph.clickNode(clean.llvm_cfg.entry_node_id);
     expect(
       document.querySelector<HTMLElement>("[data-role='block-entry']")?.hidden,
@@ -356,6 +452,7 @@ describe("the block inspector shows the block's own text", () => {
 
   it("prints machine instructions exactly as Capstone gave them", () => {
     const clean = onDisk(CLEAN);
+    setView("ir");
     mounted.graph.clickNode(0);
     click(el("tab-asm"));
 
@@ -379,12 +476,25 @@ describe("the block inspector shows the block's own text", () => {
   });
 
   it("says plainly that no LLVM-to-machine mapping is recorded", () => {
+    setView("ir");
     mounted.graph.clickNode(0);
     expect(el("asm-provenance").textContent).toMatch(/no explicit .*mapping/i);
   });
 
+  it("has nothing to disclaim when the graph is already machine blocks", () => {
+    mounted.graph.clickNode(0);
+    expect(el("inspector").getAttribute("data-mode")).toBe("x86");
+    const clean = onDisk(CLEAN);
+    const machine = clean.machine_cfg.nodes.find((n) => n.id === 0)!;
+    expect(el("inspector-meta").textContent).toContain("Address range");
+    expect(el("inspector-meta").textContent).toContain(
+      String(machine.instruction_addresses.length),
+    );
+  });
+
   it("lets a different machine block be read when the CFGs differ", async () => {
     await setControls(mounted.app, { optimization: "O3", flattening: true });
+    setView("ir");
     const variant = mounted.app.variant()!;
     mounted.graph.clickNode(variant.llvm_cfg.entry_node_id);
     const select = el<HTMLSelectElement>("mblock");
@@ -437,19 +547,19 @@ describe("keyboard", () => {
   });
 
   it("steps between blocks with the arrow keys", () => {
-    const clean = onDisk(CLEAN);
+    const nodes = onDisk(CLEAN).machine_cfg.nodes;
     const graph = el<HTMLElement>("graph");
     expect(graph.tabIndex).toBe(0);
 
     press(graph, "ArrowDown");
-    expect(mounted.app.selectedBlock()).toBe(clean.llvm_cfg.nodes[0]!.id);
+    expect(mounted.app.selectedBlock()).toBe(nodes[0]!.id);
     press(graph, "ArrowDown");
-    expect(mounted.app.selectedBlock()).toBe(clean.llvm_cfg.nodes[1]!.id);
+    expect(mounted.app.selectedBlock()).toBe(nodes[1]!.id);
     press(graph, "ArrowUp");
-    expect(mounted.app.selectedBlock()).toBe(clean.llvm_cfg.nodes[0]!.id);
+    expect(mounted.app.selectedBlock()).toBe(nodes[0]!.id);
     press(graph, "End");
-    expect(mounted.app.selectedBlock()).toBe(clean.llvm_cfg.nodes.at(-1)!.id);
-    expect(el("graph-status").textContent).toMatch(/IR instructions/);
+    expect(mounted.app.selectedBlock()).toBe(nodes.at(-1)!.id);
+    expect(el("graph-status").textContent).toMatch(/x86 instructions/);
   });
 
   it("zooms and fits from the graph", () => {
@@ -462,6 +572,7 @@ describe("keyboard", () => {
   });
 
   it("moves between the inspector tabs with arrow keys", () => {
+    setView("ir");
     mounted.graph.clickNode(0);
     press(el("tab-ir"), "ArrowRight");
     expect(el("tab-asm").getAttribute("aria-selected")).toBe("true");
@@ -501,7 +612,7 @@ describe("failures stay visible instead of breaking the page", () => {
   it("shows an error with a retry when a variant cannot be fetched", async () => {
     const control = makeLoader();
     mounted = await mountApp(control);
-    const target = fileOf("o0-bcf1-fla0-sub0-str0-split0");
+    const target = fileOf("o3-bcf1-fla0-sub0-str0-split0");
     control.failures.add(target);
 
     await setControls(mounted.app, { bcf: true });
@@ -520,9 +631,9 @@ describe("failures stay visible instead of breaking the page", () => {
     await mounted.app.ready();
 
     expect(overlay.hidden).toBe(true);
-    expect(mounted.app.variant()?.id).toBe("o0-bcf1-fla0-sub0-str0-split0");
+    expect(mounted.app.variant()?.id).toBe("o3-bcf1-fla0-sub0-str0-split0");
     expect(numberIn(metricCell("instructions"), "current")).toBe(
-      onDisk("o0-bcf1-fla0-sub0-str0-split0").metrics.instruction_count,
+      onDisk("o3-bcf1-fla0-sub0-str0-split0").metrics.instruction_count,
     );
   });
 
@@ -536,7 +647,7 @@ describe("failures stay visible instead of breaking the page", () => {
     ).toBe(false);
 
     await setControls(mounted.app, { bcf: true });
-    expect(mounted.app.variant()?.id).toBe("o0-bcf1-fla0-sub0-str0-split0");
+    expect(mounted.app.variant()?.id).toBe("o3-bcf1-fla0-sub0-str0-split0");
   });
 });
 
@@ -655,9 +766,12 @@ describe("the build command", () => {
     const text = el("cli").textContent ?? "";
     expect(text).toContain("clang");
     expect(text).toContain("-target x86_64-pc-windows-msvc");
-    expect(text).toContain("-O0");
+    expect(text).toContain("-O3");
     expect(text).not.toContain("-mllvm");
     expect(text).toContain("# no obfuscation passes enabled");
+    // One line: no backslash continuations.
+    expect(text).not.toContain("\\");
+    expect(text.split("\n").filter((line) => line.trim())).toHaveLength(1);
   });
 
   it("adds one flag per transformation, in control order", async () => {
@@ -692,14 +806,14 @@ describe("the build command", () => {
   it("tracks the optimization level", async () => {
     await setControls(mounted.app, { optimization: "O2" });
     expect(el("cli").textContent).toContain("-O2");
-    expect(el("cli").textContent).not.toContain("-O0");
+    expect(el("cli").textContent).not.toContain("-O3");
   });
 
   it("still describes the configuration when the variant fails to load", async () => {
     const control = makeLoader();
     mounted.app.destroy();
     mounted = await mountApp(control);
-    control.failures.add(fileOf("o0-bcf1-fla0-sub0-str0-split0"));
+    control.failures.add(fileOf("o3-bcf1-fla0-sub0-str0-split0"));
     await setControls(mounted.app, { bcf: true });
     expect(mounted.app.variant()).toBeNull();
     expect(el("cli").textContent).toContain("-mllvm -enable-bcfobf");

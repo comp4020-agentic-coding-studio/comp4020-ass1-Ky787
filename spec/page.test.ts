@@ -25,10 +25,11 @@ function accessibleName(el: Element): string {
 }
 
 describe("the page states its one idea", () => {
-  it("leads with the headline", () => {
-    expect(doc.querySelector("h1")?.textContent?.trim().toLowerCase()).toBe(
-      "the program didn't change",
+  it("leads with the site's name", () => {
+    expect(doc.querySelector("h1")?.textContent?.trim()).toBe(
+      "Obfuscation Explorer",
     );
+    expect(doc.title).toBe("Obfuscation Explorer");
   });
 
   it("says what to do next", () => {
@@ -36,7 +37,7 @@ describe("the page states its one idea", () => {
       .replace(/\s+/g, " ")
       .trim()
       .toLowerCase();
-    expect(sub).toContain("transformations");
+    expect(sub).toContain("the program doesn't change");
     expect(sub).toContain("harder to reason about");
 
     const lede = (doc.querySelector(".masthead__lede")?.textContent ?? "")
@@ -107,7 +108,7 @@ describe("controls", () => {
     ).toContain("Compiler Optimization");
   });
 
-  it("starts from the clean configuration", () => {
+  it("starts clean, at O3", () => {
     for (const input of doc.querySelectorAll<HTMLInputElement>(
       "input[data-transform]",
     )) {
@@ -118,9 +119,17 @@ describe("controls", () => {
         ?.hasAttribute("checked"),
     ).toBe(true);
     expect(
-      doc.querySelector<HTMLInputElement>('input[name="opt"][value="O0"]')
+      doc.querySelector<HTMLInputElement>('input[name="opt"][value="O3"]')
         ?.hasAttribute("checked"),
     ).toBe(true);
+  });
+
+  it("offers both CFGs, with x86 selected", () => {
+    const views = [
+      ...doc.querySelectorAll<HTMLInputElement>('input[name="view"]'),
+    ];
+    expect(views.map((v) => v.value)).toEqual(["x86", "ir"]);
+    expect(views[0]?.hasAttribute("checked")).toBe(true);
   });
 
   it("offers a reset", () => {
@@ -156,16 +165,12 @@ describe("the graph is reachable without a mouse", () => {
     ).toBe("polite");
   });
 
-  it("explains edge kinds in words, not only in colour", () => {
-    const items = [...doc.querySelectorAll(".legend__item")];
-    expect(items).toHaveLength(7);
-    for (const item of items) {
-      expect(item.textContent?.trim()).not.toBe("");
-    }
-    const kinds = items
-      .map((item) => item.getAttribute("data-kind"))
-      .filter(Boolean);
-    expect(kinds).toEqual(["true", "false", "branch", "case", "default"]);
+  it("has a legend the script fills for whichever CFG is shown", () => {
+    // The kinds differ between the two CFGs, so the legend is rendered rather
+    // than hard-coded; spec/app.test.ts checks what goes into it.
+    const legend = doc.querySelector('[data-testid="legend"]');
+    expect(legend).toBeTruthy();
+    expect(legend?.children).toHaveLength(0);
   });
 });
 

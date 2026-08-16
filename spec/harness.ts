@@ -9,8 +9,8 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { createApp, type App } from "../src/app.js";
 import { Dataset, type DataLoader } from "../src/dataset.js";
-import type { GraphView, GraphViewOptions } from "../src/graph.js";
-import type { Variant, VariantConfig } from "../src/types.js";
+import type { GraphModel, GraphView, GraphViewOptions } from "../src/graph.js";
+import type { VariantConfig } from "../src/types.js";
 
 const DATA_DIR = resolve("web_data");
 const PAGE = resolve("dist/index.html");
@@ -51,7 +51,7 @@ export function makeLoader(): LoaderControl {
 }
 
 export interface GraphSpy {
-  readonly rendered: Variant[];
+  readonly rendered: GraphModel[];
   readonly selections: (number | null)[];
   readonly zoomFactors: number[];
   fits: number;
@@ -59,7 +59,7 @@ export interface GraphSpy {
   destroyed: boolean;
   /** Simulates a click on a node in the rendered graph. */
   clickNode(nodeId: number | null): void;
-  lastRendered(): Variant | undefined;
+  lastRendered(): GraphModel | undefined;
 }
 
 /** Loads the *built* page into the jsdom document, minus its scripts. */
@@ -101,8 +101,8 @@ export async function mountApp(control = makeLoader()): Promise<Mounted> {
   const makeGraph = (options: GraphViewOptions): GraphView => {
     spy.clickNode = (nodeId) => options.onSelect(nodeId);
     return {
-      render: (variant) => {
-        spy.rendered.push(variant);
+      render: (model) => {
+        spy.rendered.push(model);
       },
       select: (nodeId) => {
         spy.selections.push(nodeId);
@@ -175,6 +175,16 @@ export async function setControls(
     }
   }
   await app.ready();
+}
+
+/** Switches the graph between the machine CFG and the LLVM one. */
+export function setView(view: "x86" | "ir"): void {
+  const radio = document.querySelector<HTMLInputElement>(
+    `input[name="view"][value="${view}"]`,
+  );
+  if (!radio) throw new Error(`no view control for ${view}`);
+  radio.checked = true;
+  radio.dispatchEvent(new window.Event("change", { bubbles: true }));
 }
 
 export function click(element: Element): void {

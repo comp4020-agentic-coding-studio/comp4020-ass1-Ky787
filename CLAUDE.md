@@ -20,9 +20,19 @@ dependencies; everything else lives in `src/`:
   resolved to a variant by **looking it up in `index.json`**, never by
   formatting an id or a file path, and a configuration with no entry throws
   instead of falling back to a neighbour. Fetched variants are cached.
+  Two constants, deliberately distinct: `BASELINE_CONFIG` is the clean **O0**
+  reference the complexity summary counts up from, and `INITIAL_CONFIG` is what
+  the controls open on and Reset returns to — the same clean build at **O3**.
+  Because they differ, boot fetches two variants (the selected one and the
+  baseline) so the summary has a left-hand number on first paint.
 - `src/app.ts` — the page controller. Takes its graph view as an argument
-  (`makeGraph`) so the whole UI can be driven in jsdom without a canvas.
+  (`makeGraph`) so the whole UI can be driven in jsdom without a canvas. It also
+  owns the x86/IR view switch: `VIEWS` names each view's title, edge kinds and
+  instruction unit, and `machineModel`/`llvmModel` project the chosen CFG onto
+  the neutral `GraphModel`.
 - `src/graph.ts` — Cytoscape.js + dagre. The only module that imports either.
+  It is told nothing about LLVM or x86 — it draws whatever `GraphModel` it is
+  handed, so both views share one renderer.
 - `src/asm.ts`, `src/highlight.ts` — colouring for text that came out of the
   dataset.
 - `src/command.ts` — the **one** module that does not read from `web_data/`:
@@ -34,7 +44,8 @@ dependencies; everything else lives in `src/`:
   flag may be invented — the seed is fixed at 12345, but nothing records which
   switch carried it. `spec/command.test.ts` holds that line.
 - `src/hints.ts`, `src/annotations.ts` — the other page-authored text: the
-  question-mark explanations, and the plain-English notes beside `source.c`.
+  question-mark explanations, and the plain-English `OVERVIEW` and line notes
+  beside `source.c`.
   Both explain general compiler ideas; neither states anything about the
   dataset. The notes are **never merged into the code** — `annotate` returns the
   source line untouched and the note separately, the code goes in a `.c-code`
@@ -60,11 +71,18 @@ time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
 - Node placement is presentation and may be changed (`wrapWideRows` folds an
   over-wide dagre row so a flattened CFG is not a hairline). Nodes and edges
   themselves are never added, dropped, merged, or reordered.
-- The code preview drawn inside each graph box is the node's **own LLVM IR**,
-  truncated with a visible ellipsis and a "+N more" tail. x86 is deliberately
-  not drawn on graph nodes: the dataset records no LLVM-to-machine mapping, so
-  putting machine code on an LLVM block would be a claim the data cannot make.
-  The untruncated text is always one click away in the inspector.
+- The code preview drawn inside each graph box is that node's **own** code,
+  truncated with a visible ellipsis and a "+N more" tail. The graph has two
+  views and each draws only what its own CFG holds: the machine view draws
+  `machine_cfg`, whose nodes carry real x86, and the LLVM view draws `llvm_cfg`,
+  whose nodes carry IR. Because there is no LLVM-to-machine mapping in the
+  dataset, x86 must never be drawn on an LLVM block or vice versa — that would
+  be a claim the data cannot make. The untruncated text is one click away in the
+  inspector, which likewise shows the address range for a machine block and
+  keeps the "no mapping recorded" note for an LLVM one.
+- Labels never disappear as the reader zooms out (`min-zoomed-font-size: 0`).
+  A flattened CFG is unreadably small at fit zoom, and that *is* the finding —
+  dropping the text would hide it behind a rendering optimisation.
 
 ## Checks
 
@@ -89,7 +107,8 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
 The page is two screens: a hero (headline, pinned controls, build command,
 `source.c` beside the current disassembly) and a full-viewport analysis stage
 (metrics, then watched strings and the inspector in a capped row, then the
-graph across the full width — nothing sits beside the graph). The controls are `position: sticky`, and the stage
+graph across the full width — nothing sits beside the graph). The graph's own
+header carries the x86 / LLVM IR switch beside zoom and fit. The controls are `position: sticky`, and the stage
 sizes itself with `calc(100dvh - var(--dock-h))` — `--dock-h` is measured from
 the real dock in `app.ts`, so changing the controls' height needs no CSS edit.
 

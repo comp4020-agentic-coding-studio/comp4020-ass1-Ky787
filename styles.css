@@ -511,6 +511,14 @@ main {
   background: var(--bg-inset);
 }
 
+/* A <fieldset> carries a default margin, padding and border of its own. */
+.segmented--view {
+  flex: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+  font-size: 11px;
+}
+
 .segmented__opt {
   position: relative;
   flex: 1 1 0;
@@ -539,6 +547,11 @@ main {
 
 .segmented__opt:first-child span {
   border-left: 0;
+}
+
+.segmented--view .segmented__opt span {
+  padding: 5px 10px;
+  font-size: 11px;
 }
 
 .segmented__opt span:hover {
@@ -779,7 +792,7 @@ main {
   display: flex;
   flex: none;
   gap: 6px;
-  margin-left: auto;
+  margin-left: 8px;
 }
 
 .graph-stage {
@@ -1477,7 +1490,7 @@ main {
      must not sit on 200px of nothing the graph could be using. */
   .stage__side {
     grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-    max-height: 200px;
+    max-height: 188px;
   }
 
   .stage__side > .panel {
