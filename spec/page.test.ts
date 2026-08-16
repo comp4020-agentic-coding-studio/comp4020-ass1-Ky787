@@ -272,8 +272,8 @@ describe("wiring holds together", () => {
       ?.querySelector(".panel__note");
     const note = head?.textContent?.replace(/\s+/g, " ") ?? "";
     expect(note).toMatch(/hikari/i);
-    expect(note).toMatch(/llvm 15/i);
     expect(note).toMatch(/o-llvm fork/i);
+    expect(note).toMatch(/switches for this configuration/i);
 
     // The fork this dataset was generated with, reachable rather than recited.
     const link = head?.querySelector("a");
