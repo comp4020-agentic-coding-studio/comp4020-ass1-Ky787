@@ -192,19 +192,6 @@ describe("wiring holds together", () => {
     expect(doc.getElementById(href.slice(1))).toBeTruthy();
   });
 
-  it("gives the inspector a tablist with two panels", () => {
-    const tabs = [...doc.querySelectorAll('[role="tab"]')];
-    expect(tabs).toHaveLength(2);
-    expect(tabs.map((tab) => tab.textContent?.trim())).toEqual([
-      "LLVM IR",
-      "x86",
-    ]);
-    for (const tab of tabs) {
-      const panel = doc.getElementById(tab.getAttribute("aria-controls")!);
-      expect(panel?.getAttribute("role")).toBe("tabpanel");
-    }
-  });
-
   it("puts the source and the assembly side by side", () => {
     const panes = [...doc.querySelectorAll(".diptych .pane")];
     expect(panes).toHaveLength(2);
@@ -242,24 +229,20 @@ describe("wiring holds together", () => {
       "source",
       "disassembly",
       "instructions",
-      "watched",
-      "inspector",
+      "strings",
     ]) {
       expect(keys, `no hint for ${needed}`).toContain(needed);
     }
   });
 
-  it("puts the strings and the inspector above the graph, not beside it", () => {
-    const side = doc.querySelector(".stage__side");
-    expect(side?.querySelector('[data-testid="strings"]')).toBeTruthy();
-    expect(side?.querySelector('[data-testid="inspector"]')).toBeTruthy();
-    expect(doc.querySelector(".sidecol")).toBeNull();
-
-    const children = [...(doc.querySelector(".stage")?.children ?? [])];
-    const sideAt = children.findIndex((el) => el.classList.contains("stage__side"));
-    const graphAt = children.findIndex((el) => el.classList.contains("workspace"));
-    expect(sideAt).toBeGreaterThan(-1);
-    expect(graphAt).toBeGreaterThan(sideAt);
+  it("gives the stage to the metrics and the graph, and nothing else", () => {
+    const children = [...(doc.querySelector(".stage")?.children ?? [])].filter(
+      (el) => !el.classList.contains("sr-only"),
+    );
+    expect(children.map((el) => el.className)).toEqual([
+      "metrics__grid",
+      "workspace",
+    ]);
     expect(doc.querySelector(".workspace .graph-panel")).toBeTruthy();
   });
 

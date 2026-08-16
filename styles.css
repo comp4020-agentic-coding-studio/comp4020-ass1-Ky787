@@ -22,10 +22,8 @@
   --blue: #5f9ff0;
   --purple: #b58cf0;
   --tok-key: #b58cf0;
-  --tok-type: #6fb3c8;
   --tok-num: #e8c07d;
   --tok-str: #7fc98a;
-  --tok-var: #66d0f5;
   --tok-global: #f0a5c0;
   --tok-punct: #7b8fa3;
 
@@ -988,250 +986,6 @@ main {
   border-top: 3px dashed var(--purple);
 }
 
-/* -------------------------------------------------------------- sidecol --- */
-
-.stage__side {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: 1fr;
-  min-width: 0;
-}
-
-.strings__list {
-  display: grid;
-  gap: 7px;
-}
-
-.string {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 0;
-  padding: 7px 10px;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  background: var(--bg-inset);
-}
-
-.string__text {
-  min-width: 0;
-  overflow: hidden;
-  font-size: 12px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.string__state {
-  flex: none;
-  padding: 2px 7px;
-  border: 1px solid var(--line-strong);
-  border-radius: 4px;
-  color: var(--text-faint);
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.11em;
-}
-
-.string[data-present="true"] .string__text {
-  color: var(--text);
-}
-
-.string[data-present="true"] .string__state {
-  border-color: #2f5c3d;
-  color: var(--green);
-}
-
-.string[data-present="false"] .string__text {
-  color: var(--text-faint);
-  text-decoration: line-through;
-}
-
-.strings__note {
-  margin-top: 9px;
-  color: var(--text-faint);
-  font-size: 12px;
-}
-
-/* ------------------------------------------------------------ inspector --- */
-
-.inspector {
-  min-width: 0;
-}
-
-.inspector__close {
-  margin-left: auto;
-}
-
-.inspector[data-selected="false"] .inspector__close {
-  display: none;
-}
-
-.inspector__empty {
-  color: var(--text-faint);
-  font-size: 12.5px;
-}
-
-.inspector__ident {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 10px;
-}
-
-.chip {
-  padding: 3px 9px;
-  border: 1px solid var(--line-strong);
-  border-radius: 5px;
-  background: var(--bg-inset);
-  color: var(--text-dim);
-  font-family: var(--mono);
-  font-size: 11px;
-}
-
-.chip--block {
-  border-color: var(--accent-deep);
-  color: var(--accent);
-}
-
-.chip--entry {
-  border-style: double;
-  border-width: 2px;
-  border-color: var(--warm);
-  color: var(--warm);
-}
-
-.chip[hidden] {
-  display: none;
-}
-
-.inspector__meta {
-  display: grid;
-  gap: 4px 12px;
-  grid-template-columns: max-content minmax(0, 1fr);
-  margin-bottom: 12px;
-  font-size: 12px;
-}
-
-.inspector__meta dt {
-  color: var(--text-faint);
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.inspector__meta dd {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  min-width: 0;
-  margin: 0;
-  font-family: var(--mono);
-}
-
-.edge-chip {
-  padding: 2px 7px;
-  border: 1px solid var(--line);
-  border-left-width: 3px;
-  border-radius: 4px;
-  background: var(--bg-inset);
-  color: var(--text-dim);
-  font-family: var(--mono);
-  font-size: 10.5px;
-  cursor: pointer;
-}
-
-.edge-chip:hover {
-  border-color: var(--accent);
-  color: var(--text);
-}
-
-.edge-chip--none {
-  border-left-width: 1px;
-  color: var(--text-faint);
-  cursor: default;
-}
-
-.edge-chip[data-kind="true"] {
-  border-left-color: var(--green);
-}
-
-.edge-chip[data-kind="false"] {
-  border-left-color: var(--red);
-}
-
-.edge-chip[data-kind="branch"] {
-  border-left-color: #7c93a8;
-}
-
-.edge-chip[data-kind="case"] {
-  border-left-color: var(--blue);
-}
-
-.edge-chip[data-kind="default"] {
-  border-left-color: var(--purple);
-}
-
-.tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 9px;
-  border-bottom: 1px solid var(--line);
-}
-
-.tabs__tab {
-  padding: 6px 12px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  color: var(--text-faint);
-  font-family: var(--mono);
-  font-size: 11.5px;
-  cursor: pointer;
-}
-
-.tabs__tab[aria-selected="true"] {
-  border-bottom-color: var(--accent);
-  color: var(--accent);
-}
-
-.tabpanel[hidden] {
-  display: none;
-}
-
-.provenance {
-  margin-bottom: 9px;
-  color: var(--text-faint);
-  font-size: 11px;
-  line-height: 1.45;
-}
-
-.asm-picker {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 9px;
-  color: var(--text-faint);
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.asm-picker select {
-  flex: 1 1 auto;
-  min-width: 0;
-  padding: 5px 7px;
-  border: 1px solid var(--line-strong);
-  border-radius: 6px;
-  background: var(--bg-inset);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: normal;
-  text-transform: none;
-}
-
 /* ----------------------------------------------------------------- code --- */
 
 .code {
@@ -1324,40 +1078,12 @@ main {
   font-style: italic;
 }
 
-.asm-warn {
-  color: var(--red);
-}
-
-.t-op {
-  color: var(--tok-key);
-}
-
-.t-local {
-  color: var(--tok-var);
-}
-
-.t-global {
-  color: var(--tok-global);
-}
-
-.t-type {
-  color: var(--tok-type);
-}
-
 .t-num {
   color: var(--tok-num);
 }
 
 .t-string {
   color: var(--tok-str);
-}
-
-.t-attr {
-  color: var(--text-faint);
-}
-
-.t-meta {
-  color: var(--text-faint);
 }
 
 .t-punct {
@@ -1458,27 +1184,6 @@ main {
     height: clamp(340px, 62vh, 560px);
   }
 
-  .inspector {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 40;
-    max-height: 70dvh;
-    overflow-y: auto;
-    border-width: 1px 0 0;
-    border-radius: 14px 14px 0 0;
-    box-shadow: 0 -18px 44px rgb(0 0 0 / 62%);
-    transform: translateY(101%);
-    visibility: hidden;
-    transition: transform 0.22s ease, visibility 0.22s;
-  }
-
-  .inspector[data-open="true"] {
-    transform: none;
-    visibility: visible;
-  }
-
   .code {
     max-height: 210px;
   }
@@ -1522,25 +1227,12 @@ main {
     padding-bottom: 4px;
   }
 
-  /* Nothing beside the graph any more: strings and the inspector sit above
-     it, so it gets the full width of the shell as well as the height. */
+  /* The stage holds the metrics and then the graph, and nothing else: the
+     graph takes the full width of the shell as well as the height. */
   .workspace {
     flex: 1 1 auto;
     min-height: 320px;
   }
-
-  /* Sizes to whatever the panels hold, up to a ceiling — an empty inspector
-     must not sit on 200px of nothing the graph could be using. */
-  .stage__side {
-    grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
-    max-height: 188px;
-  }
-
-  .stage__side > .panel {
-    min-height: 0;
-    overflow-y: auto;
-  }
-
 
   .graph-stage {
     flex: 1 1 auto;

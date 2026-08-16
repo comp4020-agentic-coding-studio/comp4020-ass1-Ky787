@@ -78,14 +78,6 @@ export const HINTS: Record<string, Hint> = {
     title: "Control-flow graph",
     body: "A map of the program: each box is a chunk of code, each arrow a jump it can make. This is the first thing an analyst draws, and obfuscation is aimed squarely at it.",
   },
-  inspector: {
-    title: "Block inspector",
-    body: "Click any box in the graph to read the code inside it, and see which boxes lead to and from it.",
-  },
-  watched: {
-    title: "Watched strings",
-    body: "Three pieces of readable text from the program. PLAINTEXT means the word can still be found in the compiled file; ABSENT means it cannot.",
-  },
 };
 
 const OPEN = "data-open";

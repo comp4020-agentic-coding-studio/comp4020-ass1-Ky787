@@ -180,9 +180,6 @@ const overflow = (page: Page): Promise<number> =>
       document.documentElement.clientWidth,
   );
 
-const visible = (page: Page, selector: string): Promise<boolean> =>
-  page.locator(selector).isVisible();
-
 /** Waits for the app to land on a variant other than `previous`, fully loaded. */
 async function waitForSwap(page: Page, previous: string): Promise<void> {
   await page.waitForFunction(
@@ -338,20 +335,6 @@ withBrowser("desktop 1920x1080", () => {
       session.requests.filter((url) => url.includes("/web_data/variants/")),
     ).toHaveLength(before);
   }, 40_000);
-
-  it("opens the inspector from the keyboard", async () => {
-    await session.page.locator('[data-testid="graph"]').focus();
-    await session.page.keyboard.press("ArrowDown");
-    expect(
-      await visible(session.page, '[data-testid="inspector"] [data-role="body"]'),
-    ).toBe(true);
-    expect((await text(session.page, '[data-testid="asm"]')).length).toBeGreaterThan(
-      10,
-    );
-    expect(
-      (await text(session.page, '[data-testid="graph-status"]')).length,
-    ).toBeGreaterThan(0);
-  });
 
   it("reaches every control by tabbing", async () => {
     await session.page.locator(".skip-link").focus();
@@ -572,43 +555,6 @@ withBrowser("mobile 390x844", () => {
     // Static, so scrolling moves it off screen rather than parking it on top.
     expect(after!.y).toBeLessThan(before!.y);
   });
-
-  it("hides the inspector until a block is chosen, then shows it as a sheet", async () => {
-    expect(await visible(session.page, '[data-testid="inspector"]')).toBe(false);
-
-    await session.page.locator('[data-testid="graph"]').focus();
-    await session.page.keyboard.press("ArrowDown");
-    await session.page.keyboard.press("Enter");
-    await session.page.waitForTimeout(320);
-    expect(await visible(session.page, '[data-testid="inspector"]')).toBe(true);
-    expect(await overflow(session.page)).toBeLessThanOrEqual(0);
-
-    await session.page.locator('[data-testid="inspector-close"]').click();
-    await session.page.waitForTimeout(320);
-    expect(await visible(session.page, '[data-testid="inspector"]')).toBe(false);
-  }, 40_000);
-
-  it("scrolls a long assembly listing inside its own box", async () => {
-    await session.page.locator('[data-testid="graph"]').focus();
-    await session.page.keyboard.press("ArrowDown");
-    await session.page.keyboard.press("Enter");
-    await session.page.waitForTimeout(320);
-    await session.page.locator('[data-testid="tab-asm"]').click();
-
-    const fits = await session.page.evaluate(() => {
-      const pre = document.querySelector<HTMLElement>('[data-testid="asm"]');
-      if (!pre) return false;
-      return (
-        pre.getBoundingClientRect().width <= window.innerWidth &&
-        getComputedStyle(pre).overflowX !== "visible"
-      );
-    });
-    expect(fits).toBe(true);
-    expect(await overflow(session.page)).toBeLessThanOrEqual(0);
-
-    await session.page.locator('[data-testid="inspector-close"]').click();
-    await session.page.waitForTimeout(320);
-  }, 40_000);
 
   it("keeps the configuration when the viewport is resized mid-interaction", async () => {
     await setSwitch(session.page, "flattening", true);

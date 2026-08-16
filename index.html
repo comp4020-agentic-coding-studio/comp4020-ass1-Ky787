@@ -305,113 +305,6 @@
           </li>
         </ul>
 
-        <div class="stage__side">
-          <section class="panel strings" aria-labelledby="strings-h">
-            <div class="panel__head">
-              <h3 id="strings-h" class="panel__title">Watched strings</h3>
-            <span data-hint="watched"></span>
-            </div>
-            <ul class="strings__list" data-testid="strings"></ul>
-            <p class="strings__note" data-testid="strings-note"></p>
-          </section>
-
-          <section
-            class="panel inspector"
-            data-open="false"
-            data-selected="false"
-            data-testid="inspector"
-            aria-labelledby="insp-h"
-          >
-            <div class="panel__head">
-              <h3 id="insp-h" class="panel__title" tabindex="-1">
-                Block inspector
-              </h3>
-              <span data-hint="inspector"></span>
-              <button
-                type="button"
-                class="btn btn--icon inspector__close"
-                data-testid="inspector-close"
-                aria-label="Close block inspector"
-              >
-                <span aria-hidden="true">✕</span>
-              </button>
-            </div>
-
-            <p class="inspector__empty" data-role="empty">
-              Select a block in the graph to read its LLVM IR and the machine
-              code from the same compilation.
-            </p>
-
-            <div class="inspector__body" data-role="body" hidden>
-              <div class="inspector__ident">
-                <span class="chip chip--block" data-role="block-label"></span>
-                <span class="chip chip--entry" data-role="block-entry" hidden>
-                  entry point
-                </span>
-              </div>
-              <dl class="inspector__meta" data-testid="inspector-meta"></dl>
-
-              <div class="tabs" role="tablist" aria-label="Block detail">
-                <button
-                  type="button"
-                  role="tab"
-                  id="tab-ir"
-                  aria-controls="panel-ir"
-                  aria-selected="true"
-                  class="tabs__tab"
-                  data-testid="tab-ir"
-                >
-                  LLVM IR
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  id="tab-asm"
-                  aria-controls="panel-asm"
-                  aria-selected="false"
-                  tabindex="-1"
-                  class="tabs__tab"
-                  data-testid="tab-asm"
-                >
-                  x86
-                </button>
-              </div>
-
-              <div
-                role="tabpanel"
-                id="panel-ir"
-                aria-labelledby="tab-ir"
-                tabindex="0"
-                class="tabpanel"
-              >
-                <pre
-                  class="code code--ir"
-                  data-testid="ir"
-                ><code data-role="ir"></code></pre>
-              </div>
-
-              <div
-                role="tabpanel"
-                id="panel-asm"
-                aria-labelledby="tab-asm"
-                tabindex="0"
-                class="tabpanel"
-                hidden
-              >
-                <p class="provenance" data-testid="asm-provenance"></p>
-                <label class="asm-picker">
-                  <span>Machine block</span>
-                  <select data-role="mblock" data-testid="mblock"></select>
-                </label>
-                <pre
-                  class="code code--asm"
-                  data-testid="asm"
-                ><code data-role="asm"></code></pre>
-              </div>
-            </div>
-          </section>
-        </div>
-
         <div class="workspace">
           <section class="panel graph-panel" aria-labelledby="cfg-h">
             <div class="panel__head">
@@ -474,7 +367,7 @@
             <p id="graph-help" class="sr-only">
               Interactive graph. Drag to pan, scroll or use the zoom buttons to
               zoom. When the graph has focus, arrow keys step between basic
-              blocks, Enter opens the block inspector, plus and minus zoom, and
+              blocks, Enter centres the selected block, plus and minus zoom, and
               0 fits the graph to the view.
             </p>
             <p class="sr-only" aria-live="polite" data-testid="graph-status"></p>

@@ -34,7 +34,9 @@ dependencies; everything else lives in `src/`:
   It is told nothing about LLVM or x86 — it draws whatever `GraphModel` it is
   handed, so both views share one renderer.
 - `src/asm.ts`, `src/highlight.ts` — colouring for text that came out of the
-  dataset.
+  dataset: x86 in the disassembly pane, C in the source pane. Nothing colours
+  IR any more — the IR on screen is the graph's node previews, which cytoscape
+  draws as plain label text.
 - `src/command.ts` — the **one** module that does not read from `web_data/`:
   the dataset holds the compiled objects, so the `clang` line is assembled from
   the six controls. The switch spellings are verified against the archived
@@ -65,9 +67,9 @@ time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
 - x86 text on screen is Capstone's own `mnemonic` and `op_str`. The structured
   `operands` array only chooses colours. If the two cannot be lined up, colour
   nothing rather than guess (`operandRanges` in `src/asm.ts`).
-- The dataset records no mapping between LLVM blocks and machine blocks. The
-  inspector says so, and states what the two CFGs actually look like, rather
-  than implying a correspondence.
+- The dataset records no mapping between LLVM blocks and machine blocks.
+  Nothing on the page lines one CFG up against the other, and the technical
+  details in the footer say so outright, beside the two block counts.
 - Node placement is presentation and may be changed (`wrapWideRows` folds an
   over-wide dagre row so a flattened CFG is not a hairline). Nodes and edges
   themselves are never added, dropped, merged, or reordered.
@@ -77,9 +79,9 @@ time; nothing in it may be `import`ed, or all 256 variants land in the bundle.
   `machine_cfg`, whose nodes carry real x86, and the LLVM view draws `llvm_cfg`,
   whose nodes carry IR. Because there is no LLVM-to-machine mapping in the
   dataset, x86 must never be drawn on an LLVM block or vice versa — that would
-  be a claim the data cannot make. The untruncated text is one click away in the
-  inspector, which likewise shows the address range for a machine block and
-  keeps the "no mapping recorded" note for an LLVM one.
+  be a claim the data cannot make. Selecting a block highlights it and
+  describes it to a screen reader; there is no detail panel behind it, so the
+  box has to carry enough of the code to be worth reading.
 - Labels never disappear as the reader zooms out (`min-zoomed-font-size: 0`).
   A flattened CFG is unreadably small at fit zoom, and that *is* the finding —
   dropping the text would hide it behind a rendering optimisation.
@@ -106,9 +108,11 @@ calling anything done; the specs read `dist/`, so a stale build fails them.
 
 The page is two screens: a hero (headline, pinned controls, build command,
 `source.c` beside the current disassembly) and a full-viewport analysis stage
-(metrics, then watched strings and the inspector in a capped row, then the
-graph across the full width — nothing sits beside the graph). The graph's own
-header carries the x86 / LLVM IR switch beside zoom and fit. The controls are `position: sticky`, and the stage
+holding two things and no others — the metrics, then the graph across the full
+width. Nothing sits beside the graph and nothing sits above it but the metrics;
+`spec/page.test.ts` asserts the stage has exactly those two children, so a new
+panel cannot quietly take the graph's height back. The graph's own header
+carries the x86 / LLVM IR switch beside zoom and fit. The controls are `position: sticky`, and the stage
 sizes itself with `calc(100dvh - var(--dock-h))` — `--dock-h` is measured from
 the real dock in `app.ts`, so changing the controls' height needs no CSS edit.
 

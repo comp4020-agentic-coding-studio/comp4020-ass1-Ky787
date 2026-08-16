@@ -65,7 +65,7 @@ describe("first load", () => {
       ["index.json", "source.c", fileOf(CLEAN), fileOf(BASELINE)].sort(),
     );
     // The baseline is the left-hand number in every metric; without it the
-    // watched-strings row would have nothing to compare against.
+    // plaintext-strings row would have nothing to compare against.
     expect(
       mounted.control.requests.filter((path) => path.startsWith("variants/")),
     ).toHaveLength(2);
@@ -79,11 +79,8 @@ describe("first load", () => {
     expect(model?.entryId).toBe(expected.machine_cfg.entry_node_id);
   });
 
-  it("shows no block inspector until a block is picked", () => {
-    expect(el("inspector").getAttribute("data-open")).toBe("false");
-    expect(
-      el("inspector").querySelector<HTMLElement>("[data-role='body']")?.hidden,
-    ).toBe(true);
+  it("picks no block until one is chosen", () => {
+    expect(mounted.app.selectedBlock()).toBeNull();
   });
 });
 
@@ -397,131 +394,6 @@ describe("the graph gets exactly the dataset's blocks and edges", () => {
   });
 });
 
-describe("the block inspector shows the block's own text", () => {
-  beforeEach(async () => {
-    mounted = await mountApp();
-  });
-
-  it("prints the selected machine block's x86 verbatim", () => {
-    const clean = onDisk(CLEAN);
-    mounted.graph.clickNode(1);
-    const block = clean.machine_cfg.nodes.find((n) => n.id === 1)!;
-    const byAddress = new Map(
-      clean.disassembly.instructions.map((i) => [i.address, i]),
-    );
-    const lines = [...el("asm").querySelectorAll(".asm-line")];
-    expect(lines).toHaveLength(block.instruction_addresses.length);
-    block.instruction_addresses.forEach((address, i) => {
-      const instruction = byAddress.get(address)!;
-      const reloc =
-        instruction.relocations.length > 0
-          ? `; ${instruction.relocations.map((r) => r.symbol).join(", ")}`
-          : "";
-      expect(lines[i]!.textContent).toBe(
-        `${instruction.address_hex}${instruction.mnemonic}${instruction.op_str}${reloc}`,
-      );
-    });
-    expect(mounted.app.selectedBlock()).toBe(1);
-  });
-
-  it("prints the LLVM IR verbatim in the IR view", () => {
-    const clean = onDisk(CLEAN);
-    setView("ir");
-    mounted.graph.clickNode(1);
-    const node = clean.llvm_cfg.nodes.find((n) => n.id === 1)!;
-    expect(el("ir").textContent).toBe(node.instructions.join("\n"));
-  });
-
-  it("labels the entry block and lists real successors", () => {
-    const clean = onDisk(CLEAN);
-    setView("ir");
-    mounted.graph.clickNode(clean.llvm_cfg.entry_node_id);
-    expect(
-      document.querySelector<HTMLElement>("[data-role='block-entry']")?.hidden,
-    ).toBe(false);
-    const successors = [
-      ...el("inspector-meta").querySelectorAll(".edge-chip"),
-    ].map((chip) => chip.textContent);
-    for (const edge of clean.llvm_cfg.edges.filter(
-      (e) => e.source === clean.llvm_cfg.entry_node_id,
-    )) {
-      const label = clean.llvm_cfg.nodes.find((n) => n.id === edge.target)!.label;
-      expect(successors).toContain(`→ ${label} · ${edge.kind}`);
-    }
-  });
-
-  it("prints machine instructions exactly as Capstone gave them", () => {
-    const clean = onDisk(CLEAN);
-    setView("ir");
-    mounted.graph.clickNode(0);
-    click(el("tab-asm"));
-
-    const block = clean.machine_cfg.nodes.find((n) => n.id === 0)!;
-    const byAddress = new Map(
-      clean.disassembly.instructions.map((i) => [i.address, i]),
-    );
-    const lines = [...el("asm").querySelectorAll(".asm-line")];
-    expect(lines).toHaveLength(block.instruction_addresses.length);
-
-    block.instruction_addresses.forEach((address, i) => {
-      const instruction = byAddress.get(address)!;
-      const reloc =
-        instruction.relocations.length > 0
-          ? `; ${instruction.relocations.map((r) => r.symbol).join(", ")}`
-          : "";
-      expect(lines[i]!.textContent).toBe(
-        `${instruction.address_hex}${instruction.mnemonic}${instruction.op_str}${reloc}`,
-      );
-    });
-  });
-
-  it("says plainly that no LLVM-to-machine mapping is recorded", () => {
-    setView("ir");
-    mounted.graph.clickNode(0);
-    expect(el("asm-provenance").textContent).toMatch(/no explicit .*mapping/i);
-  });
-
-  it("has nothing to disclaim when the graph is already machine blocks", () => {
-    mounted.graph.clickNode(0);
-    expect(el("inspector").getAttribute("data-mode")).toBe("x86");
-    const clean = onDisk(CLEAN);
-    const machine = clean.machine_cfg.nodes.find((n) => n.id === 0)!;
-    expect(el("inspector-meta").textContent).toContain("Address range");
-    expect(el("inspector-meta").textContent).toContain(
-      String(machine.instruction_addresses.length),
-    );
-  });
-
-  it("lets a different machine block be read when the CFGs differ", async () => {
-    await setControls(mounted.app, { optimization: "O3", flattening: true });
-    setView("ir");
-    const variant = mounted.app.variant()!;
-    mounted.graph.clickNode(variant.llvm_cfg.entry_node_id);
-    const select = el<HTMLSelectElement>("mblock");
-    expect(select.options).toHaveLength(variant.machine_cfg.nodes.length);
-    expect(el("asm-provenance").textContent).toContain(
-      `${variant.machine_cfg.nodes.length} blocks`,
-    );
-  });
-
-  it("clears itself when the variant changes", async () => {
-    mounted.graph.clickNode(1);
-    expect(mounted.app.selectedBlock()).toBe(1);
-    await setControls(mounted.app, { bcf: true });
-    expect(mounted.app.selectedBlock()).toBeNull();
-    expect(
-      el("inspector").querySelector<HTMLElement>("[data-role='body']")?.hidden,
-    ).toBe(true);
-  });
-
-  it("closes back to the empty state", () => {
-    mounted.graph.clickNode(1);
-    click(el("inspector-close"));
-    expect(mounted.app.selectedBlock()).toBeNull();
-    expect(el("inspector").getAttribute("data-open")).toBe("false");
-  });
-});
-
 describe("keyboard", () => {
   beforeEach(async () => {
     mounted = await mountApp();
@@ -571,41 +443,6 @@ describe("keyboard", () => {
     expect(mounted.graph.fits).toBe(1);
   });
 
-  it("moves between the inspector tabs with arrow keys", () => {
-    setView("ir");
-    mounted.graph.clickNode(0);
-    press(el("tab-ir"), "ArrowRight");
-    expect(el("tab-asm").getAttribute("aria-selected")).toBe("true");
-    expect(document.getElementById("panel-ir")?.hidden).toBe(true);
-    press(el("tab-asm"), "ArrowLeft");
-    expect(el("tab-ir").getAttribute("aria-selected")).toBe("true");
-    expect(document.getElementById("panel-asm")?.hidden).toBe(true);
-  });
-});
-
-describe("watched strings", () => {
-  beforeEach(async () => {
-    mounted = await mountApp();
-  });
-
-  it("lists the dataset's own strings and their state", async () => {
-    const rows = () => [...el("strings").querySelectorAll<HTMLElement>(".string")];
-    expect(rows()).toHaveLength(3);
-    expect(rows().every((r) => r.dataset.present === "true")).toBe(true);
-    expect(rows()[0]?.textContent).toContain("ACCESS GRANTED");
-    expect(el("strings-note").textContent).toMatch(/All 3 watched literals/);
-
-    await setControls(mounted.app, { string_encryption: true });
-    expect(rows().every((r) => r.dataset.present === "false")).toBe(true);
-    expect(el("strings-note").textContent).toMatch(/String Encryption is on/);
-  });
-
-  it("never calls a string encrypted while it is still in the object", () => {
-    for (const row of el("strings").querySelectorAll(".string")) {
-      expect(row.textContent).not.toMatch(/encrypt/i);
-      expect(row.querySelector(".string__state")?.textContent).toBe("PLAINTEXT");
-    }
-  });
 });
 
 describe("failures stay visible instead of breaking the page", () => {
@@ -704,8 +541,10 @@ describe("the source and the assembly, side by side", () => {
   it("annotates the source without putting the notes in the code", () => {
     const notes = [...document.querySelectorAll(".c-note")];
     expect(notes.length).toBeGreaterThan(8);
+    // Every note is a comment, in its own span, on a file that has none of its
+    // own — so the code beside it stays the bytes that were compiled.
     for (const note of notes) expect(note.textContent).toMatch(/^\s*\/\//);
-    expect(el("source-note").textContent).toMatch(/added by this page/);
+    expect(document.querySelectorAll(".c-code .c-note")).toHaveLength(0);
     expect(el("source-note").textContent).not.toMatch(/no longer match/);
   });
 
