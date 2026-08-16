@@ -265,12 +265,22 @@ describe("wiring holds together", () => {
     );
   });
 
-  it("names the toolchain the command belongs to", () => {
-    const note = doc
+  it("names the toolchain the command belongs to, and links the fork", () => {
+    const head = doc
       .querySelector('[data-testid="cli"]')
       ?.closest("section")
-      ?.querySelector(".panel__note")?.textContent;
-    expect(note?.replace(/\s+/g, " ")).toMatch(/hikari llvm 15/i);
+      ?.querySelector(".panel__note");
+    const note = head?.textContent?.replace(/\s+/g, " ") ?? "";
+    expect(note).toMatch(/hikari/i);
+    expect(note).toMatch(/llvm 15/i);
+    expect(note).toMatch(/o-llvm fork/i);
+
+    // The fork this dataset was generated with, reachable rather than recited.
+    const link = head?.querySelector("a");
+    expect(link?.getAttribute("href")).toBe(
+      "https://github.com/ChandHsu/Hikari-LLVM15",
+    );
+    expect(link?.getAttribute("rel")).toContain("noopener");
   });
 
   it("pins the controls so they stay with the graph", () => {

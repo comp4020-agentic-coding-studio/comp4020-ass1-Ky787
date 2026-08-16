@@ -167,7 +167,7 @@
     </div>
 
     <p class="thesis" data-testid="thesis">
-      The program doesn't change. Turn compiler transformations on and watch the
+      The program doesn't change! Turn compiler transformations on and watch the
       code become harder to reason about.
     </p>
 
@@ -177,8 +177,15 @@
         <div class="panel__head">
           <h2 id="pipeline-h" class="panel__title">Build command</h2>
           <span data-hint="command"></span>
-          <p class="panel__note">
-            the Hikari LLVM 15 switches for this configuration
+          <p class="panel__note panel__note--wrap">
+            the Hikari (an O-LLVM fork:
+            <a
+              class="ext"
+              href="https://github.com/ChandHsu/Hikari-LLVM15"
+              target="_blank"
+              rel="noreferrer noopener"
+              >https://github.com/ChandHsu/Hikari-LLVM15</a
+            >) LLVM 15 switches for this configuration
           </p>
           <button type="button" class="btn" data-testid="cli-copy">
             Copy
